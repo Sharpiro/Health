@@ -1,0 +1,9 @@
+﻿Install-Package EntityFramework.SqlServer –Pre
+	"EntityFramework.SqlServer": "7.0.0-beta7"
+Install-Package EntityFramework.Commands –Pre
+	"ef": "EntityFramework.Commands"
+
+dnvm use 1.0.0-beta7
+cd F:\Git_Base\Health\src\Health.Core
+dnx ef migrations add Initial
+dnx ef database update

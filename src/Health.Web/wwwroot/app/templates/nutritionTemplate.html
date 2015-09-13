@@ -1,0 +1,53 @@
+﻿<div class="container">
+    <div class="row">
+        <div id="addFood" class="col-md-3 form-inline">
+            <form>
+                <div class="row">
+                    <h4>Add Food</h4>
+                    <label class="">Name:</label>
+                    <input class="form-control" type="text" ng-model="addFoodName" />
+                </div>
+                <div class="row">
+                    <label>Calories:</label>
+                    <input class="form-control" type="number" ng-model="addFoodCalories" />
+                </div>
+                <div class="row">
+                    <label>Serving Size:</label>
+                    <input class="form-control" type="number" ng-model="addFoodServingSize" />
+                </div>
+                <div class="row">
+                    <button class="form-control" ng-click="vm.addFood(addFoodName, addFoodCalories, addFoodServingSize)">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div id="addMealEntry" class="col-md-3 form-inline">
+            <form>
+                <div class="row">
+                    <h4>Add Meal Entry</h4>
+                    <label class="">Food:</label>
+                    <input class="form-control" type="text" ng-model="food"/>
+                </div>
+                <div class="row">
+                    <label>Calories:</label>
+                    <input class="form-control" type="text" ng-model="calories"/>
+                </div>
+                <div class="row">
+                    <button class="form-control" ng-click="vm.addMealEntry(food, calories)">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row">
+        <div class="centered">
+            <label>Message</label>
+            {{message}}
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="centered">
+            <label>Data</label>
+            {{data}}
+        </div>
+    </div>
+</div>

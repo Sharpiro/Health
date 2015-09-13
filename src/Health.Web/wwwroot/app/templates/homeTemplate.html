@@ -1,0 +1,27 @@
+﻿<div class="container">
+    <div class="form-inline">
+        <form>
+            <div class="row">
+                <label class="">User Name</label>
+                <input class="form-control" type="text" ng-model="userName" />
+
+            </div>
+            <div class="row">
+                <label>Password</label>
+                <input class="form-control" type="text" ng-model="password" />
+            </div>
+            <div class="row">
+                <button class="form-control" ng-click="vm.login(userName, password)">Login</button>
+                <button class="form-control" ng-click="vm.getProtectedData()">Get Data</button>
+            </div>
+        </form>
+    </div>
+    <div class="row">
+        <label>Message</label>
+        {{message}}
+    </div>
+    <div class="row">
+        <label>Data</label>
+        {{data}}
+    </div>
+</div>

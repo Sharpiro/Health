@@ -1,0 +1,18 @@
+﻿.container {
+    width: 1700px;
+    padding-top: 25px;
+}
+
+.row {
+    padding: 0 0 10px 0;
+}
+
+    .row > label {
+        width: 15%;
+    }
+
+.centered {
+    margin-left: auto;
+    margin-right: auto;
+    width: 20%;
+}
