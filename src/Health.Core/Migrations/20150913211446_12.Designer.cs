@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Health.Core.Migrations
 {
     [DbContext(typeof(HealthContext))]
-    partial class HealthContextModelSnapshot : ModelSnapshot
+    partial class _12
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150913211446_12"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -31,22 +36,9 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("Calories");
 
-                    b.Property<string>("Name")
-                        .Required();
+                    b.Property<string>("Name");
 
                     b.Property<int>("ServingSize");
-
-                    b.Key("Id");
-                });
-
-            modelBuilder.Entity("Health.Core.Entities.Meal", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<DateTime>("DayId");
-
-                    b.Property<int>("MealNumber");
 
                     b.Key("Id");
                 });
@@ -60,16 +52,7 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("FoodId");
 
-                    b.Property<int>("MealId");
-
                     b.Key("Id");
-                });
-
-            modelBuilder.Entity("Health.Core.Entities.Meal", b =>
-                {
-                    b.Reference("Health.Core.Entities.Day")
-                        .InverseCollection()
-                        .ForeignKey("DayId");
                 });
 
             modelBuilder.Entity("Health.Core.Entities.MealEntry", b =>
@@ -77,10 +60,6 @@ namespace Health.Core.Migrations
                     b.Reference("Health.Core.Entities.Food")
                         .InverseCollection()
                         .ForeignKey("FoodId");
-
-                    b.Reference("Health.Core.Entities.Meal")
-                        .InverseCollection()
-                        .ForeignKey("MealId");
                 });
         }
     }

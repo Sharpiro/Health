@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Health.Core.Migrations
 {
     [DbContext(typeof(HealthContext))]
-    partial class HealthContextModelSnapshot : ModelSnapshot
+    partial class _13
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150913212047_13"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -31,8 +36,7 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("Calories");
 
-                    b.Property<string>("Name")
-                        .Required();
+                    b.Property<string>("Name");
 
                     b.Property<int>("ServingSize");
 
@@ -60,8 +64,6 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("FoodId");
 
-                    b.Property<int>("MealId");
-
                     b.Key("Id");
                 });
 
@@ -77,10 +79,6 @@ namespace Health.Core.Migrations
                     b.Reference("Health.Core.Entities.Food")
                         .InverseCollection()
                         .ForeignKey("FoodId");
-
-                    b.Reference("Health.Core.Entities.Meal")
-                        .InverseCollection()
-                        .ForeignKey("MealId");
                 });
         }
     }

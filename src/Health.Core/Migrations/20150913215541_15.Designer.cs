@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Health.Core.Migrations
 {
     [DbContext(typeof(HealthContext))]
-    partial class HealthContextModelSnapshot : ModelSnapshot
+    partial class _15
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150913215541_15"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -31,8 +36,7 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("Calories");
 
-                    b.Property<string>("Name")
-                        .Required();
+                    b.Property<string>("Name");
 
                     b.Property<int>("ServingSize");
 

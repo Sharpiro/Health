@@ -2,7 +2,8 @@
 {
     public class MealEntryModel
     {
-        public string Food { get; set; }
+        public string FoodName { get; set; }
         public int Calories { get; set; }
+        public int MealId { get; set; }
     }
 }

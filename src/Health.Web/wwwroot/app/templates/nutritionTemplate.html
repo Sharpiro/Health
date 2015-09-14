@@ -5,15 +5,15 @@
                 <div class="row">
                     <h4>Add Food</h4>
                     <label class="">Name:</label>
-                    <input class="form-control" type="text" ng-model="addFoodName" />
+                    <input class="form-control" type="text" ng-model="addFoodName"/>
                 </div>
                 <div class="row">
                     <label>Calories:</label>
-                    <input class="form-control" type="number" ng-model="addFoodCalories" />
+                    <input class="form-control" type="number" ng-model="addFoodCalories"/>
                 </div>
                 <div class="row">
                     <label>Serving Size:</label>
-                    <input class="form-control" type="number" ng-model="addFoodServingSize" />
+                    <input class="form-control" type="number" ng-model="addFoodServingSize"/>
                 </div>
                 <div class="row">
                     <button class="form-control" ng-click="vm.addFood(addFoodName, addFoodCalories, addFoodServingSize)">Submit</button>
@@ -25,14 +25,38 @@
                 <div class="row">
                     <h4>Add Meal Entry</h4>
                     <label class="">Food:</label>
-                    <input class="form-control" type="text" ng-model="food"/>
+                    <input class="form-control" type="text" ng-model="addMealEntryfood"/>
                 </div>
                 <div class="row">
                     <label>Calories:</label>
-                    <input class="form-control" type="text" ng-model="calories"/>
+                    <input class="form-control" type="number" ng-model="addMealEntrycalories"/>
                 </div>
                 <div class="row">
-                    <button class="form-control" ng-click="vm.addMealEntry(food, calories)">Submit</button>
+                    <label>Meal Number:</label>
+                    <input class="form-control" type="number" ng-model="addMealEntryMealId" />
+                </div>
+                <div class="row">
+                    <button class="form-control" ng-click="vm.addMealEntry(addMealEntryfood, addMealEntrycalories, addMealEntryMealId)">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div id="addMeal" class="col-md-3 form-inline">
+            <form>
+                <div class="row">
+                    <h4>Add Meal</h4>
+                    <label class="">Meal Number:</label>
+                    <input class="form-control" type="text" ng-model="mealNumber"/>
+                </div>
+                <div class="row">
+                    <button class="form-control" ng-click="vm.addMeal(mealNumber)">Submit</button>
+                </div>
+            </form>
+        </div>
+        <div id="addDay" class="col-md-3 form-inline">
+            <form>
+                <div class="row">
+                    <h4>Add Day</h4>
+                    <button class="form-control" ng-click="vm.addDay()">Submit</button>
                 </div>
             </form>
         </div>

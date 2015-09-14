@@ -16,13 +16,37 @@ namespace Health.Web.Api
             _businessLayer = businessLayer;
         }
 
-        [HttpPost]
+        public ActionResult GetMostRecentDay()
+        {
+            return ExecuteQuery(e => e.GetMostRecentDay());
+        }
+
         public ActionResult AddFood([FromBody]FoodModel meal)
+        {
+            return ExecuteNonQuery(e => e.AddFood(meal));
+        }
+
+        public ActionResult AddMealEntry([FromBody]MealEntryModel mealEntry)
+        {
+            return ExecuteNonQuery(e => e.AddMealEntry(mealEntry.FoodName, mealEntry.Calories, mealEntry.MealId));
+        }
+
+        public ActionResult AddMeal([FromBody]MealModel meal)
+        {
+            return ExecuteNonQuery(e => e.AddMeal(meal.Date, meal.MealNumber));
+        }
+
+        public ActionResult AddDay()
+        {
+            return ExecuteNonQuery(e => e.AddDay());
+        }
+
+        private ObjectResult ExecuteNonQuery(Action<IBusinessService> blMethod)
         {
             try
             {
-                _businessLayer.AddFood(meal);
-                return Ok("got it");
+                blMethod(_businessLayer);
+                return Ok("");
             }
             catch (Exception ex)
             {
@@ -30,10 +54,17 @@ namespace Health.Web.Api
             }
         }
 
-        public ActionResult AddMealEntry(MealEntryModel meal)
+        private ObjectResult ExecuteQuery<T>(Func<IBusinessService, T> blMethod)
         {
-            _businessLayer.AddMealEntry(meal.Calories);
-            return Ok();
+            try
+            {
+                var result = blMethod(_businessLayer);
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return this.Error(ex.Message);
+            }
         }
     }
 }

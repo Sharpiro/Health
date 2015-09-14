@@ -1,7 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Health.Core.Entities
+﻿namespace Health.Core.Entities
 {
     public class MealDay
     {

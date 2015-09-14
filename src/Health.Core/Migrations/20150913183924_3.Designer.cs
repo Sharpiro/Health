@@ -9,9 +9,14 @@ using Microsoft.Data.Entity.SqlServer.Metadata;
 namespace Health.Core.Migrations
 {
     [DbContext(typeof(HealthContext))]
-    partial class HealthContextModelSnapshot : ModelSnapshot
+    partial class _3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        public override string Id
+        {
+            get { return "20150913183924_3"; }
+        }
+
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .Annotation("ProductVersion", "7.0.0-beta7-15540")
@@ -19,9 +24,12 @@ namespace Health.Core.Migrations
 
             modelBuilder.Entity("Health.Core.Entities.Day", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<DateTime>("Created");
 
-                    b.Key("Created");
+                    b.Key("Id");
                 });
 
             modelBuilder.Entity("Health.Core.Entities.Food", b =>
@@ -31,8 +39,7 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("Calories");
 
-                    b.Property<string>("Name")
-                        .Required();
+                    b.Property<string>("Name");
 
                     b.Property<int>("ServingSize");
 
@@ -44,11 +51,18 @@ namespace Health.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DayId");
-
-                    b.Property<int>("MealNumber");
+                    b.Property<string>("MealNumber");
 
                     b.Key("Id");
+                });
+
+            modelBuilder.Entity("Health.Core.Entities.MealDay", b =>
+                {
+                    b.Property<int>("DayId");
+
+                    b.Property<int>("MealId");
+
+                    b.Key("DayId", "MealId");
                 });
 
             modelBuilder.Entity("Health.Core.Entities.MealEntry", b =>
@@ -60,16 +74,7 @@ namespace Health.Core.Migrations
 
                     b.Property<int>("FoodId");
 
-                    b.Property<int>("MealId");
-
                     b.Key("Id");
-                });
-
-            modelBuilder.Entity("Health.Core.Entities.Meal", b =>
-                {
-                    b.Reference("Health.Core.Entities.Day")
-                        .InverseCollection()
-                        .ForeignKey("DayId");
                 });
 
             modelBuilder.Entity("Health.Core.Entities.MealEntry", b =>
@@ -77,10 +82,6 @@ namespace Health.Core.Migrations
                     b.Reference("Health.Core.Entities.Food")
                         .InverseCollection()
                         .ForeignKey("FoodId");
-
-                    b.Reference("Health.Core.Entities.Meal")
-                        .InverseCollection()
-                        .ForeignKey("MealId");
                 });
         }
     }

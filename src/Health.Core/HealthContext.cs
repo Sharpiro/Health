@@ -8,7 +8,7 @@ namespace Health.Core
         public static string ConnectionString;
         public DbSet<Day> Days { get; set; }
         public DbSet<Meal> Meals { get; set; }
-        public DbSet<MealDay> MealDays { get; set; }
+        //public DbSet<MealDay> MealDays { get; set; }
         public DbSet<MealEntry> MealEntries { get; set; }
         public DbSet<Food> Foods { get; set; }
 
@@ -22,7 +22,9 @@ namespace Health.Core
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<MealDay>().Key(md => new { md.DayId, md.MealId});
+            //modelBuilder.Entity<MealDay>().Key(md => new { md.DayId, md.MealId });
+            //modelBuilder.Entity<Day>().Property(e => e.Id).UseSqlServerIdentityColumn();
+            modelBuilder.Entity<Day>().Key(d => new {d.Created });
         }
     }
 }
