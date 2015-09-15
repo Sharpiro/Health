@@ -33,6 +33,11 @@
         var data = {};
         return this.$http.post("/api/nutrition/addday", data);
     }
+
+    public saveDay(meal: IMeal): ng.IPromise<any>
+    {
+        return this.$http.post("/api/nutrition/saveday", meal);
+    }
 }
 
 app.service("nutritionService", ["$http", NutritionService]);

@@ -12,65 +12,36 @@ namespace Health.Core
     {
         public EfBusinessLayer()
         {
-            AddDefaultData();
+            
         }
 
         public void AddDefaultData()
         {
-            using (var context = new HealthContext())
-            {
-                //context.SaveChanges();
-            }
+            throw new NotImplementedException();
         }
 
         public List<MealEntry> GetData()
         {
-            using (var context = new HealthContext())
-            {
-                return null;
-            }
+            throw new NotImplementedException();
         }
 
         public object GetMostRecentDay()
         {
             using (var context = new HealthContext())
             {
-                //var gg = from meals in context.Meals
-                //           join mealEntries in context.MealEntries
-                //           on meals.MealNumber equals mealEntries.MealId
-                //           select new {
-                //               meals.Id,
-                //               meals.MealNumber,
-                //               meals.MealEntries
-                //           };
                 var day = context.Days.OrderByDescending(d => d.Created).FirstOrDefault();
-                //var yyy = context.Meals.Include(m => m.MealEntries).Where(m => m.DayId == day.Created).Select(m => new MealViewModel
-                //{
-                //    Id= m.Id,
-                //    MealNumber = m.MealNumber,
-                //}).ToList();
-                var xxx = context.Meals.Join(context.MealEntries, meal => meal.MealNumber, mealEntry => mealEntry.MealId, (meal, mealEntry) => mealEntry).ToList();
-                //.Select(m => new {
-                //    m.Id,
-                //    m.MealNumber,
-                //    m.MealEntries
-                //}).ToList();
-                return null;
+                var meals = context.Meals
+                    .Where(m => m.DayId == day.Created)
+                    .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
+                    .Select(m => m.MealEntries.Select(me => me.Calories));
+                var recentDay = new RecentDayModel
+                {
+                    Date = day.Created,
+                    Meals = meals
+                };
+                return recentDay;
             }
         }
-
-        //public RecentDayModel GetMostRecentDay()
-        //{
-        //    using (var context = new HealthContext())
-        //    {
-        //        var day = context.Days.OrderByDescending(d => d.Created)
-        //        .Include(d => d.Meals)
-        //        .ThenInclude(m => m.MealEntries)
-        //        .ThenInclude(me => me.Food)
-        //        .FirstOrDefault();
-        //return day;
-        //    }
-        //}
 
         public void AddFood(FoodModel food)
         {
