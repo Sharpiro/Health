@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Health.Core.Entities;
+using Health.Core.Models.ViewModels;
 
 namespace Health.Core.Models
 {
@@ -8,10 +9,12 @@ namespace Health.Core.Models
     {
         List<MealEntry> GetData();
         void AddDefaultData();
-        object GetMostRecentDay();
+        object GetNutritionTable();
+        RecentDayModel GetMostRecentDay();
+        ICollection<Day> GetAllData();
         void AddFood(FoodModel food);
         void AddMealEntry(string foodName, int calories, int mealId);
-        void AddMeal(DateTime date, int mealNumber);
+        void AddMeal(MealModel mealModel);
         void AddDay();
     }
 }

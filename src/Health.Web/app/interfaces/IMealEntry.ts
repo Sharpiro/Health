@@ -1,6 +1,6 @@
 ﻿interface IMealEntry
 {
-    foodName: string;
+    foodId: number;
     calories: number;
     mealEntryNumber: number;
 }

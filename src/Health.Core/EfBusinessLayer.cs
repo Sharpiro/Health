@@ -12,7 +12,7 @@ namespace Health.Core
     {
         public EfBusinessLayer()
         {
-            
+
         }
 
         public void AddDefaultData()
@@ -25,7 +25,30 @@ namespace Health.Core
             throw new NotImplementedException();
         }
 
-        public object GetMostRecentDay()
+        public object GetNutritionTable()
+        {
+            using (var context = new HealthContext())
+            {
+                var foods = context.Foods.Select(f => new
+                {
+                    f.Id,
+                    f.Name,
+                    f.Calories
+                }).ToList();
+                return foods;
+            }
+        }
+
+        public ICollection<Day> GetAllData()
+        {
+            using (var context = new HealthContext())
+            {
+                var days = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).ThenInclude(me =>me.Food).ToList();
+                return days;
+            }
+        }
+
+        public RecentDayModel GetMostRecentDay()
         {
             using (var context = new HealthContext())
             {
@@ -33,7 +56,8 @@ namespace Health.Core
                 var meals = context.Meals
                     .Where(m => m.DayId == day.Created)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
-                    .Select(m => m.MealEntries.Select(me => me.Calories));
+                    .Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
+                    .Select(me => me.Calories));
                 var recentDay = new RecentDayModel
                 {
                     Date = day.Created,
@@ -76,17 +100,18 @@ namespace Health.Core
             }
         }
 
-        public void AddMeal(DateTime date, int mealNumber)
+        public void AddMeal(MealModel mealModel)
         {
-            if (mealNumber < 1) throw new ArgumentException("mealNumber value is invalid");
             using (var context = new HealthContext())
             {
                 var meal = new Meal
                 {
-                    MealNumber = mealNumber,
-                    DayId = date
+                    DayId = mealModel.Date,
+                    MealNumber = mealModel.MealNumber,
+                    MealEntries = mealModel.MealEntries
                 };
-                context.Meals.Add(meal);
+                context.Add(meal);
+                context.MealEntries.AddRange(meal.MealEntries);
                 context.SaveChanges();
             }
         }

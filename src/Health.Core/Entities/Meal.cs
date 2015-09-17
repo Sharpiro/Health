@@ -15,6 +15,6 @@ namespace Health.Core.Entities
         public int Id { get; set; }
         public int MealNumber { get; set; }
         public DateTime DayId { get; set; }
-        public ICollection<MealEntry> MealEntries { get; set; }
+        public virtual ICollection<MealEntry> MealEntries { get; set; }
     }
 }

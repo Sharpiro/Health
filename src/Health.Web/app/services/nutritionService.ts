@@ -5,9 +5,19 @@
 
     }
 
+    public getAllData(): ng.IPromise<any>
+    {
+        return this.$http.get("/api/nutrition/getalldata");
+    }
+
     public getMostRecentDay(): ng.IPromise<any>
     {
         return this.$http.get("/api/nutrition/getmostrecentday");
+    }
+
+    public getNutritionTable(): ng.IPromise<any>
+    {
+        return this.$http.get("/api/nutrition/getnutritiontable");
     }
 
     public addFood(name: string, calories: number, servingSize: number): ng.IPromise<any>
@@ -22,21 +32,15 @@
         return this.$http.post("/api/nutrition/addmealentry", data);
     }
 
-    public addMeal(date: Date, mealNumber: number): ng.IPromise<any>
+    public addMeal(meal: IMeal): ng.IPromise<any>
     {
-        var data = { date: date, mealNumber: mealNumber };
-        return this.$http.post("/api/nutrition/addmeal", data);
+        return this.$http.post("/api/nutrition/addmeal", meal);
     }
 
     public addDay(): ng.IPromise<any>
     {
         var data = {};
         return this.$http.post("/api/nutrition/addday", data);
-    }
-
-    public saveDay(meal: IMeal): ng.IPromise<any>
-    {
-        return this.$http.post("/api/nutrition/saveday", meal);
     }
 }
 

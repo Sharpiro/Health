@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Web.Api.Extensions;
 using Microsoft.AspNet.Http;
@@ -14,6 +16,16 @@ namespace Health.Web.Api
         public NutritionController(IBusinessService businessLayer)
         {
             _businessLayer = businessLayer;
+        }
+
+        public ActionResult GetAllData()
+        {
+            return ExecuteQuery(e => e.GetAllData());
+        } 
+
+        public ActionResult GetNutritionTable()
+        {
+            return ExecuteQuery(e => e.GetNutritionTable());
         }
 
         public ActionResult GetMostRecentDay()
@@ -33,7 +45,7 @@ namespace Health.Web.Api
 
         public ActionResult AddMeal([FromBody]MealModel meal)
         {
-            return ExecuteNonQuery(e => e.AddMeal(meal.Date, meal.MealNumber));
+            return ExecuteNonQuery(e => e.AddMeal(meal));
         }
 
         public ActionResult AddDay()
