@@ -1030,7 +1030,7 @@
           "lib/dotnet/System.Collections.NonGeneric.dll": {}
         }
       },
-      "System.Collections.Specialized/4.0.1-beta-23220": {
+      "System.Collections.Specialized/4.0.1-beta-23225": {
         "type": "package",
         "dependencies": {
           "System.Collections.NonGeneric": "4.0.0",
@@ -1249,7 +1249,7 @@
           "lib/DNXCore50/System.Diagnostics.Tools.dll": {}
         }
       },
-      "System.Diagnostics.Tracing/4.0.21-beta-23220": {
+      "System.Diagnostics.Tracing/4.0.21-beta-23225": {
         "type": "package",
         "dependencies": {
           "System.Runtime": "4.0.0"
@@ -1530,7 +1530,7 @@
           "lib/dotnet/System.Linq.Queryable.dll": {}
         }
       },
-      "System.Net.Http/4.0.1-beta-23220": {
+      "System.Net.Http/4.0.1-beta-23225": {
         "type": "package",
         "dependencies": {
           "Microsoft.Win32.Primitives": "4.0.0",
@@ -1545,9 +1545,9 @@
           "System.Runtime.Extensions": "4.0.10",
           "System.Runtime.Handles": "4.0.0",
           "System.Runtime.InteropServices": "4.0.20",
-          "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23220",
+          "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23225",
           "System.Text.Encoding": "4.0.10",
-          "System.Threading": "4.0.10",
+          "System.Threading": "4.0.0",
           "System.Threading.Tasks": "4.0.10"
         },
         "compile": {
@@ -4335,10 +4335,10 @@
         "System.Collections.NonGeneric.nuspec"
       ]
     },
-    "System.Collections.Specialized/4.0.1-beta-23220": {
+    "System.Collections.Specialized/4.0.1-beta-23225": {
       "type": "package",
       "serviceable": true,
-      "sha512": "om8HxUDkh39yznXhm8Kytwapluu9H0G7MI13gs5X6A9TLgL9PfrWaNEb/DsGVhI6/+4hB4odFFnKJeJ/mIR6oA==",
+      "sha512": "1cWjed/l4dgel1ewGa48veCzsXtd6dFtHzGUC0ZutvgpAorfvD+5p0OiweXLlESYFb3dWbS2zFqYIM4yIpvMJQ==",
       "files": [
         "lib/dotnet/System.Collections.Specialized.dll",
         "lib/MonoAndroid10/_._",
@@ -4352,8 +4352,8 @@
         "ref/net46/System.Collections.Specialized.dll",
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
-        "System.Collections.Specialized.4.0.1-beta-23220.nupkg",
-        "System.Collections.Specialized.4.0.1-beta-23220.nupkg.sha512",
+        "System.Collections.Specialized.4.0.1-beta-23225.nupkg",
+        "System.Collections.Specialized.4.0.1-beta-23225.nupkg.sha512",
         "System.Collections.Specialized.nuspec"
       ]
     },
@@ -4624,10 +4624,10 @@
         "System.Diagnostics.Tools.nuspec"
       ]
     },
-    "System.Diagnostics.Tracing/4.0.21-beta-23220": {
+    "System.Diagnostics.Tracing/4.0.21-beta-23225": {
       "type": "package",
       "serviceable": true,
-      "sha512": "OOjtloyxAWsAgc+HRIUxeGON47bzID2fW4VJ1C8dt4naIpQGQtjAUyEbr7REupsl0fm0YcIsmlZKJadewmkWxQ==",
+      "sha512": "5wQpoAWxFiJFFx5iSZVKIs/3bRZNpyTdCz8Uoj01Kb0FICPO2Q0fXbKAno/0zDv25Irq7q1urWG+f3At9d22sw==",
       "files": [
         "lib/DNXCore50/System.Diagnostics.Tracing.dll",
         "lib/MonoAndroid10/_._",
@@ -4643,8 +4643,8 @@
         "ref/xamarinios10/_._",
         "ref/xamarinmac20/_._",
         "runtimes/win8-aot/lib/netcore50/System.Diagnostics.Tracing.dll",
-        "System.Diagnostics.Tracing.4.0.21-beta-23220.nupkg",
-        "System.Diagnostics.Tracing.4.0.21-beta-23220.nupkg.sha512",
+        "System.Diagnostics.Tracing.4.0.21-beta-23225.nupkg",
+        "System.Diagnostics.Tracing.4.0.21-beta-23225.nupkg.sha512",
         "System.Diagnostics.Tracing.nuspec"
       ]
     },
@@ -4972,10 +4972,10 @@
         "System.Linq.Queryable.nuspec"
       ]
     },
-    "System.Net.Http/4.0.1-beta-23220": {
+    "System.Net.Http/4.0.1-beta-23225": {
       "type": "package",
       "serviceable": true,
-      "sha512": "MJNHFL0AJ0mSQKsL1WFuVZwaZHQCO2xyZN3OJLkLvofkLJFszJ3NlZZimc6vg1U7jKBYwphGrrSxAMExZez6vw==",
+      "sha512": "PFh0rGs7K+NaRAzijr/ENcFDCOraQ7Tr22Ip++CI298rZWtLsA7nJ/INsibL0clFDwqd/hj4kGwZ65D+9zHwhQ==",
       "files": [
         "lib/DNXCore50/System.Net.Http.dll",
         "lib/net45/_._",
@@ -4987,8 +4987,8 @@
         "ref/netcore50/System.Net.Http.dll",
         "ref/win8/_._",
         "ref/wpa81/_._",
-        "System.Net.Http.4.0.1-beta-23220.nupkg",
-        "System.Net.Http.4.0.1-beta-23220.nupkg.sha512",
+        "System.Net.Http.4.0.1-beta-23225.nupkg",
+        "System.Net.Http.4.0.1-beta-23225.nupkg.sha512",
         "System.Net.Http.nuspec"
       ]
     },

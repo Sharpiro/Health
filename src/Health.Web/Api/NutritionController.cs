@@ -33,7 +33,7 @@ namespace Health.Web.Api
             return ExecuteQuery(e => e.GetMostRecentDay());
         }
 
-        public ActionResult AddFood([FromBody]FoodModel meal)
+        public ActionResult AddFood([FromBody]Food meal)
         {
             return ExecuteNonQuery(e => e.AddFood(meal));
         }

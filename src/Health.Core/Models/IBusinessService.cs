@@ -9,10 +9,11 @@ namespace Health.Core.Models
     {
         List<MealEntry> GetData();
         void AddDefaultData();
+        Food GetFoodByName(string foodName);
         object GetNutritionTable();
         RecentDayModel GetMostRecentDay();
         ICollection<Day> GetAllData();
-        void AddFood(FoodModel food);
+        void AddFood(Food food);
         void AddMealEntry(string foodName, int calories, int mealId);
         void AddMeal(MealModel mealModel);
         void AddDay();

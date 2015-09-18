@@ -43,7 +43,7 @@ namespace Health.Core
         {
             using (var context = new HealthContext())
             {
-                var days = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).ThenInclude(me =>me.Food).ToList();
+                var days = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).ThenInclude(me => me.Food).ToList();
                 return days;
             }
         }
@@ -57,28 +57,31 @@ namespace Health.Core
                     .Where(m => m.DayId == day.Created)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
                     .Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
-                    .Select(me => me.Calories));
+                    .Select(me => me.Calories).ToList());
+                var temp = meals.SelectMany(meal => meal).Sum();
                 var recentDay = new RecentDayModel
                 {
                     Date = day.Created,
-                    Meals = meals
+                    Meals = meals.ToList()
                 };
                 return recentDay;
             }
         }
 
-        public void AddFood(FoodModel food)
+        public Food GetFoodByName(string foodName)
+        {
+            using (var context = new HealthContext())
+            {
+                return context.Foods.FirstOrDefault(f => f.Name == foodName);
+            }
+        }
+
+        public void AddFood(Food food)
         {
             if (string.IsNullOrEmpty(food.Name)) return;
             using (var context = new HealthContext())
             {
-                var newFood = new Food
-                {
-                    Calories = food.Calories,
-                    Name = food.Name,
-                    ServingSize = food.ServingSize
-                };
-                context.Foods.Add(newFood);
+                context.Foods.Add(food);
                 context.SaveChanges();
             }
         }
