@@ -53,6 +53,11 @@ namespace Health.Web.Api
             return ExecuteNonQuery(e => e.AddDay());
         }
 
+        public ActionResult ClearDay()
+        {
+            return ExecuteNonQuery(e => e.ClearDay());
+        }
+
         private ObjectResult ExecuteNonQuery(Action<IBusinessService> blMethod)
         {
             try

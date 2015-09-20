@@ -20,17 +20,16 @@
         return this.$http.get("/api/nutrition/getnutritiontable");
     }
 
-    public addFood(name: string, calories: number, servingSize: number): ng.IPromise<any>
+    public addFood(food: any): ng.IPromise<any>
     {
-        var data = { name: name, calories: calories, servingSize: servingSize };
-        return this.$http.post("/api/nutrition/addfood", data);
+        return this.$http.post("/api/nutrition/addfood", food);
     }
 
-    public addMealEntry(food: string, calories: number, mealId: number): ng.IPromise<any>
-    {
-        var data = { foodName: food, calories: calories, mealId: mealId };
-        return this.$http.post("/api/nutrition/addmealentry", data);
-    }
+    //public addMealEntry(food: string, calories: number, mealId: number): ng.IPromise<any>
+    //{
+    //    var data = { foodName: food, calories: calories, mealId: mealId };
+    //    return this.$http.post("/api/nutrition/addmealentry", data);
+    //}
 
     public addMeal(meal: IMeal): ng.IPromise<any>
     {
@@ -41,6 +40,12 @@
     {
         var data = {};
         return this.$http.post("/api/nutrition/addday", data);
+    }
+
+    public clearDay(): ng.IPromise<any>
+    {
+        var data = {};
+        return this.$http.post("/api/nutrition/clearday", data);
     }
 }
 

@@ -4,11 +4,12 @@
     private currentDay: ICurrentDay;
     private nextMeal: IMeal;
 
-    constructor(private scope: any, private nutritionService: NutritionService)
+    constructor(private scope: any, private nutritionService: NutritionService, private nutritionDataService: NutritionDataService)
     {
         scope.vm = this;
         this.getNutritionTable();
         this.getMostRecentDay();
+        scope.editMode = true;
         //this.getAllData();
     }
 
@@ -19,16 +20,21 @@
 
     private getNutritionTable(): void
     {
-        this.nutritionService.getNutritionTable().then((data) =>
+        this.nutritionDataService.GetNutritionTable().then((data) =>
         {
             this.nutritionData = data.data;
+            this.selectRandomFood();
             this.scope.message = `${data.status}: ${data.statusText}`;
         }, this.errorCallBack);
     }
 
-    private dropDownUpdate(currentDropdownFood: IFood): void
+    private dropDownUpdate(currentDropdownFoodId: number): void
     {
-        console.log(currentDropdownFood);
+        this.nutritionData.forEach((value) =>
+        {
+            if (value.Id === currentDropdownFoodId)
+                this.scope.finalCalories = value.Calories;
+        });
     }
 
     private getMostRecentDay(): void
@@ -42,29 +48,14 @@
         }, this.errorCallBack);
     }
 
-    private addFood(foodName: string, foodCalories: number, foodServingSize: number): void
-    {
-        this.nutritionService.addFood(foodName, foodCalories, foodServingSize).then(this.successCallBack, this.errorCallBack);
-    }
-
-    private addMealEntry(food: string, calories: number, mealId: number): void
-    {
-        this.nutritionService.addMealEntry(food, calories, mealId).then(this.successCallBack, this.errorCallBack);
-    }
-
-    private addMeal(mealNumber: number): void
-    {
-        var today = new Date();
-        var tempDate = this.currentDay.Date;
-        var date = new Date(today.getFullYear(), today.getMonth(), today.getDate(), today.getHours());
-        //this.nutritionService.addMeal(date, mealNumber).then(this.successCallBack, this.errorCallBack);
-        alert("not working...");
-        console.log("doing nothing...");
-    }
-
     private addDay(): void
     {
         this.nutritionService.addDay().then(this.successCallBack, this.errorCallBack);
+    }
+
+    private clearDay(): void
+    {
+        this.nutritionService.clearDay().then(this.successCallBack, this.errorCallBack);
     }
 
     private addFoodFinal(currentDropdownFoodId: number, finalCalories: number): void
@@ -79,6 +70,7 @@
             calories: finalCalories,
             mealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
+        this.selectRandomFood();
         console.log(this.nextMeal.mealEntries);
     }
 
@@ -89,9 +81,18 @@
         this.nutritionService.addMeal(this.nextMeal).then(this.successCallBack, this.errorCallBack);
     }
 
-    private clearMessage()
-    {
-        this.scope.message = "";
+    private selectRandomFood() {
+        var maxValue = this.nutritionData.length;
+        var randomNumber = Math.floor(Math.random() * maxValue);
+        var randomFood = this.nutritionData[randomNumber];
+        this.scope.finalCalories = randomFood.Calories;
+        this.scope.currentDropdownFoodId = randomFood.Id;
+    }
+
+    private testing(index: number) {
+        console.log(index);
+        console.log("testing...");
+        this.scope.editMode = !this.scope.editMode;
     }
 
     private successCallBack = (data: any): any =>
@@ -110,4 +111,4 @@
     }
 }
 
-app.controller("nutritionController", ["$scope", "nutritionService", NutritionController]);
+app.controller("nutritionController", ["$scope", "nutritionService", "nutritionDataService", NutritionController]);

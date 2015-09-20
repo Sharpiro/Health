@@ -8,8 +8,6 @@ using Xunit;
 
 namespace Health.Tests
 {
-    // This project can output the Class library as a NuGet Package.
-    // To enable this option, right-click on the project and select the Properties menu item. In the Build tab select "Produce outputs on build".
     public class EfBusinessLayerTests
     {
         [Fact]
@@ -28,29 +26,55 @@ namespace Health.Tests
         }
 
         [Fact]
+        private void ClearDayTest()
+        {
+            IBusinessService businessService = new EfBusinessLayer();
+            businessService.ClearDay();
+        }
+
+        [Fact]
+        private void DeleteDayTest()
+        {
+            IBusinessService businessService = new EfBusinessLayer();
+            var day = businessService.GetMostRecentDay();
+            businessService.DeleteDay(day.Date);
+        }
+
+        [Fact]
         public void SeedDatabaseTest()
         {
             IBusinessService businessService = new EfBusinessLayer();
-            //SeedFood(businessService);
-            SeedMeal(businessService);
+            SeedFood(businessService);
+            //SeedMeal(businessService);
         }
 
         private void SeedFood(IBusinessService businessService)
         {
             var chicken = new Food
             {
-                Name = "Chicken",
+                Name = "Chicken1",
                 Calories = 120,
                 ServingSize = 4
             };
             var eggs = new Food
             {
-                Name = "Eggs",
+                Name = "Eggs1",
                 Calories = 70,
                 ServingSize = 1
             };
-            businessService.AddFood(chicken);
-            businessService.AddFood(eggs);
+            var apple = new Food
+            {
+                Name = "Apple1",
+                Calories = 40,
+                ServingSize = 1
+            };
+            var almonds = new Food
+            {
+                Name = "Almonds1",
+                Calories = 100,
+                ServingSize = 1
+            };
+            businessService.AddFood(chicken, eggs, apple, almonds);
         }
 
         private void SeedMeal(IBusinessService businessService)

@@ -4,7 +4,7 @@ var app = angular.module("app", ["ui.router"]);
 
 app.config(["$stateProvider", "$urlRouterProvider", ($stateProvider: any, $urlRouterProvider: any) =>
 {
-    $urlRouterProvider.otherwise("/nutrition");
+    $urlRouterProvider.otherwise("/foodlist");
 
     $stateProvider
         .state("home", {
@@ -15,5 +15,10 @@ app.config(["$stateProvider", "$urlRouterProvider", ($stateProvider: any, $urlRo
             url: "/nutrition",
             templateUrl: "app/templates/nutritionTemplate.html",
             controller: "nutritionController"
+        })
+        .state("foodList", {
+            url: "/foodlist",
+            templateUrl: "app/templates/foodListTemplate.html",
+            controller: "foodListController"
         });
 }]);

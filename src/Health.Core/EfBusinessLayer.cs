@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Health.Core.Entities;
+using Health.Core.Extensions;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.Data.Entity;
@@ -29,12 +30,7 @@ namespace Health.Core
         {
             using (var context = new HealthContext())
             {
-                var foods = context.Foods.Select(f => new
-                {
-                    f.Id,
-                    f.Name,
-                    f.Calories
-                }).ToList();
+                var foods = context.Foods.ToList();
                 return foods;
             }
         }
@@ -57,12 +53,17 @@ namespace Health.Core
                     .Where(m => m.DayId == day.Created)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
                     .Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
-                    .Select(me => me.Calories).ToList());
-                var temp = meals.SelectMany(meal => meal).Sum();
+                    .Select(me => new
+                    {
+                        me.FoodId,
+                        me.Calories
+                    }).ToList()).ToList();
+                var calorieTotal = meals.SelectMany(m => m.Select(me => me.Calories)).Sum();
                 var recentDay = new RecentDayModel
                 {
                     Date = day.Created,
-                    Meals = meals.ToList()
+                    Total = calorieTotal,
+                    Meals = meals
                 };
                 return recentDay;
             }
@@ -76,12 +77,12 @@ namespace Health.Core
             }
         }
 
-        public void AddFood(Food food)
+        public void AddFood(params Food[] food)
         {
-            if (string.IsNullOrEmpty(food.Name)) return;
+            if (food.Length < 1) return;
             using (var context = new HealthContext())
             {
-                context.Foods.Add(food);
+                context.Foods.AddOrUpdateCustom(f => f.Name, food);
                 context.SaveChanges();
             }
         }
@@ -129,6 +130,31 @@ namespace Health.Core
                     Created = new DateTime(now.Year, now.Month, now.Day)
                 };
                 context.Days.Add(day);
+                context.SaveChanges();
+            }
+        }
+
+        public void ClearDay()
+        {
+            using (var context = new HealthContext())
+            {
+                var date = GetMostRecentDay().Date;
+                var meals = context.Meals.Include(m => m.MealEntries).Where(m => m.DayId == date).ToList();
+                meals.ForEach(m => context.MealEntries.RemoveRange(m.MealEntries));
+                context.Meals.RemoveRange(meals);
+                context.SaveChanges();
+            }
+        }
+
+        public void DeleteDay(DateTime date)
+        {
+            using (var context = new HealthContext())
+            {
+                var day = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).FirstOrDefault(d => d.Created == date);
+                if (day == null) throw new NullReferenceException("The day provided does not exist in the database");
+                day.Meals.ToList().ForEach(m => context.MealEntries.RemoveRange(m.MealEntries));
+                context.Meals.RemoveRange(day.Meals);
+                context.Days.Remove(day);
                 context.SaveChanges();
             }
         }

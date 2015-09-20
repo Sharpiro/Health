@@ -13,9 +13,11 @@ namespace Health.Core.Models
         object GetNutritionTable();
         RecentDayModel GetMostRecentDay();
         ICollection<Day> GetAllData();
-        void AddFood(Food food);
+        void AddFood(params Food[] food);
         void AddMealEntry(string foodName, int calories, int mealId);
         void AddMeal(MealModel mealModel);
         void AddDay();
+        void ClearDay();
+        void DeleteDay(DateTime date);
     }
 }
