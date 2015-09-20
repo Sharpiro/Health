@@ -14,8 +14,9 @@ namespace Health.Core
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=Context;Trusted_Connection=True;";
-            services.AddEntityFramework().AddSqlServer().AddDbContext<HealthContext>(options => options.UseSqlServer(connectionString));
+            //var connectionString = "Server=(localdb)\\MSSQLLocalDB;Database=Context;Trusted_Connection=True;";
+            //var connectionString = "";
+            //services.AddEntityFramework().AddSqlServer().AddDbContext<HealthContext>(options => options.UseSqlServer(connectionString));
         }
     }
 }

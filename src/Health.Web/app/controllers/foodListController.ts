@@ -46,16 +46,16 @@
     private clearTextboxes(): void
     {
         this.scope.addFoodName = undefined;
-        this.scope.addFoodServingSize = "";
-        this.scope.addFoodServingName = "";
-        this.scope.addFoodCalories = "";
-        this.scope.addFoodProtein = "";
-        this.scope.addFoodFat = "";
-        this.scope.addFoodCarbs = "";
-        this.scope.addFoodSugar = "";
-        this.scope.addFoodFiber = "";
-        this.scope.addFoodSodium = "";
-        this.scope.addFoodPotassium = "";
+        this.scope.addFoodServingSize = undefined;
+        this.scope.addFoodServingName = undefined;
+        this.scope.addFoodCalories = undefined;
+        this.scope.addFoodProtein = undefined;
+        this.scope.addFoodFat = undefined;
+        this.scope.addFoodCarbs = undefined;
+        this.scope.addFoodSugar = undefined;
+        this.scope.addFoodFiber = undefined;
+        this.scope.addFoodSodium = undefined;
+        this.scope.addFoodPotassium = undefined;
     }
 
     private testing(index: number): void

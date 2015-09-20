@@ -3,13 +3,13 @@
         <div id="functions" class="col-md-3 form-inline">
             <h4>Functions</h4>
             <div class="row">
-                <button class="form-control" ng-click="vm.addDay()">Add Day</button>
+                <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
             </div>
             <div class="row">
-                <button class="form-control" ng-click="vm.clearDay()">Clear Day</button>
+                <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
             </div>
             <div class="row">
-                <button class="form-control" ng-click="vm.testing()">Testing</button>
+                <button class="btn btn-default" ng-click="vm.testing()">Testing</button>
             </div>
         </div>
     </div>
@@ -26,28 +26,30 @@
                     <input class="form-control" type="number" ng-model="finalCalories" />
                 </div>
                 <div class="row">
-                    <button class="form-control" ng-click="vm.addFoodFinal(currentDropdownFoodId, finalCalories)">Add Food</button>
-                    <button class="form-control" ng-click="vm.saveDay()">Save Day</button>
+                    <button class="btn btn-default" ng-click="vm.addFoodFinal(currentDropdownFoodId, finalCalories)">Add Food</button>
+                    <button class="btn btn-default" ng-click="vm.saveDay()">Save Day</button>
                 </div>
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="row">
-            <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
-            <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
-            <span class="h4" style="padding-right: 15px">Goal: 2000</span>
-            <table class="table">
-                <tr ng-repeat="item in vm.currentDay.Meals">
-                    <td ng-repeat="subItem in item">
-                        {{subItem | foodIdFilter}}
-                    </td>
-                </tr>
-            </table>
+        <div class="col-md-12">
+            <div class="row">
+                <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
+                <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
+                <span class="h4" style="padding-right: 15px">Goal: 2000</span>
+                <table class="table">
+                    <tr ng-repeat="item in vm.currentDay.Meals">
+                        <td ng-repeat="subItem in item">
+                            {{subItem | foodIdFilter}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
     </div>
     <div class="row">
-        
+
     </div>
     <div class="row">
         <div class="row">

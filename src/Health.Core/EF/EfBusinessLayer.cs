@@ -49,6 +49,8 @@ namespace Health.Core.EF
             using (var context = new HealthContext())
             {
                 var day = context.Days.OrderByDescending(d => d.Created).FirstOrDefault();
+                if (day == null)
+                    throw new NullReferenceException("There is no day information in the database");
                 var meals = context.Meals
                     .Where(m => m.DayId == day.Created)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()

@@ -1,7 +1,6 @@
 {
     "webroot": "wwwroot",
     "version": "1.0.0-*",
-     "resource": [ "Certificate.pfx" ],
 
     "dependencies": {
         "Microsoft.AspNet.Mvc": "6.0.0-beta7",
@@ -15,7 +14,7 @@
     },
 
     "commands": {
-        "web": "Microsoft.AspNet.Hosting --config hosting.ini"
+        "web": "Microsoft.AspNet.Hosting --config hosting.ini",
     },
 
     "frameworks": {

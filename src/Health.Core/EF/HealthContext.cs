@@ -8,7 +8,6 @@ namespace Health.Core.EF
         public static string ConnectionString;
         public DbSet<Day> Days { get; set; }
         public DbSet<Meal> Meals { get; set; }
-        //public DbSet<MealDay> MealDays { get; set; }
         public DbSet<MealEntry> MealEntries { get; set; }
         public DbSet<Food> Foods { get; set; }
 
