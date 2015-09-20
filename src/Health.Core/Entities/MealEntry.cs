@@ -1,6 +1,4 @@
-﻿using Microsoft.Data.Entity.Metadata;
-
-namespace Health.Core.Entities
+﻿namespace Health.Core.Entities
 {
     public class MealEntry
     {

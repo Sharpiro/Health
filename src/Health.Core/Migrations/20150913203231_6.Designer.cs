@@ -1,9 +1,6 @@
-using System;
+using Health.Core.EF;
 using Microsoft.Data.Entity;
 using Microsoft.Data.Entity.Infrastructure;
-using Microsoft.Data.Entity.Metadata;
-using Microsoft.Data.Entity.Migrations;
-using Health.Core;
 using Microsoft.Data.Entity.SqlServer.Metadata;
 
 namespace Health.Core.Migrations

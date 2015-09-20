@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Builder;
+﻿using Health.Core.EF;
+using Microsoft.AspNet.Builder;
 using Microsoft.Data.Entity;
 using Microsoft.Framework.DependencyInjection;
 

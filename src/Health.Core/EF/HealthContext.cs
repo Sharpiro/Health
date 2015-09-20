@@ -1,7 +1,7 @@
 ﻿using Health.Core.Entities;
 using Microsoft.Data.Entity;
 
-namespace Health.Core
+namespace Health.Core.EF
 {
     public class HealthContext : DbContext
     {

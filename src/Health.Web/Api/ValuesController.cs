@@ -1,4 +1,4 @@
-﻿using Health.Core;
+﻿using Health.Core.EF;
 using Health.Core.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;

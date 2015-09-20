@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Health.Core.EF.Extensions;
 using Health.Core.Entities;
-using Health.Core.Extensions;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.Data.Entity;
 
-namespace Health.Core
+namespace Health.Core.EF
 {
     public class EfBusinessLayer : IBusinessService
     {

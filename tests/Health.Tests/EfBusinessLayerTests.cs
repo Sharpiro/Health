@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Health.Core;
+using Health.Core.EF;
 using Health.Core.Entities;
 using Health.Core.Models;
 using Xunit;

@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Threading.Tasks;
 using Microsoft.Data.Entity;
 
-namespace Health.Core.Extensions
+namespace Health.Core.EF.Extensions
 {
     public static class ExtensionMethods
     {

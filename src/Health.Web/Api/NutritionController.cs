@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Net;
 using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Web.Api.Extensions;
-using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
 
 namespace Health.Web.Api

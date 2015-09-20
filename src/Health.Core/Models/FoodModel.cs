@@ -1,6 +1,4 @@
-﻿using Newtonsoft.Json;
-
-namespace Health.Core.Models
+﻿namespace Health.Core.Models
 {
     public class FoodModel
     {
