@@ -1,19 +1,5 @@
 ﻿<div class="container">
     <div class="row">
-        <div id="functions" class="col-md-3 form-inline">
-            <h4>Functions</h4>
-            <div class="row">
-                <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
-            </div>
-            <div class="row">
-                <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
-            </div>
-            <div class="row">
-                <button class="btn btn-default" ng-click="vm.testing()">Testing</button>
-            </div>
-        </div>
-    </div>
-    <div class="row">
         <div id="dataEntry" class="col-md-3 form-inline">
             <form>
                 <div class="row">
@@ -38,7 +24,7 @@
                 <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
                 <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
                 <span class="h4" style="padding-right: 15px">Goal: 2000</span>
-                <table class="table">
+                <table class="table table-bordered table-responsive">
                     <tr ng-repeat="item in vm.currentDay.Meals">
                         <td ng-repeat="subItem in item">
                             {{subItem | foodIdFilter}}
@@ -48,22 +34,29 @@
             </div>
         </div>
     </div>
-    <div class="row">
-
-    </div>
-    <div class="row">
-        <div class="row">
-            <div class="centered">
-                <label>Message</label>
-                {{message}}
-
+    <h4>Functions</h4>
+    <div id="functions" class="row">
+        <div class="col-md-3">
+            <div class="row">
+                <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
+                <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
+                <button class="btn btn-default" ng-click="vm.testing()">Testing</button>
             </div>
         </div>
-        <div class="row">
-            <div class="centered">
-                <label>Data</label>
-                {{data}}
-            </div>
+    </div>
+</div>
+<div class="row">
+    <div class="row">
+        <div class="centered">
+            <label>Message</label>
+            {{message}}
+
+        </div>
+    </div>
+    <div class="row">
+        <div class="centered">
+            <label>Data</label>
+            {{data}}
         </div>
     </div>
 </div>
