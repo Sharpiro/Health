@@ -13,6 +13,7 @@
         this.nutritionDataService.GetNutritionTable(forceUpdate).then((data) =>
         {
             this.nutritionTable = data.data;
+            this.successCallBack(data);
             return null;
         });
     }
@@ -38,7 +39,7 @@
         {
             this.getNutritionData(RequestOptions.Force);
             this.clearTextboxes();
-            this.successCallBack(data);
+            this.successCallBack(data, "Succesfully Added/Updated food");
             return null;
         }, this.errorCallBack);
     };
@@ -58,7 +59,7 @@
         this.scope.addFoodPotassium = undefined;
     }
 
-    private testing(index: number): void
+    private setDataToTextboxes(index: number): void
     {
         console.log(index);
         var food = this.nutritionTable[index];
@@ -75,11 +76,12 @@
         this.scope.addFoodPotassium = food.Potassium;
     }
 
-    private successCallBack = (data: any): any =>
+    private successCallBack = (data: any, message?: string): any =>
     {
-        console.log(data.data);
         this.scope.message = `${data.status}: ${data.statusText}`;
         this.scope.data = data.data;
+        if (message)
+            toastr.success(message);
         return null;
     }
 
@@ -88,6 +90,7 @@
         this.scope.message = `${error.status}: ${error.statusText}`;
         this.scope.data = error.data;
         console.log(error);
+        toastr.error("Error!");
     }
 }
 

@@ -4,20 +4,25 @@
     padding: 0 0 10px 0;
 }
 
-    .row > label {
-        width: 18%;
-    }
+#addFood label {
+    width: 22%;
+}
 
 .centered {
     margin-left: auto;
     margin-right: auto;
-    width: 20%;
+    width: 100%;
+}
+
+.response {
+    overflow-x: scroll;
 }
 
 @media screen and (max-width: 768px) {
     button {
         margin-right: 15px;
     }
+
     .container {
         margin-left: 15px;
         margin-right: auto;

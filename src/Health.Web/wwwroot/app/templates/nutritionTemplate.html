@@ -1,30 +1,36 @@
 ﻿<div class="container">
     <div class="row">
-        <div id="dataEntry" class="col-md-3 form-inline">
+        <div id="dataEntry" class="col-md-3 form">
             <form>
                 <div class="row">
-                    <h4>Enter Calories</h4>
-                    <label class="">Food:</label>
-                    <select class="form-control" ng-change="vm.dropDownUpdate(currentDropdownFoodId)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="currentDropdownFoodId"></select>
+                    <div class="col-md-12">
+                        <h4>Enter Calories</h4>
+                        <label class="">Food:</label>
+                        <select class="form-control" ng-change="vm.dropDownUpdate(currentDropdownFoodId)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="currentDropdownFoodId"></select>
+                    </div>
                 </div>
                 <div class="row">
-                    <label>Calories:</label>
-                    <input class="form-control" type="number" ng-model="finalCalories" />
+                    <div class="col-md-12">
+                        <label>Calories:</label>
+                        <input class="form-control" type="number" ng-model="finalCalories" />
+                    </div>
                 </div>
                 <div class="row">
-                    <button class="btn btn-default" ng-click="vm.addFoodFinal(currentDropdownFoodId, finalCalories)">Add Food</button>
-                    <button class="btn btn-default" ng-click="vm.saveDay()">Save Day</button>
+                    <div class="col-md-12">
+                        <button class="btn btn-default" ng-click="vm.addFoodFinal(currentDropdownFoodId, finalCalories)">Add Food</button>
+                        <button class="btn btn-default" ng-click="vm.saveDay()">Save Day</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div class="row">
-                <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
-                <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
-                <span class="h4" style="padding-right: 15px">Goal: 2000</span>
-                <table class="table table-bordered table-responsive">
+            <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
+            <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
+            <span class="h4" style="padding-right: 15px">Goal: 2000</span>
+            <div class="table-responsive">
+                <table class="table">
                     <tr ng-repeat="item in vm.currentDay.Meals">
                         <td ng-repeat="subItem in item">
                             {{subItem | foodIdFilter}}
@@ -34,29 +40,27 @@
             </div>
         </div>
     </div>
-    <h4>Functions</h4>
     <div id="functions" class="row">
         <div class="col-md-3">
-            <div class="row">
-                <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
-                <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
-                <button class="btn btn-default" ng-click="vm.testing()">Testing</button>
+            <h4>Functions</h4>
+            <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
+            <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
+            <button class="btn btn-default" ng-click="vm.testing()">Testing</button>
+        </div>
+    </div>
+    <div class="response">
+        <div class="row">
+            <div class="col-md-3">
+                <label>Message</label>
+                {{message}}
+
             </div>
         </div>
-    </div>
-</div>
-<div class="row">
-    <div class="row">
-        <div class="centered">
-            <label>Message</label>
-            {{message}}
-
-        </div>
-    </div>
-    <div class="row">
-        <div class="centered">
-            <label>Data</label>
-            {{data}}
+        <div class="row">
+            <div class="col-md-12">
+                <label>Data</label>
+                {{data}}
+            </div>
         </div>
     </div>
 </div>

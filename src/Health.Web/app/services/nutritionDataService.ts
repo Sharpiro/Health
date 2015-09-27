@@ -1,6 +1,7 @@
 ﻿class NutritionDataService
 {
     private nutritionTable: Array<IFood>;
+    private currentDay: ICurrentDay;
 
     constructor(private $q: ng.IQService, private nutritionService: NutritionService)
     {
@@ -14,15 +15,41 @@
         {
             this.nutritionService.getNutritionTable().then((data) =>
             {
-                var returnData = { data: data.data };
-                this.nutritionTable = returnData.data;
-                dfd.resolve(returnData);
+                this.nutritionTable = data.data;
+                dfd.resolve(data);
                 return null;
-            });
+            }, (error) =>
+                {
+                    dfd.reject(error);
+                });
         }
         else
         {
-            dfd.resolve(this.nutritionTable);
+            var dataResponse = { data: this.nutritionTable }
+            dfd.resolve(dataResponse);
+        }
+        return dfd.promise;
+    }
+
+    public getMostRecentDay(forceUpdate?: RequestOptions): ng.IPromise<any>
+    {
+        var dfd = this.$q.defer();
+        if (!this.currentDay || forceUpdate === RequestOptions.Force)
+        {
+            this.nutritionService.getMostRecentDay().then((data) =>
+            {
+                this.currentDay = data.data;
+                dfd.resolve(data);
+                return null;
+            }, (error) =>
+                {
+                    dfd.reject(error);
+                });
+        }
+        else
+        {
+            var dataResponse = { data: this.currentDay }
+            dfd.resolve(dataResponse);
         }
         return dfd.promise;
     }
@@ -39,7 +66,7 @@
     }
 }
 
-app.service("nutritionDataService", ["$q", "nutritionService", NutritionDataService])
+app.service("nutritionDataService", ["$q", "nutritionService", NutritionDataService]);
 
 enum RequestOptions
 {

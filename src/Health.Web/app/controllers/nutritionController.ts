@@ -1,4 +1,6 @@
-﻿class NutritionController
+﻿///<reference path="../../Lib/definitelyTyped/toastr/toastr.d.ts"/>
+
+class NutritionController
 {
     private nutritionData: Array<IFood>;
     private currentDay: ICurrentDay;
@@ -24,7 +26,7 @@
         {
             this.nutritionData = data.data;
             this.selectRandomFood();
-            this.scope.message = `${data.status}: ${data.statusText}`;
+            return this.successCallBack(data);
         }, this.errorCallBack);
     }
 
@@ -37,25 +39,31 @@
         });
     }
 
-    private getMostRecentDay(): void
+    private getMostRecentDay(forceUpdate?: RequestOptions): void
     {
-        this.nutritionService.getMostRecentDay().then((data) =>
+        this.nutritionDataService.getMostRecentDay(forceUpdate).then((data) =>
         {
             this.currentDay = data.data;
-            this.scope.message = `${data.status}: ${data.statusText}`;
-            this.scope.data = data.data;
-            console.log(this.currentDay);
+            return this.successCallBack(data);
         }, this.errorCallBack);
     }
 
     private addDay(): void
     {
-        this.nutritionService.addDay().then(this.successCallBack, this.errorCallBack);
+        this.nutritionService.addDay().then((data) =>
+        {
+            this.getMostRecentDay(RequestOptions.Force);
+            return this.successCallBack(data, "Successfully Added day.");
+        }, this.errorCallBack);
     }
 
     private clearDay(): void
     {
-        this.nutritionService.clearDay().then(this.successCallBack, this.errorCallBack);
+        this.nutritionService.clearDay().then((data) =>
+        {
+            this.getMostRecentDay(RequestOptions.Force);
+            return this.successCallBack(data, "Successfully cleared day.");
+        }, this.errorCallBack);
     }
 
     private addFoodFinal(currentDropdownFoodId: number, finalCalories: number): void
@@ -76,12 +84,24 @@
 
     private saveDay(): void
     {
+        if (!this.nextMeal)
+        {
+            toastr.error("Error: Please enter a food first");
+            return;
+        }
         this.nextMeal.mealNumber = this.currentDay.Meals.length + 1;
         console.log(`Next Meal Number: ${this.nextMeal.mealNumber}`);
-        this.nutritionService.addMeal(this.nextMeal).then(this.successCallBack, this.errorCallBack);
+        this.nutritionService.addMeal(this.nextMeal).then((data) =>
+        {
+            this.getMostRecentDay(RequestOptions.Force);
+            this.nextMeal = undefined;
+            this.successCallBack(data, "Successfully Saved Day!");
+            return null;
+        }, this.errorCallBack);
     }
 
-    private selectRandomFood() {
+    private selectRandomFood(): void
+    {
         var maxValue = this.nutritionData.length;
         var randomNumber = Math.floor(Math.random() * maxValue);
         var randomFood = this.nutritionData[randomNumber];
@@ -89,25 +109,28 @@
         this.scope.currentDropdownFoodId = randomFood.Id;
     }
 
-    private testing(index: number) {
+    private testing(index: number): void
+    {
         console.log(index);
         console.log("testing...");
-        this.scope.editMode = !this.scope.editMode;
+        //this.scope.editMode = !this.scope.editMode;
     }
 
-    private successCallBack = (data: any): any =>
+    private successCallBack = (data: any, message?: string): any =>
     {
-        console.log(data.data);
-        this.scope.message = `${data.status}: ${data.statusText}`;
         this.scope.data = data.data;
+        this.scope.message = `${data.status}: ${data.statusText}`;
+        if (message)
+            toastr.success(message);
         return null;
     }
 
-    private errorCallBack = (error: any): any =>
+    private errorCallBack = (error: any): void =>
     {
         this.scope.message = `${error.status}: ${error.statusText}`;
         this.scope.data = error.data;
         console.log(error);
+        toastr.error("Error!");
     }
 }
 

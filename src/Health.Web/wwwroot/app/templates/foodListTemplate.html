@@ -1,90 +1,188 @@
 ﻿<div class="container">
     <div class="row">
-        <table class="table">
-            <tr>
-                <th>Name</th>
-                <th>Calories</th>
-                <th>Protein</th>
-                <th>Fat</th>
-                <th>Carbs</th>
-                <th>Sugar</th>
-                <th>Serving Size</th>
-                <th>Serving Name</th>
-                <th>Fiber</th>
-                <th>Sodium</th>
-                <th>Potassium</th>
-            </tr>
-            <tr ng-repeat="food in vm.nutritionTable" ng-dblclick="vm.testing($index)">
-                <td ng-repeat="property in food" ng-if="$index > 0" ng-attr-contenteditable="{{editMode || undefined}}">
-                    {{property}}
-                </td>
-            </tr>
-        </table>
+        <div class="col-md-12 table-responsive">
+            <table class="table">
+                <tr>
+                    <th>Name</th>
+                    <th>Calories</th>
+                    <th>Protein</th>
+                    <th>Fat</th>
+                    <th>Carbs</th>
+                    <th>Sugar</th>
+                    <th>Serving Size</th>
+                    <th>Serving Name</th>
+                    <th>Fiber</th>
+                    <th>Sodium</th>
+                    <th>Potassium</th>
+                </tr>
+                <tr ng-repeat="food in vm.nutritionTable" ng-dblclick="vm.setDataToTextboxes($index)" ios-dblclick="vm.setDataToTextboxes($index)">
+                    <td ng-repeat="property in food" ng-if="$index > 0" ng-attr-contenteditable="{{editMode || undefined}}">
+                        {{property}}
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
-    <div class="row">
-        <div id="addFood" class="col-md-3 form-inline">
+
+    <!-- Testing -->
+    <div div id="addFood" class="row form-inline">
+        <div class="col-md-12">
             <form>
                 <div class="row">
-                    <h4>Add Food</h4>
-                    <label class="">Name:</label>
-                    <input class="form-control" type="text" ng-model="addFoodName" required/>
+                    <div class="col-md-12">
+                        <h4>Add Food</h4>
+                    </div>
                 </div>
                 <div class="row">
-                    <label>Calories:</label>
-                    <input class="form-control" type="number" ng-model="addFoodCalories" required/>
+                    <div class="col-md-4">
+                        <label class="">Name:</label>
+                        <input class="form-control" type="text" ng-model="addFoodName" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Calories:</label>
+                        <input class="form-control" type="number" ng-model="addFoodCalories" required />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Protein:</label>
+                        <input class="form-control" type="number" ng-model="addFoodProtein" />
+                    </div>
+
                 </div>
                 <div class="row">
-                    <label>Protein:</label>
-                    <input class="form-control" type="number" ng-model="addFoodProtein"/>
+                    <div class="col-md-4">
+                        <label>Fat:</label>
+                        <input class="form-control" type="number" ng-model="addFoodFat" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Carbs:</label>
+                        <input class="form-control" type="number" ng-model="addFoodCarbs" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Sugar:</label>
+                        <input class="form-control" type="number" ng-model="addFoodSugar" />
+                    </div>
                 </div>
                 <div class="row">
-                    <label>Fat:</label>
-                    <input class="form-control" type="number" ng-model="addFoodFat"/>
+                    <div class="col-md-4">
+                        <label>Serving Size:</label>
+                        <input class="form-control" type="number" ng-model="addFoodServingSize" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Serving Type:</label>
+                        <input class="form-control" type="text" ng-model="addFoodServingName" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Fiber:</label>
+                        <input class="form-control" type="number" ng-model="addFoodFiber" />
+                    </div>
                 </div>
                 <div class="row">
-                    <label>Carbs:</label>
-                    <input class="form-control" type="number" ng-model="addFoodCarbs"/>
+                    <div class="col-md-4">
+                        <label>Sodium:</label>
+                        <input class="form-control" type="number" ng-model="addFoodSodium" />
+                    </div>
+                    <div class="col-md-4">
+                        <label>Potassium:</label>
+                        <input class="form-control" type="number" ng-model="addFoodPotassium" />
+                    </div>
                 </div>
                 <div class="row">
-                    <label>Sugar:</label>
-                    <input class="form-control" type="number" ng-model="addFoodSugar"/>
-                </div>
-                <div class="row">
-                    <label>Serving Size:</label>
-                    <input class="form-control" type="number" ng-model="addFoodServingSize" />
-                </div>
-                <div class="row">
-                    <label>Serving Type:</label>
-                    <input class="form-control" type="text" ng-model="addFoodServingName" />
-                </div>
-                <div class="row">
-                    <label>Fiber:</label>
-                    <input class="form-control" type="number" ng-model="addFoodFiber"/>
-                </div>
-                <div class="row">
-                    <label>Sodium:</label>
-                    <input class="form-control" type="number" ng-model="addFoodSodium"/>
-                </div>
-                <div class="row">
-                    <label>Potassium:</label>
-                    <input class="form-control" type="number" ng-model="addFoodPotassium"/>
-                </div>
-                <div class="row">
-                    <button class="form-control" ng-click="vm.addFood()">Submit</button>
+                    <div class="col-md-12">
+                        <button class="btn btn-default" ng-click="vm.addFood()">Submit</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="row">
+    <!--End Testing-->
+    <!--<div class="row">
+        <div id="addFood" class="col-md-12 form-inline">
+            <form>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Add Food</h4>
+                        <label class="">Name:</label>
+                        <input class="form-control" type="text" ng-model="addFoodName" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Calories:</label>
+                        <input class="form-control" type="number" ng-model="addFoodCalories" required/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Protein:</label>
+                        <input class="form-control" type="number" ng-model="addFoodProtein"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Fat:</label>
+                        <input class="form-control" type="number" ng-model="addFoodFat"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Carbs:</label>
+                        <input class="form-control" type="number" ng-model="addFoodCarbs"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Sugar:</label>
+                        <input class="form-control" type="number" ng-model="addFoodSugar"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Serving Size:</label>
+                        <input class="form-control" type="number" ng-model="addFoodServingSize"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Serving Type:</label>
+                        <input class="form-control" type="text" ng-model="addFoodServingName"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Fiber:</label>
+                        <input class="form-control" type="number" ng-model="addFoodFiber"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Sodium:</label>
+                        <input class="form-control" type="number" ng-model="addFoodSodium"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <label>Potassium:</label>
+                        <input class="form-control" type="number" ng-model="addFoodPotassium"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="form-control" ng-click="vm.addFood()">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>-->
+    <div class="response">
         <div class="row">
-            <div class="centered">
+            <div class="col-md-3">
                 <label>Message</label>
                 {{message}}
 
             </div>
         </div>
         <div class="row">
-            <div class="centered">
+            <div class="col-md-12">
                 <label>Data</label>
                 {{data}}
             </div>
