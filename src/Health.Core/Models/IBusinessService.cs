@@ -19,5 +19,6 @@ namespace Health.Core.Models
         void AddDay();
         void ClearDay();
         void DeleteDay(DateTime date);
+        DayTotalsModel GetDayTotals();
     }
 }

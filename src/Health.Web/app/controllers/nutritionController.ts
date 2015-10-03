@@ -5,6 +5,7 @@ class NutritionController
     private nutritionData: Array<IFood>;
     private currentDay: ICurrentDay;
     private nextMeal: IMeal;
+    private dayTotals: any;
 
     constructor(private scope: any, private nutritionService: NutritionService, private nutritionDataService: NutritionDataService)
     {
@@ -44,6 +45,11 @@ class NutritionController
         this.nutritionDataService.getMostRecentDay(forceUpdate).then((data) =>
         {
             this.currentDay = data.data;
+            this.nutritionService.getDayTotals().then((innerData) =>
+            {
+                this.dayTotals = innerData.data;
+                this.successCallBack(innerData);
+            });
             return this.successCallBack(data);
         }, this.errorCallBack);
     }
@@ -66,17 +72,22 @@ class NutritionController
         }, this.errorCallBack);
     }
 
-    private addFoodFinal(currentDropdownFoodId: number, finalCalories: number): void
+    private addFood(currentDropdownFoodId: number, finalCalories: number): void
     {
+        if (currentDropdownFoodId === undefined || finalCalories === null)
+        {
+            toastr.error("Error: Please select a food");
+            return;
+        }
         if (!this.nextMeal)
         {
             this.nextMeal = new Meal();
             this.nextMeal.date = this.currentDay.Date;
         }
         this.nextMeal.mealEntries.push({
-            foodId: currentDropdownFoodId,
-            calories: finalCalories,
-            mealEntryNumber: this.nextMeal.mealEntries.length + 1
+            FoodId: currentDropdownFoodId,
+            Calories: finalCalories,
+            MealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
         this.selectRandomFood();
         console.log(this.nextMeal.mealEntries);
@@ -86,7 +97,7 @@ class NutritionController
     {
         if (!this.nextMeal)
         {
-            toastr.error("Error: Please enter a food first");
+            toastr.error("Error: Please enter a food");
             return;
         }
         this.nextMeal.mealNumber = this.currentDay.Meals.length + 1;
@@ -109,11 +120,22 @@ class NutritionController
         this.scope.currentDropdownFoodId = randomFood.Id;
     }
 
+    private clearSelection(): void
+    {
+        this.scope.finalCalories = undefined;
+        this.scope.currentDropdownFoodId = undefined;
+    }
+
     private testing(index: number): void
     {
         console.log(index);
         console.log("testing...");
         //this.scope.editMode = !this.scope.editMode;
+    }
+
+    private clearNextMeal(): void
+    {
+        this.nextMeal = undefined;
     }
 
     private successCallBack = (data: any, message?: string): any =>

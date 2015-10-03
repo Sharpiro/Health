@@ -10,6 +10,13 @@ namespace Health.Tests
     public class EfBusinessLayerTests
     {
         [Fact]
+        public void GetDayTotalsTest()
+        {
+            IBusinessService businessService = new EfBusinessLayer();
+            var dayTotals = businessService.GetDayTotals();
+            Assert.NotNull(dayTotals);
+        }
+        [Fact]
         public void GetMostRecentDayTest()
         {
             IBusinessService businessService = new EfBusinessLayer();

@@ -18,7 +18,7 @@ namespace Health.Web.Api
         public ActionResult GetAllData()
         {
             return ExecuteQuery(e => e.GetAllData());
-        } 
+        }
 
         public ActionResult GetNutritionTable()
         {
@@ -28,6 +28,11 @@ namespace Health.Web.Api
         public ActionResult GetMostRecentDay()
         {
             return ExecuteQuery(e => e.GetMostRecentDay());
+        }
+
+        public ActionResult GetDayTotals()
+        {
+            return ExecuteQuery(e => e.GetDayTotals());
         }
 
         public ActionResult AddFood([FromBody]Food meal)
@@ -42,7 +47,11 @@ namespace Health.Web.Api
 
         public ActionResult AddMeal([FromBody]MealModel meal)
         {
-            return ExecuteNonQuery(e => e.AddMeal(meal));
+            if (ModelState.IsValid)
+                return ExecuteNonQuery(e => e.AddMeal(meal));
+
+            return HttpBadRequest(ModelState);
+
         }
 
         public ActionResult AddDay()

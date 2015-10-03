@@ -7,3 +7,4 @@ dnvm use 1.0.0-beta7
 cd F:\Git_Base\Health\src\Health.Core
 dnx ef migrations add Initial
 dnx ef database update
+dnx ef migrations script

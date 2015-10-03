@@ -1,6 +1,6 @@
 ﻿interface IMealEntry
 {
-    foodId: number;
-    calories: number;
-    mealEntryNumber: number;
+    FoodId: number;
+    Calories: number;
+    MealEntryNumber: number;
 }

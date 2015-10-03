@@ -12,19 +12,34 @@
                 <div class="row">
                     <div class="col-md-12">
                         <label>Calories:</label>
-                        <input class="form-control" type="number" ng-model="finalCalories" />
+                        <input class="form-control" type="number" ng-model="finalCalories"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-default" ng-click="vm.addFoodFinal(currentDropdownFoodId, finalCalories)">Add Food</button>
+                        <button class="btn btn-default" ng-click="vm.addFood(currentDropdownFoodId, finalCalories)">Add Food</button>
                         <button class="btn btn-default" ng-click="vm.saveDay()">Save Day</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <div class="row">
+    <div id="nextMeal" class="row" ng-show="vm.nextMeal">
+        <div class="col-md-12">
+            <span class="h4">Current Meal</span>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr ng-repeat="item in vm.nextMeal.mealEntries">
+                        <td>
+                            {{item | foodIdFilter}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <button class="btn btn-default" ng-click="vm.clearNextMeal()">Clear Meal</button>
+        </div>
+    </div>
+    <div id="currentDay" class="row">
         <div class="col-md-12">
             <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
             <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
@@ -35,6 +50,25 @@
                         <td ng-repeat="subItem in item">
                             {{subItem | foodIdFilter}}
                         </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div id="macros" class="row">
+        <div class="col-md-12">
+            <span class="h4">Macros</span>
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <th>Protein</th>
+                        <th>Carbs</th>
+                        <th>Fats</th>
+                    </tr>
+                    <tr>
+                        <td>{{vm.dayTotals.Protein}}</td>
+                        <td>{{vm.dayTotals.Carbs}}</td>
+                        <td>{{vm.dayTotals.Fat}}</td>
                     </tr>
                 </table>
             </div>

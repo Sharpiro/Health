@@ -15,6 +15,11 @@
         return this.$http.get("/api/nutrition/getmostrecentday");
     }
 
+    public getDayTotals(): ng.IPromise<any>
+    {
+        return this.$http.get("/api/nutrition/getdaytotals");
+    }
+
     public getNutritionTable(): ng.IPromise<any>
     {
         return this.$http.get("/api/nutrition/getnutritiontable");

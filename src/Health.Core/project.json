@@ -12,7 +12,8 @@
     "dependencies": {
         "EntityFramework.Commands": "7.0.0-beta7",
         "EntityFramework.SqlServer": "7.0.0-beta7",
-        "AspNet.Security.OpenIdConnect.Server": "1.0.0-beta2"
+        "AspNet.Security.OpenIdConnect.Server": "1.0.0-beta2",
+        "VNextTools.Core": "1.2.1"
     },
     "commands": {
         "ef": "EntityFramework.Commands"

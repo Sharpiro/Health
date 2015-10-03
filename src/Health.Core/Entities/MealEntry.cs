@@ -1,4 +1,7 @@
-﻿namespace Health.Core.Entities
+﻿using System.ComponentModel.DataAnnotations;
+using System.IdentityModel.Tokens;
+
+namespace Health.Core.Entities
 {
     public class MealEntry
     {
@@ -7,6 +10,7 @@
         public int MealId { get; set; }
         public int FoodId { get; set; }
         public virtual Food Food { get; set; }
+        [Range(0, 2000, ErrorMessage = "Value must be between 0 and 2000")]
         public int Calories { get; set; }
     }
 }

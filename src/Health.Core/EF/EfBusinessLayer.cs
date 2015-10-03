@@ -6,6 +6,7 @@ using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.Data.Entity;
+using VNextTools.Core.Extensions;
 
 namespace Health.Core.EF
 {
@@ -68,6 +69,36 @@ namespace Health.Core.EF
                     Meals = meals
                 };
                 return recentDay;
+            }
+        }
+
+        public DayTotalsModel GetDayTotals()
+        {
+            using (var context = new HealthContext())
+            {
+                var day = context.Days.OrderByDescending(d => d.Created).FirstOrDefault();
+                if (day == null)
+                    throw new NullReferenceException("There is no day information in the database");
+                var dayTotals = context.Meals
+                    .Where(m => m.DayId == day.Created)
+                    .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
+                    .ThenInclude(me => me.Food).ToList()
+                    .SelectMany(m => m.MealEntries.OrderBy(me => me.MealEntryNumber))
+                    .GroupBy(me => me.Food)
+                    .Select(g => new
+                    {
+                        Food = g.Key,
+                        CalorieTotal = g.Sum(me => me.Calories),
+                        Count = g.Count()
+                    })
+                    .Select(nn => new DayTotalsModel
+                    {
+                        Calories = nn.CalorieTotal,
+                        Protein = (nn.CalorieTotal / nn.Food.Calories) * nn.Food.Protein,
+                        Carbs = (nn.CalorieTotal / nn.Food.Calories) * nn.Food.Carbs,
+                        Fat = (nn.CalorieTotal / nn.Food.Calories) * nn.Food.Fat,
+                    }).Addition();
+                return dayTotals;
             }
         }
 

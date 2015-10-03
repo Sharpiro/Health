@@ -33,6 +33,32 @@
           "lib/dnxcore50/AspNet.Security.OpenIdConnect.Server.dll": {}
         }
       },
+      "AutoMapper/4.0.4": {
+        "type": "package",
+        "dependencies": {
+          "System.Collections": "4.0.10",
+          "System.Collections.Concurrent": "4.0.10",
+          "System.Diagnostics.Debug": "4.0.10",
+          "System.Linq": "4.0.0",
+          "System.Linq.Expressions": "4.0.10",
+          "System.Linq.Queryable": "4.0.0",
+          "System.ObjectModel": "4.0.10",
+          "System.Reflection": "4.0.10",
+          "System.Reflection.Extensions": "4.0.0",
+          "System.Reflection.TypeExtensions": "4.0.0",
+          "System.Runtime": "4.0.20",
+          "System.Runtime.Extensions": "4.0.10",
+          "System.Text.RegularExpressions": "4.0.10",
+          "System.Threading": "4.0.10",
+          "System.Threading.Tasks": "4.0.10"
+        },
+        "compile": {
+          "lib/dotnet/AutoMapper.dll": {}
+        },
+        "runtime": {
+          "lib/dotnet/AutoMapper.dll": {}
+        }
+      },
       "EntityFramework.Commands/7.0.0-beta7": {
         "type": "package",
         "dependencies": {
@@ -139,7 +165,8 @@
         "dependencies": {
           "AspNet.Security.OpenIdConnect.Server": "1.0.0-beta2",
           "EntityFramework.Commands": "7.0.0-beta7",
-          "EntityFramework.SqlServer": "7.0.0-beta7"
+          "EntityFramework.SqlServer": "7.0.0-beta7",
+          "VNextTools.Core": "1.2.1"
         }
       },
       "Ix-Async/1.2.5": {
@@ -1402,6 +1429,26 @@
         },
         "runtime": {
           "lib/dnxcore50/Microsoft.IdentityModel.Protocols.OpenIdConnect.dll": {}
+        }
+      },
+      "Microsoft.Net.Http.Client/1.0.0-beta7-15000": {
+        "type": "package",
+        "dependencies": {
+          "System.Globalization": "4.0.11-beta-23210",
+          "System.Linq": "4.0.1-beta-23210",
+          "System.Net.Http": "4.0.1-beta-23210",
+          "System.Net.Security": "4.0.0-beta-23210",
+          "System.Net.Sockets": "4.0.10-beta-23210",
+          "System.Security.Cryptography.X509Certificates": "4.0.0-beta-23210",
+          "System.Security.Principal": "4.0.1-beta-23210",
+          "System.Text.Encoding": "4.0.11-beta-23210",
+          "System.Threading.Tasks": "4.0.11-beta-23210"
+        },
+        "compile": {
+          "lib/dnxcore50/Microsoft.Net.Http.Client.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/Microsoft.Net.Http.Client.dll": {}
         }
       },
       "Microsoft.Net.Http.Headers/1.0.0-beta7": {
@@ -2843,6 +2890,20 @@
         "runtime": {
           "lib/dotnet/System.Xml.XDocument.dll": {}
         }
+      },
+      "VNextTools.Core/1.2.1.0": {
+        "type": "package",
+        "dependencies": {
+          "AutoMapper": "4.0.4",
+          "Microsoft.AspNet.Mvc": "6.0.0-beta7",
+          "Microsoft.Net.Http.Client": "1.0.0-beta7-15000"
+        },
+        "compile": {
+          "lib/dnxcore50/VNextTools.Core.dll": {}
+        },
+        "runtime": {
+          "lib/dnxcore50/VNextTools.Core.dll": {}
+        }
       }
     }
   },
@@ -2875,6 +2936,37 @@
         "lib/dnx451/AspNet.Security.OpenIdConnect.Server.xml",
         "lib/dnxcore50/AspNet.Security.OpenIdConnect.Server.dll",
         "lib/dnxcore50/AspNet.Security.OpenIdConnect.Server.xml"
+      ]
+    },
+    "AutoMapper/4.0.4": {
+      "type": "package",
+      "sha512": "7EJaXSD7mI/T1nwlAgsUcxiuSW4zAY8cQy52/onmc8+lM4T9XqVlDqvFuY9pzcNxI1c2X3GD47G8qDO0hcip1g==",
+      "files": [
+        "AutoMapper.4.0.4.nupkg",
+        "AutoMapper.4.0.4.nupkg.sha512",
+        "AutoMapper.nuspec",
+        "lib/dotnet/AutoMapper.dll",
+        "lib/dotnet/AutoMapper.xml",
+        "lib/MonoAndroid/AutoMapper.dll",
+        "lib/MonoAndroid/AutoMapper.XML",
+        "lib/MonoTouch/AutoMapper.dll",
+        "lib/MonoTouch/AutoMapper.XML",
+        "lib/net40/AutoMapper.dll",
+        "lib/net40/AutoMapper.xml",
+        "lib/net45/AutoMapper.dll",
+        "lib/net45/AutoMapper.xml",
+        "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.dll",
+        "lib/portable-net45+win+wpa81+wp80+MonoAndroid10+Xamarin.iOS10+MonoTouch10/AutoMapper.xml",
+        "lib/sl50/AutoMapper.dll",
+        "lib/sl50/AutoMapper.xml",
+        "lib/win/AutoMapper.dll",
+        "lib/win/AutoMapper.xml",
+        "lib/wp80/AutoMapper.dll",
+        "lib/wp80/AutoMapper.xml",
+        "lib/wpa81/AutoMapper.dll",
+        "lib/wpa81/AutoMapper.xml",
+        "lib/Xamarin.iOS10/AutoMapper.dll",
+        "lib/Xamarin.iOS10/AutoMapper.XML"
       ]
     },
     "EntityFramework.Commands/7.0.0-beta7": {
@@ -4163,6 +4255,21 @@
         "Microsoft.IdentityModel.Protocols.OpenIdConnect.2.0.0-beta7-208241120.nupkg",
         "Microsoft.IdentityModel.Protocols.OpenIdConnect.2.0.0-beta7-208241120.nupkg.sha512",
         "Microsoft.IdentityModel.Protocols.OpenIdConnect.nuspec"
+      ]
+    },
+    "Microsoft.Net.Http.Client/1.0.0-beta7-15000": {
+      "type": "package",
+      "sha512": "Lwa6P/RBk8HmHZPfcEuijllh81SlcFi8LUbTdVJ3RID9Ss5pUBN3+iSD7xITQlsgL+nxgFql8J4PWvuriNmGvA==",
+      "files": [
+        "lib/dnx451/Microsoft.Net.Http.Client.dll",
+        "lib/dnx451/Microsoft.Net.Http.Client.xml",
+        "lib/dnxcore50/Microsoft.Net.Http.Client.dll",
+        "lib/dnxcore50/Microsoft.Net.Http.Client.xml",
+        "lib/net45/Microsoft.Net.Http.Client.dll",
+        "lib/net45/Microsoft.Net.Http.Client.xml",
+        "Microsoft.Net.Http.Client.1.0.0-beta7-15000.nupkg",
+        "Microsoft.Net.Http.Client.1.0.0-beta7-15000.nupkg.sha512",
+        "Microsoft.Net.Http.Client.nuspec"
       ]
     },
     "Microsoft.Net.Http.Headers/1.0.0-beta7": {
@@ -6087,6 +6194,21 @@
         "System.Xml.XDocument.4.0.11-beta-23225.nupkg",
         "System.Xml.XDocument.4.0.11-beta-23225.nupkg.sha512",
         "System.Xml.XDocument.nuspec"
+      ]
+    },
+    "VNextTools.Core/1.2.1.0": {
+      "type": "package",
+      "sha512": "BvjPcKaUqGJLvwUbitVmxryAMggZZ8WZIzK1PWRRgrczWZEf2W98byjiWgTIzmhZA+Rj41FoDUIUuVQl/8R+Dg==",
+      "files": [
+        "lib/dnx451/VNextTools.Core.dll",
+        "lib/dnx451/VNextTools.Core.xml",
+        "lib/dnxcore50/VNextTools.Core.dll",
+        "lib/dnxcore50/VNextTools.Core.xml",
+        "lib/net451/VNextTools.Core.dll",
+        "lib/net451/VNextTools.Core.xml",
+        "VNextTools.Core.1.2.1.nupkg",
+        "VNextTools.Core.1.2.1.nupkg.sha512",
+        "VNextTools.Core.nuspec"
       ]
     }
   },
