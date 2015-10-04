@@ -19,9 +19,15 @@ namespace Health.Core.Migrations
 
             modelBuilder.Entity("Health.Core.Entities.Day", b =>
                 {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
                     b.Property<DateTime>("Created");
 
-                    b.Key("Created");
+                    b.Key("Id");
+
+                    b.Index("Created")
+                        .Unique();
                 });
 
             modelBuilder.Entity("Health.Core.Entities.Food", b =>
@@ -60,11 +66,14 @@ namespace Health.Core.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<DateTime>("DayId");
+                    b.Property<int>("DayId");
 
                     b.Property<int>("MealNumber");
 
                     b.Key("Id");
+
+                    b.Index("MealNumber", "DayId")
+                        .Unique();
                 });
 
             modelBuilder.Entity("Health.Core.Entities.MealEntry", b =>

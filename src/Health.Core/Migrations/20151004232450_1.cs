@@ -13,11 +13,13 @@ namespace Health.Core.Migrations
                 name: "Day",
                 columns: table => new
                 {
+                    Id = table.Column<int>(isNullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
                     Created = table.Column<DateTime>(isNullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Day", x => x.Created);
+                    table.PrimaryKey("PK_Day", x => x.Id);
                 });
             migrationBuilder.CreateTable(
                 name: "Food",
@@ -47,7 +49,7 @@ namespace Health.Core.Migrations
                 {
                     Id = table.Column<int>(isNullable: false)
                         .Annotation("SqlServer:ValueGenerationStrategy", SqlServerIdentityStrategy.IdentityColumn),
-                    DayId = table.Column<DateTime>(isNullable: false),
+                    DayId = table.Column<int>(isNullable: false),
                     MealNumber = table.Column<int>(isNullable: false)
                 },
                 constraints: table =>
@@ -57,7 +59,7 @@ namespace Health.Core.Migrations
                         name: "FK_Meal_Day_DayId",
                         column: x => x.DayId,
                         principalTable: "Day",
-                        principalColumn: "Created");
+                        principalColumn: "Id");
                 });
             migrationBuilder.CreateTable(
                 name: "MealEntry",
@@ -84,6 +86,16 @@ namespace Health.Core.Migrations
                         principalTable: "Meal",
                         principalColumn: "Id");
                 });
+            migrationBuilder.CreateIndex(
+                name: "IX_Day_Created",
+                table: "Day",
+                column: "Created",
+                isUnique: true);
+            migrationBuilder.CreateIndex(
+                name: "IX_Meal_MealNumber_DayId",
+                table: "Meal",
+                columns: new[] { "MealNumber", "DayId" },
+                isUnique: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -23,7 +23,9 @@ namespace Health.Core.EF
         {
             //modelBuilder.Entity<MealDay>().Key(md => new { md.DayId, md.MealId });
             //modelBuilder.Entity<Day>().Property(e => e.Id).UseSqlServerIdentityColumn();
-            modelBuilder.Entity<Day>().Key(d => new {d.Created });
+            modelBuilder.Entity<Meal>().Index(m => new { m.MealNumber, m.DayId }).Unique();
+            modelBuilder.Entity<Day>().Index(d => d.Created).Unique();
+
         }
     }
 }

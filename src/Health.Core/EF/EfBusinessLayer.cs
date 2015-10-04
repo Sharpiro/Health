@@ -53,7 +53,7 @@ namespace Health.Core.EF
                 if (day == null)
                     throw new NullReferenceException("There is no day information in the database");
                 var meals = context.Meals
-                    .Where(m => m.DayId == day.Created)
+                    .Where(m => m.DayId == day.Id   )
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
                     .Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
                     .Select(me => new
@@ -80,7 +80,7 @@ namespace Health.Core.EF
                 if (day == null)
                     throw new NullReferenceException("There is no day information in the database");
                 var dayTotals = context.Meals
-                    .Where(m => m.DayId == day.Created)
+                    .Where(m => m.DayId == day.Id)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
                     .ThenInclude(me => me.Food).ToList()
                     .SelectMany(m => m.MealEntries.OrderBy(me => me.MealEntryNumber))
@@ -141,9 +141,10 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
+                var day = context.Days.FirstOrDefault(d => d.Created == mealModel.Date);
                 var meal = new Meal
                 {
-                    DayId = mealModel.Date,
+                    DayId = day.Id,
                     MealNumber = mealModel.MealNumber,
                     MealEntries = mealModel.MealEntries
                 };
@@ -171,8 +172,9 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                var date = GetMostRecentDay().Date;
-                var meals = context.Meals.Include(m => m.MealEntries).Where(m => m.DayId == date).ToList();
+                var day = context.Days.OrderByDescending(d => d.Created).FirstOrDefault();
+                if (day == null) throw new NullReferenceException("The day provided does not exist in the database");
+                var meals = context.Meals.Include(m => m.MealEntries).Where(m => m.DayId == day.Id).ToList();
                 meals.ForEach(m => context.MealEntries.RemoveRange(m.MealEntries));
                 context.Meals.RemoveRange(meals);
                 context.SaveChanges();
