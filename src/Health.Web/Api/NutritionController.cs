@@ -64,6 +64,17 @@ namespace Health.Web.Api
             return ExecuteNonQuery(e => e.ClearDay());
         }
 
+        [HttpDelete]
+        public ActionResult DeleteDay(int id)
+        {
+            return ExecuteNonQuery(e => e.DeleteDay(id));
+        }
+
+        public ActionResult DeleteInvalidDays()
+        {
+            return ExecuteNonQuery(e => e.DeleteInvalidDays());
+        }
+
         private ObjectResult ExecuteNonQuery(Action<IBusinessService> blMethod)
         {
             try
@@ -73,7 +84,8 @@ namespace Health.Web.Api
             }
             catch (Exception ex)
             {
-                return this.Error(ex.Message);
+                var exceptionMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                return this.Error(exceptionMessage);
             }
         }
 
@@ -86,7 +98,8 @@ namespace Health.Web.Api
             }
             catch (Exception ex)
             {
-                return this.Error(ex.Message);
+                var exceptionMessage = ex.InnerException == null ? ex.Message : ex.InnerException.Message;
+                return this.Error(exceptionMessage);
             }
         }
     }

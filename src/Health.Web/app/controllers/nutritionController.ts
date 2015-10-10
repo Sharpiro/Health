@@ -72,6 +72,25 @@ class NutritionController
         }, this.errorCallBack);
     }
 
+
+    private deleteDay(): void
+    {
+        this.nutritionService.deleteDay(this.currentDay.DayId).then((data) =>
+        {
+            this.getMostRecentDay(RequestOptions.Force);
+            return this.successCallBack(data, "Successfully deleted day.");
+        }, this.errorCallBack);
+    }
+
+    private deleteInvalidDays(): void
+    {
+        this.nutritionService.deleteInvalidDays().then((data) =>
+        {
+            this.getMostRecentDay(RequestOptions.Force);
+            return this.successCallBack(data, "Successfully deleted invalid days.");
+        }, this.errorCallBack);
+    }
+
     private addFood(currentDropdownFoodId: number, finalCalories: number): void
     {
         if (currentDropdownFoodId === undefined || finalCalories === null)
@@ -126,13 +145,6 @@ class NutritionController
         this.scope.currentDropdownFoodId = undefined;
     }
 
-    private testing(index: number): void
-    {
-        console.log(index);
-        console.log("testing...");
-        //this.scope.editMode = !this.scope.editMode;
-    }
-
     private clearNextMeal(): void
     {
         this.nextMeal = undefined;
@@ -152,7 +164,7 @@ class NutritionController
         this.scope.message = `${error.status}: ${error.statusText}`;
         this.scope.data = error.data;
         console.log(error);
-        toastr.error("Error!");
+        toastr.error(`Error: ${error.data}`);
     }
 }
 

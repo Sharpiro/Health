@@ -53,7 +53,7 @@ namespace Health.Core.EF
                 if (day == null)
                     throw new NullReferenceException("There is no day information in the database");
                 var meals = context.Meals
-                    .Where(m => m.DayId == day.Id   )
+                    .Where(m => m.DayId == day.Id)
                     .OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
                     .Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
                     .Select(me => new
@@ -64,6 +64,7 @@ namespace Health.Core.EF
                 var calorieTotal = meals.SelectMany(m => m.Select(me => me.Calories)).Sum();
                 var recentDay = new RecentDayModel
                 {
+                    DayId = day.Id,
                     Date = day.Created,
                     Total = calorieTotal,
                     Meals = meals
@@ -181,11 +182,35 @@ namespace Health.Core.EF
             }
         }
 
-        public void DeleteDay(DateTime date)
+        public List<TotalCaloriesPerDayModel> GetCalorieCountAllDays()
         {
             using (var context = new HealthContext())
             {
-                var day = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).FirstOrDefault(d => d.Created == date);
+                var dayCalories = context.Days.OrderByDescending(d => d.Created).Include(d => d.Meals).ThenInclude(m => m.MealEntries).ToList().Skip(1)
+                    .Select(d => new TotalCaloriesPerDayModel
+                    {
+                        Id = d.Id,
+                        TotalCalories = d.Meals.SelectMany(m => m.MealEntries).ToList().Select(me => me.Calories).ToList().Sum()
+                    }).ToList();
+                    
+
+                return dayCalories;
+            }
+        }
+
+        public void DeleteInvalidDays()
+        {
+            var invalidDays = GetCalorieCountAllDays().Where(d => d.TotalCalories < 1500).ToList();
+            if (!invalidDays.Any())
+                throw new NullReferenceException("No invalid days were found");
+            invalidDays.Do(d => DeleteDay(d.Id));
+        }
+
+        public void DeleteDay(int id)
+        {
+            using (var context = new HealthContext())
+            {
+                var day = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).FirstOrDefault(d => d.Id == id);
                 if (day == null) throw new NullReferenceException("The day provided does not exist in the database");
                 day.Meals.ToList().ForEach(m => context.MealEntries.RemoveRange(m.MealEntries));
                 context.Meals.RemoveRange(day.Meals);

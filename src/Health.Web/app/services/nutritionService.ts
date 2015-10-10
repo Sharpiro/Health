@@ -30,12 +30,6 @@
         return this.$http.post("/api/nutrition/addfood", food);
     }
 
-    //public addMealEntry(food: string, calories: number, mealId: number): ng.IPromise<any>
-    //{
-    //    var data = { foodName: food, calories: calories, mealId: mealId };
-    //    return this.$http.post("/api/nutrition/addmealentry", data);
-    //}
-
     public addMeal(meal: IMeal): ng.IPromise<any>
     {
         return this.$http.post("/api/nutrition/addmeal", meal);
@@ -43,14 +37,25 @@
 
     public addDay(): ng.IPromise<any>
     {
-        var data = {};
+        const data = {};
         return this.$http.post("/api/nutrition/addday", data);
     }
 
     public clearDay(): ng.IPromise<any>
     {
-        var data = {};
+        const data = {};
         return this.$http.post("/api/nutrition/clearday", data);
+    }
+
+    public deleteDay(dayId: number): ng.IPromise<any>
+    {
+        return this.$http.delete(`/api/nutrition/deleteday?id=${dayId}`);
+    }
+
+    public deleteInvalidDays(): ng.IPromise<any>
+    {
+        const data = {};
+        return this.$http.post("/api/nutrition/deleteinvaliddays", data);
     }
 }
 

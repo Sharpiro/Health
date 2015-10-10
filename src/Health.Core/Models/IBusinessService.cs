@@ -18,7 +18,8 @@ namespace Health.Core.Models
         void AddMeal(MealModel mealModel);
         void AddDay();
         void ClearDay();
-        void DeleteDay(DateTime date);
+        void DeleteDay(int id);
+        void DeleteInvalidDays();
         DayTotalsModel GetDayTotals();
     }
 }

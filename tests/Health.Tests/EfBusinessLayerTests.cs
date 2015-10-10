@@ -25,6 +25,21 @@ namespace Health.Tests
         }
 
         [Fact]
+        public void GetCalorieCountAllDaysTest()
+        {
+            var businessService = new EfBusinessLayer();
+            var allDays = businessService.GetCalorieCountAllDays();
+            Assert.NotNull(allDays);
+        }
+
+        [Fact]
+        public void DeleteInvalidDaysTest()
+        {
+            var businessService = new EfBusinessLayer();
+            businessService.DeleteInvalidDays();
+        }
+
+        [Fact]
         private void AddDayTest()
         {
             IBusinessService businessService = new EfBusinessLayer();
@@ -43,7 +58,7 @@ namespace Health.Tests
         {
             IBusinessService businessService = new EfBusinessLayer();
             var day = businessService.GetMostRecentDay();
-            businessService.DeleteDay(day.Date);
+            businessService.DeleteDay(day.DayId);
         }
 
         [Fact]
