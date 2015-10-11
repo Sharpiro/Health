@@ -64,7 +64,7 @@ namespace Health.Web.Api
             return ExecuteNonQuery(e => e.ClearDay());
         }
 
-        [HttpDelete]
+        [HttpDelete("/api/Nutrition/DeleteDay/{id}")]
         public ActionResult DeleteDay(int id)
         {
             return ExecuteNonQuery(e => e.DeleteDay(id));

@@ -49,7 +49,7 @@
 
     public deleteDay(dayId: number): ng.IPromise<any>
     {
-        return this.$http.delete(`/api/nutrition/deleteday?id=${dayId}`);
+        return this.$http.delete(`/api/nutrition/deleteday/${dayId}`);
     }
 
     public deleteInvalidDays(): ng.IPromise<any>

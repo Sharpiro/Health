@@ -6,18 +6,18 @@
                     <div class="col-md-12">
                         <h4>Enter Calories</h4>
                         <label class="">Food:</label>
-                        <select class="form-control" ng-change="vm.dropDownUpdate(currentDropdownFoodId)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="currentDropdownFoodId"></select>
+                        <select class="form-control" ng-change="vm.dropDownUpdate(vm.activeFood.Id)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="vm.activeFood.Id"></select>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <label>Calories:</label>
-                        <input class="form-control" type="number" ng-model="finalCalories"/>
+                        <input class="form-control" type="number" ng-model="vm.activeFood.Calories"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-default" ng-click="vm.addFood(currentDropdownFoodId, finalCalories)">Add Food</button>
+                        <button class="btn btn-default" ng-click="vm.addFood(vm.activeFood.Id, vm.activeFood.Calories)">Add Food</button>
                         <button class="btn btn-default" ng-click="vm.saveDay()">Save Day</button>
                     </div>
                 </div>
@@ -41,8 +41,8 @@
     </div>
     <div id="currentDay" class="row">
         <div class="col-md-12">
-            <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total}}</span>
-            <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total}}</span>
+            <span class="h4" style="padding-right: 15px">Total: {{vm.currentDay.Total + vm.nextMeal.calories}}</span>
+            <span class="h4" style="padding-right: 15px">Remaining: {{2000 - vm.currentDay.Total - vm.nextMeal.calories}}</span>
             <span class="h4" style="padding-right: 15px">Goal: 2000</span>
             <div class="table-responsive">
                 <table class="table">
@@ -79,7 +79,7 @@
             <h4>Functions</h4>
             <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
             <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
-            <button class="btn btn-default" ng-click="vm.deleteDay()">Delete Day</button>
+            <!--<button class="btn btn-default" ng-click="vm.deleteDay()">Delete Day</button>-->
             <button class="btn btn-default" ng-click="vm.deleteInvalidDays()">Prune Days</button>
         </div>
     </div>
@@ -87,14 +87,14 @@
         <div class="row">
             <div class="col-md-3">
                 <label>Message</label>
-                {{message}}
+                {{vm.debugObj.message}}
 
             </div>
         </div>
         <div class="row">
             <div class="col-md-12">
                 <label>Data</label>
-                {{data}}
+                {{vm.debugObj.data}}
             </div>
         </div>
     </div>

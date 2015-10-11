@@ -4,15 +4,16 @@ class NutritionController
 {
     private nutritionData: Array<IFood>;
     private currentDay: ICurrentDay;
+    private activeFood: IFood = new Food();
     private nextMeal: IMeal;
     private dayTotals: any;
+    private debugObj: any = {};
 
     constructor(private scope: any, private nutritionService: NutritionService, private nutritionDataService: NutritionDataService)
     {
         scope.vm = this;
         this.getNutritionTable();
         this.getMostRecentDay();
-        scope.editMode = true;
         //this.getAllData();
     }
 
@@ -36,7 +37,7 @@ class NutritionController
         this.nutritionData.forEach((value) =>
         {
             if (value.Id === currentDropdownFoodId)
-                this.scope.finalCalories = value.Calories;
+                this.activeFood.Calories = value.Calories;
         });
     }
 
@@ -91,9 +92,9 @@ class NutritionController
         }, this.errorCallBack);
     }
 
-    private addFood(currentDropdownFoodId: number, finalCalories: number): void
+    private addFood(currentDropdownFoodId: number, foodCalories: number): void
     {
-        if (currentDropdownFoodId === undefined || finalCalories === null)
+        if (currentDropdownFoodId === undefined || foodCalories === null)
         {
             toastr.error("Error: Please select a food");
             return;
@@ -103,9 +104,10 @@ class NutritionController
             this.nextMeal = new Meal();
             this.nextMeal.date = this.currentDay.Date;
         }
+        this.nextMeal.calories += foodCalories;
         this.nextMeal.mealEntries.push({
             FoodId: currentDropdownFoodId,
-            Calories: finalCalories,
+            Calories: foodCalories,
             MealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
         this.selectRandomFood();
@@ -132,17 +134,17 @@ class NutritionController
 
     private selectRandomFood(): void
     {
-        var maxValue = this.nutritionData.length;
-        var randomNumber = Math.floor(Math.random() * maxValue);
-        var randomFood = this.nutritionData[randomNumber];
-        this.scope.finalCalories = randomFood.Calories;
-        this.scope.currentDropdownFoodId = randomFood.Id;
+        const maxValue = this.nutritionData.length;
+        const randomNumber = Math.floor(Math.random() * maxValue);
+        const randomFood = this.nutritionData[randomNumber];
+        this.activeFood.Calories = randomFood.Calories;
+        this.activeFood.Id = randomFood.Id;
     }
 
     private clearSelection(): void
     {
-        this.scope.finalCalories = undefined;
-        this.scope.currentDropdownFoodId = undefined;
+        this.activeFood.Calories = undefined;
+        this.activeFood.Id = undefined;
     }
 
     private clearNextMeal(): void
@@ -152,8 +154,8 @@ class NutritionController
 
     private successCallBack = (data: any, message?: string): any =>
     {
-        this.scope.data = data.data;
-        this.scope.message = `${data.status}: ${data.statusText}`;
+        this.debugObj.data = data.data;
+        this.debugObj.message = `${data.status}: ${data.statusText}`;
         if (message)
             toastr.success(message);
         return null;
@@ -161,8 +163,8 @@ class NutritionController
 
     private errorCallBack = (error: any): void =>
     {
-        this.scope.message = `${error.status}: ${error.statusText}`;
-        this.scope.data = error.data;
+        this.debugObj.message = `${error.status}: ${error.statusText}`;
+        this.debugObj.data = error.data;
         console.log(error);
         toastr.error(`Error: ${error.data}`);
     }
