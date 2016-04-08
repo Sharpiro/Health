@@ -1,0 +1,8 @@
+﻿CREATE TABLE [dbo].[Meals]
+(
+	[Id] INT NOT NULL IDENTITY (1,1)
+
+	CONSTRAINT [PK_Meals] PRIMARY KEY CLUSTERED ([Id] ASC), 
+    [MealNumber] INT NOT NULL, 
+    [DayId] INT NOT NULL
+)

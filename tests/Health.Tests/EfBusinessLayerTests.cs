@@ -69,6 +69,15 @@ namespace Health.Tests
             //SeedMeal(businessService);
         }
 
+        [Fact]
+        public void GetFoodByName()
+        {
+            IBusinessService businessService = new EfBusinessLayer();
+            var food = businessService.GetFoodByName("Food1");
+            Assert.NotNull(food);
+            Assert.True(food.Id > 0);
+        }
+
         private void SeedFood(IBusinessService businessService)
         {
             var chicken = new Food

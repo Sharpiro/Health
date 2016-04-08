@@ -1,5 +1,7 @@
 ﻿using Health.Core.Entities;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Extensions.Logging;
 
 namespace Health.Core.EF
 {
@@ -14,18 +16,27 @@ namespace Health.Core.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
 #if DEBUG
-            ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=HealthContext;Trusted_Connection=True;";
+            ConnectionString = "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;";
 #endif
             optionsBuilder.UseSqlServer(ConnectionString);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<MealDay>().Key(md => new { md.DayId, md.MealId });
+            //modelBuilder.Entity<MealDay>().HasKey(md => new { md.DayId, md.MealId });
             //modelBuilder.Entity<Day>().Property(e => e.Id).UseSqlServerIdentityColumn();
-            modelBuilder.Entity<Meal>().Index(m => new { m.MealNumber, m.DayId }).Unique();
-            modelBuilder.Entity<Day>().Index(d => d.Created).Unique();
+            //modelBuilder.Entity<Day>().HasKey(d => new {d.Created });
+            //modelBuilder.Entity<Day>().Index(d => d.Created).Unique();
+            //modelBuilder.Entity<Meal>().Index(m => new { m.MealNumber, m.DayId }).Unique();
+            modelBuilder.Entity<Food>().ToTable("Foods");
+            modelBuilder.Entity<Day>().ToTable("Days");
+        }
 
+        public void AddLogging()
+        {
+            var loggerFactory = this.GetService<ILoggerFactory>();
+            loggerFactory.AddConsole(LogLevel.Information);
+            loggerFactory.AddProvider(new CustomLoggerFactory());
         }
     }
 }

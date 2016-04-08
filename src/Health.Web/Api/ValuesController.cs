@@ -1,34 +1,41 @@
-﻿using Health.Core.EF;
-using Health.Core.Models;
+﻿using Health.Core.Models;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Health.Web.Api
 {
-    //[Route("[controller]")]
     public class ValuesController : Controller
     {
         private readonly IBusinessService _businessLayer;
-        private readonly EfBusinessLayer _efBusinessLayer;
+        private readonly ILogger _logger;
 
-        public ValuesController(IBusinessService businessLayer, EfBusinessLayer efBusinessLayer)
+        public ValuesController(IBusinessService businessLayer, ILogger<ValuesController> logger)
         {
             _businessLayer = businessLayer;
-            _efBusinessLayer = efBusinessLayer;
+            _logger = logger;
         }
 
         [HttpGet]
         public ActionResult GetManufacturers()
         {
-            var manufacturers = _efBusinessLayer.GetData();
+            var manufacturers = _businessLayer.GetData();
             return Ok(manufacturers);
+        }
+
+        [HttpGet]
+        public string GetData()
+        {
+            const string data = "data";
+            _logger.LogInformation("we logged something");
+            return data;
         }
 
         [HttpGet]
         [Authorize]
         public ActionResult GetSecuredData()
         {
-            var data = "this is secured data, congratulations";
+            const string data = "this is secured data, congratulations";
             return Ok(data);
         }
     }

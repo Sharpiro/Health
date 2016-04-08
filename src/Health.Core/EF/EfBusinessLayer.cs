@@ -12,11 +12,6 @@ namespace Health.Core.EF
 {
     public class EfBusinessLayer : IBusinessService
     {
-        public EfBusinessLayer()
-        {
-
-        }
-
         public void AddDefaultData()
         {
             throw new NotImplementedException();
@@ -107,7 +102,9 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                return context.Foods.FirstOrDefault(f => f.Name == foodName);
+                context.AddLogging();
+                var foods = context.Foods.FirstOrDefault(f => f.Name == foodName);
+                return foods;
             }
         }
 

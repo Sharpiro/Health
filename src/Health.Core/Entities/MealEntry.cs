@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens;
 
 namespace Health.Core.Entities
 {
