@@ -6,16 +6,14 @@ using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.Data.Entity;
+using Microsoft.Data.Entity.Infrastructure;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 
 namespace Health.Core.EF
 {
     public class EfBusinessLayer : IBusinessService
     {
-        public EfBusinessLayer()
-        {
-
-        }
-
         public void AddDefaultData()
         {
             throw new NotImplementedException();
@@ -75,7 +73,9 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                return context.Foods.FirstOrDefault(f => f.Name == foodName);
+                context.AddLogging();
+                var foods = context.Foods.FirstOrDefault(f => f.Name == foodName);
+                return foods;
             }
         }
 

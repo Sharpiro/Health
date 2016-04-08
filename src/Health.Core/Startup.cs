@@ -1,7 +1,5 @@
-﻿using Health.Core.EF;
-using Microsoft.AspNet.Builder;
-using Microsoft.Data.Entity;
-using Microsoft.Framework.DependencyInjection;
+﻿using Microsoft.AspNet.Builder;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Health.Core
 {
