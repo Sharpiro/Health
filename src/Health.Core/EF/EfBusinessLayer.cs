@@ -7,7 +7,6 @@ using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
 using VNextTools.Core.Extensions;
-//using VNextTools.Core.Extensions;
 
 namespace Health.Core.EF
 {

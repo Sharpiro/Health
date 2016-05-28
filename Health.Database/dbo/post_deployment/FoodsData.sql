@@ -2,12 +2,17 @@
 
 MERGE INTO [dbo].[Foods] AS TARGET
 USING (VALUES 
-	(1, 'Food1', 1,2,3,4,5,6, 'ServingName1', 1, 2, 3),
-	(2, 'Food2', 1,2,3,4,5,6, 'ServingName2', 1, 2, 3),
-	(3, 'Food3', 1,2,3,4,5,6, 'ServingName3', 1, 2, 3),
-	(4, 'Food4', 1,2,3,4,5,6, 'ServingName4', 1, 2, 3)
+	(1, 120, N'Chicken', 4, 0, 1, 0, 0, 26, N'oz', 50, 0),
+	(2, 184, N'Eggs', 1, 0, 10, 0, 75, 21, N'custom', 272, 0),
+	(3, 100, N'Almonds', 1, 1, 9, 2, 130, 4, N'packet', 0, 1),
+	(4, 105, N'Oatmeal', 1, 16, 2, 3, 105, 4, N'packet', 75, 0),
+	(5, 100, N'Lunch Meat', 4, 2, 2, 0, 0, 20, N'oz', 450, 0),
+	(6, 40, N'Apple', 1, 17, 0, 5, 0, 0, N'apple', 0, 17),
+	(7, 35, N'Soup', 1, 8, 0, 4, 580, 3, N'half-can', 470, 2),
+	(8, 180, N'Protein Bar', 1, 4, 8, 13, 140, 20, N'bar', 170, 1),
+	(9, 110, N'Beans', 130, 14, 1, 6, 400, 6, N'grams', 530, 2)
 ) AS SOURCE 
-([Id], [Name], [Calories], [Protein], [Fat], [Carbs], [Sugar], [ServingSize], [ServingName], [Fiber], [Sodium], [Potassium])
+([Id], [Calories], [Name], [ServingSize], [Carbs], [Fat], [Fiber], [Potassium], [Protein], [ServingName], [Sodium], [Sugar])
 ON Target.[Id] = Source.[Id]
 
 WHEN MATCHED THEN UPDATE SET 

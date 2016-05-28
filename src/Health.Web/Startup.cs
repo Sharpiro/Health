@@ -1,11 +1,11 @@
-﻿using Health.Core;
-using Health.Core.EF;
+﻿using Health.Core.EF;
 using Health.Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using System;
 using System.IO;
 
 namespace Health.Web
@@ -18,24 +18,22 @@ namespace Health.Web
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("config.json").AddEnvironmentVariables();
+                .AddJsonFile("config.json", true).AddEnvironmentVariables();
             Configuration = builder.Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            HealthContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
+            var conn = Configuration.GetConnectionString("DefaultConnection");
+            HealthContext.ConnectionString = conn;
             services.AddMvc();
             services.AddTransient<IBusinessService, EfBusinessLayer>();
-            //services.AddTransient<ILoggerFactory, CustomLoggerFactory>();
-            services.AddLogging();
+            ////services.AddTransient<ILoggerFactory, CustomLoggerFactory>();
+            //services.AddLogging();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logFactory)
         {
-#if !DEBUG
-            app.UseForceSSL();
-#endif
             logFactory.AddConsole();
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
