@@ -1,20 +1,33 @@
 {
-    "version": "1.0.0-*",
-    "description": "Health.Core Class Library",
-    "authors": [ "sharpiro" ],
-    "tags": [ "" ],
-    "projectUrl": "",
-    "licenseUrl": "",
-    "frameworks": {
-        "dnxcore50": { },
-        "dnx451": { }
-    },
-    "dependencies": {
-        "EntityFramework.MicrosoftSqlServer": "7.0.0-rc1-final",
-        "EntityFramework.Commands": "7.0.0-rc1-final",
-        "Microsoft.Extensions.Logging.Console": "1.0.0-rc1-final",
-        "VNextTools.Core": "1.2.5.6"
-    },
-    "commands": {
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "NETStandard.Library": "1.5.0-rc2-24027",
+    "Microsoft.Extensions.Logging.Console": "1.0.0-rc2-final",
+    "Microsoft.EntityFrameworkCore.SqlServer": "1.0.0-rc2-final",
+    "VNextTools.Core": "1.2.5.6"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+      "imports": [
+        "dotnet5.6",
+        "dnxcore50",
+        "portable-net45+win8"
+      ]
     }
+
+  },
+  "tools": {
+    "Microsoft.EntityFrameworkCore.Tools": {
+      "version": "1.0.0-preview1-final",
+      "imports": [
+        "portable-net45+win8+dnxcore50",
+        "portable-net45+win8"
+      ]
+    }
+  },
+  "commands": {
+    "ef": "EntityFramework.Commands"
+  }
 }

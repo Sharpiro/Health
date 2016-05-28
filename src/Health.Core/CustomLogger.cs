@@ -6,28 +6,20 @@ namespace Health.Core
 {
     public class CustomLogger : ILogger
     {
-        public void Log(LogLevel logLevel, int eventId, object state, Exception exception, Func<object, Exception, string> formatter)
-        {
-            //var message = state as string;
-            //if (!string.IsNullOrEmpty(message))
-            //{
-            //    Debug.WriteLine(message);
-            //    Console.WriteLine(message);
-            //    return;
-            //}
-            Debug.WriteLine(formatter(state, exception));
-            Console.WriteLine(formatter(state, exception));
-        }
-
         public bool IsEnabled(LogLevel logLevel)
         {
             return true;
         }
 
-        public IDisposable BeginScopeImpl(object state)
+        public void Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter)
+        {
+            Debug.WriteLine(formatter(state, exception));
+            Console.WriteLine(formatter(state, exception));
+        }
+
+        public IDisposable BeginScope<TState>(TState state)
         {
             return null;
-            //throw new NotImplementedException();
         }
     }
 }

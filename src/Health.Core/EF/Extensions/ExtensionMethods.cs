@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Microsoft.Data.Entity;
 
 namespace Health.Core.EF.Extensions
 {
