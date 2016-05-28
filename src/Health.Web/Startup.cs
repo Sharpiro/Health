@@ -3,7 +3,6 @@ using Health.Core.EF;
 using Health.Core.Models;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -28,22 +27,23 @@ namespace Health.Web
             HealthContext.ConnectionString = Configuration["Data:DefaultConnection:ConnectionString"];
             services.AddMvc();
             services.AddTransient<IBusinessService, EfBusinessLayer>();
-            services.AddTransient<ILoggerFactory, CustomLoggerFactory>();
+            //services.AddTransient<ILoggerFactory, CustomLoggerFactory>();
             services.AddLogging();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logFactory)
         {
-//#if !DEBUG
-//            app.UseForceSSL();
-//#endif
-//            if (env.IsDevelopment())
-//                app.UseDeveloperExceptionPage();
+#if !DEBUG
+            app.UseForceSSL();
+#endif
+            logFactory.AddConsole();
+            if (env.IsDevelopment())
+                app.UseDeveloperExceptionPage();
+            app.UseMvc(builder =>
+            {
+                builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
+            });
             app.UseFileServer();
-            //app.UseMvc(builder =>
-            //{
-            //    builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
-            //});
         }
 
         public static void Main(string[] args)

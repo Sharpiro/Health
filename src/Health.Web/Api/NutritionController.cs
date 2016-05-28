@@ -2,7 +2,7 @@
 using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Web.Api.Extensions;
-using Microsoft.AspNet.Mvc;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Health.Web.Api
 {
@@ -50,8 +50,7 @@ namespace Health.Web.Api
             if (ModelState.IsValid)
                 return ExecuteNonQuery(e => e.AddMeal(meal));
 
-            return HttpBadRequest(ModelState);
-
+            return BadRequest(ModelState);
         }
 
         public ActionResult AddDay()
