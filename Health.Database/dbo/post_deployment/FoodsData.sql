@@ -10,7 +10,8 @@ USING (VALUES
 	(6, 40, N'Apple', 1, 17, 0, 5, 0, 0, N'apple', 0, 17),
 	(7, 35, N'Soup', 1, 8, 0, 4, 580, 3, N'half-can', 470, 2),
 	(8, 180, N'Protein Bar', 1, 4, 8, 13, 140, 20, N'bar', 170, 1),
-	(9, 110, N'Beans', 130, 14, 1, 6, 400, 6, N'grams', 530, 2)
+	(9, 110, N'Beans', 130, 14, 1, 6, 400, 6, N'grams', 530, 2),
+	(10	, 150, 'Potatoes', 213, 34, 0, 4, 969, 4, grams, 38, 3)
 ) AS SOURCE 
 ([Id], [Calories], [Name], [ServingSize], [Carbs], [Fat], [Fiber], [Potassium], [Protein], [ServingName], [Sodium], [Sugar])
 ON Target.[Id] = Source.[Id]
