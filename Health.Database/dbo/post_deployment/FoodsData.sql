@@ -2,16 +2,21 @@
 
 MERGE INTO [dbo].[Foods] AS TARGET
 USING (VALUES 
-	(1, 120, N'Chicken', 4, 0, 1, 0, 0, 26, N'oz', 50, 0),
-	(2, 184, N'Eggs', 1, 0, 10, 0, 75, 21, N'custom', 272, 0),
-	(3, 100, N'Almonds', 1, 1, 9, 2, 130, 4, N'packet', 0, 1),
-	(4, 105, N'Oatmeal', 1, 16, 2, 3, 105, 4, N'packet', 75, 0),
-	(5, 100, N'Lunch Meat', 4, 2, 2, 0, 0, 20, N'oz', 450, 0),
-	(6, 40, N'Apple', 1, 17, 0, 5, 0, 0, N'apple', 0, 17),
-	(7, 35, N'Soup', 1, 8, 0, 4, 580, 3, N'half-can', 470, 2),
-	(8, 180, N'Protein Bar', 1, 4, 8, 13, 140, 20, N'bar', 170, 1),
-	(9, 110, N'Beans', 130, 14, 1, 6, 400, 6, N'grams', 530, 2),
-	(10	, 150, 'Potatoes', 213, 34, 0, 4, 969, 4, grams, 38, 3)
+	(6, 120, N'Chicken', 4, 0, 1, 0, 0, 26, N'oz', 50, 0),
+	(7, 184, N'Eggs', 1, 0, 10, 0, 75, 21, N'custom', 272, 0),
+	(8, 100, N'Almonds', 1, 1, 9, 2, 130, 4, N'packet', 0, 1),
+	(9, 105, N'Oatmeal', 1, 16, 2, 3, 105, 4, N'packet', 75, 0),
+	(11, 40, N'Apple', 1, 17, 0, 5, 0, 0, N'apple', 0, 17),
+	(12, 35, N'Soup', 1, 8, 0, 4, 580, 3, N'half-can', 470, 2),
+	(13, 180, N'Protein Bar', 1, 4, 8, 13, 140, 20, N'bar', 170, 1),
+	(14, 110, N'Beans', 130, 14, 1, 6, 400, 6, N'grams', 530, 2),
+	(16, 150, N'Potatoes', 213, 34, 0, 4, 969, 4, N'grams', 38, 3),
+	(17, 130, N'Cheeto-Crunch', 28, 0, 0, 0, 0, 0, N'grams', 0, 0),
+	(18, 150, N'Cheeto-Puff', 28, 0, 0, 0, 0, 0, N'grams', 0, 0),
+	(19, 100, N'Yasso-Pop', 1, 0, 0, 0, 0, 0, N'pop', 0, 0),
+	(20, 150, N'Yasso-Bar', 1, 0, 0, 0, 0, 0, N'bar', 0, 0),
+	(21, 140, N'Waffles', 2, 0, 0, 0, 0, 0, N'waffles', 0, 0),
+	(22, 380, N'Strudles', 2, 0, 0, 0, 0, 0, N'strudles', 0, 0)
 ) AS SOURCE 
 ([Id], [Calories], [Name], [ServingSize], [Carbs], [Fat], [Fiber], [Potassium], [Protein], [ServingName], [Sodium], [Sugar])
 ON Target.[Id] = Source.[Id]
