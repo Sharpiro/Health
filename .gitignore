@@ -6,6 +6,8 @@
 
 #My Additions
 
+*.map
+*.vs
 .vs/config/applicationhost.config
 src/Health.Web/wwwroot/lib
 src/Health.Web/wwwroot/**/*.map
