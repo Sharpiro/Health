@@ -156,7 +156,7 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                var now = DateTime.UtcNow;
+                var now = DateTime.Now;
                 var day = new Day
                 {
                     Created = new DateTime(now.Year, now.Month, now.Day)

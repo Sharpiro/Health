@@ -12,4 +12,20 @@
     public Fiber: number;
     public Sodium: number;
     public Potassium: number;
+
+    constructor(food: IFood)
+    {
+        this.Id = food.Id;
+        this.Name = food.Name;
+        this.Calories = food.Calories
+        this.Protein = food.Protein;
+        this.Fat = food.Fat;
+        this.Carbs = food.Carbs;
+        this.Sugar = food.Sugar;
+        this.ServingSize = food.ServingSize;
+        this.ServingName = food.ServingName;
+        this.Fiber = food.Fiber;
+        this.Sodium = food.Sodium;
+        this.Potassium = food.Potassium;
+    }
 }

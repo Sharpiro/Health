@@ -4,7 +4,8 @@ class NutritionController
 {
     private nutritionData: Array<IFood>;
     private currentDay: ICurrentDay;
-    private activeFood: IFood = new Food();
+    private activeFood: IFood;
+    private dropDownFoodId: number = 6;
     private nextMeal: IMeal;
     private dayTotals: any;
     private debugObj: any = {};
@@ -34,11 +35,14 @@ class NutritionController
 
     private dropDownUpdate(currentDropdownFoodId: number): void
     {
-        this.nutritionData.forEach((value) =>
+        for (var food of this.nutritionData)
         {
-            if (value.Id === currentDropdownFoodId)
-                this.activeFood.Calories = value.Calories;
-        });
+            if (food.Id === currentDropdownFoodId)
+            {
+                this.activeFood = new Food(food);
+                return;
+            }
+        }
     }
 
     private getMostRecentDay(forceUpdate?: RequestOptions): void
@@ -137,19 +141,39 @@ class NutritionController
         const maxValue = this.nutritionData.length;
         const randomNumber = Math.floor(Math.random() * maxValue);
         const randomFood = this.nutritionData[randomNumber];
-        this.activeFood.Calories = randomFood.Calories;
-        this.activeFood.Id = randomFood.Id;
-    }
-
-    private clearSelection(): void
-    {
-        this.activeFood.Calories = undefined;
-        this.activeFood.Id = undefined;
+        this.activeFood = new Food(randomFood);
+        this.dropDownFoodId = this.activeFood.Id;
     }
 
     private clearNextMeal(): void
     {
         this.nextMeal = undefined;
+    }
+
+    public updateServing(foodId: number, calories: number)
+    {
+        for (var food of this.nutritionData)
+        {
+            if (food.Id === foodId)
+            {
+                let servingsPerCaloorie = food.ServingSize / food.Calories;
+                this.activeFood.ServingSize = servingsPerCaloorie * calories;
+                return;
+            }
+        }
+    }
+
+    public updateCalories(foodId: number, servingSize: number)
+    {
+        for (var food of this.nutritionData)
+        {
+            if (food.Id === foodId)
+            {
+                let caloriesPerServing = food.Calories / food.ServingSize;
+                this.activeFood.Calories = caloriesPerServing * servingSize;
+                return;
+            }
+        }
     }
 
     private successCallBack = (data: any, message?: string): any =>
