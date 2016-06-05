@@ -10,7 +10,8 @@ class NutritionController
     private dayTotals: any;
     private debugObj: any = {};
 
-    constructor(private scope: any, private nutritionService: NutritionService, private nutritionDataService: NutritionDataService)
+    constructor(private scope: any, private nutritionService: NutritionService,
+        private nutritionDataService: NutritionDataService, private _responseService: ResponseService)
     {
         scope.vm = this;
         this.getNutritionTable();
@@ -20,7 +21,7 @@ class NutritionController
 
     private getAllData(): void
     {
-        this.nutritionService.getAllData().then(this.successCallBack, this.errorCallBack);
+        this.nutritionService.getAllData().then(this._responseService.successCallBack, this._responseService.errorCallBack);
     }
 
     private getNutritionTable(): void
@@ -29,8 +30,8 @@ class NutritionController
         {
             this.nutritionData = data.data;
             this.selectRandomFood();
-            return this.successCallBack(data);
-        }, this.errorCallBack);
+            return this._responseService.successCallBack(data);
+        }, this._responseService.errorCallBack);
     }
 
     private dropDownUpdate(currentDropdownFoodId: number): void
@@ -53,10 +54,10 @@ class NutritionController
             this.nutritionService.getDayTotals().then((innerData) =>
             {
                 this.dayTotals = innerData.data;
-                this.successCallBack(innerData);
+                this._responseService.successCallBack(innerData);
             });
-            return this.successCallBack(data);
-        }, this.errorCallBack);
+            return this._responseService.successCallBack(data);
+        }, this._responseService.errorCallBack);
     }
 
     private addDay(): void
@@ -64,8 +65,8 @@ class NutritionController
         this.nutritionService.addDay().then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
-            return this.successCallBack(data, "Successfully Added day.");
-        }, this.errorCallBack);
+            return this._responseService.successCallBack(data, "Successfully Added day.");
+        }, this._responseService.errorCallBack);
     }
 
     private clearDay(): void
@@ -73,32 +74,23 @@ class NutritionController
         this.nutritionService.clearDay().then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
-            return this.successCallBack(data, "Successfully cleared day.");
-        }, this.errorCallBack);
+            return this._responseService.successCallBack(data, "Successfully cleared day.");
+        }, this._responseService.errorCallBack);
     }
 
-
-    private deleteDay(): void
-    {
-        this.nutritionService.deleteDay(this.currentDay.DayId).then((data) =>
-        {
-            this.getMostRecentDay(RequestOptions.Force);
-            return this.successCallBack(data, "Successfully deleted day.");
-        }, this.errorCallBack);
-    }
 
     private deleteInvalidDays(): void
     {
         this.nutritionService.deleteInvalidDays().then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
-            return this.successCallBack(data, "Successfully deleted invalid days.");
-        }, this.errorCallBack);
+            return this._responseService.successCallBack(data, "Successfully deleted invalid days.");
+        }, this._responseService.errorCallBack);
     }
 
     private addFood(currentDropdownFoodId: number, foodCalories: number): void
     {
-        if (currentDropdownFoodId === undefined || foodCalories === null)
+        if (!currentDropdownFoodId || !foodCalories)
         {
             toastr.error("Error: Please select a food");
             return;
@@ -115,7 +107,6 @@ class NutritionController
             MealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
         this.selectRandomFood();
-        console.log(this.nextMeal.mealEntries);
     }
 
     private saveDay(): void
@@ -126,14 +117,13 @@ class NutritionController
             return;
         }
         this.nextMeal.mealNumber = this.currentDay.Meals.length + 1;
-        console.log(`Next Meal Number: ${this.nextMeal.mealNumber}`);
         this.nutritionService.addMeal(this.nextMeal).then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
             this.nextMeal = undefined;
-            this.successCallBack(data, "Successfully Saved Day!");
+            this._responseService.successCallBack(data, "Successfully Saved Day!");
             return null;
-        }, this.errorCallBack);
+        }, this._responseService.errorCallBack);
     }
 
     private selectRandomFood(): void
@@ -170,28 +160,13 @@ class NutritionController
             if (food.Id === foodId)
             {
                 let caloriesPerServing = food.Calories / food.ServingSize;
-                this.activeFood.Calories = caloriesPerServing * servingSize;
+                let calories = caloriesPerServing * servingSize
+                console.log(calories);
+                this.activeFood.Calories = Math.ceil(calories);
                 return;
             }
         }
     }
-
-    private successCallBack = (data: any, message?: string): any =>
-    {
-        this.debugObj.data = data.data;
-        this.debugObj.message = `${data.status}: ${data.statusText}`;
-        if (message)
-            toastr.success(message);
-        return null;
-    }
-
-    private errorCallBack = (error: any): void =>
-    {
-        this.debugObj.message = `${error.status}: ${error.statusText}`;
-        this.debugObj.data = error.data;
-        console.log(error);
-        toastr.error(`Error: ${error.data}`);
-    }
 }
 
-app.controller("nutritionController", ["$scope", "nutritionService", "nutritionDataService", NutritionController]);
+app.controller("nutritionController", ["$scope", "nutritionService", "nutritionDataService", "responseService", NutritionController]);

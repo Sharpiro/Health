@@ -11,19 +11,17 @@ namespace Health.Web
 {
     public class Startup
     {
-        public IConfiguration Configuration { get; set; }
+        private readonly IConfiguration _configuration;
 
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("config.json", true).AddEnvironmentVariables();
-            Configuration = builder.Build();
+            var Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+                .AddJsonFile("config.json", true).AddEnvironmentVariables().Build();
         }
 
         public void ConfigureServices(IServiceCollection services)
         {
-            var conn = Configuration.GetConnectionString("DefaultConnection");
+            var conn = _configuration.GetConnectionString("DefaultConnection");
             HealthContext.ConnectionString = conn;
             services.AddMvc();
             services.AddTransient<IBusinessService, EfBusinessLayer>();
