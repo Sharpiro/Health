@@ -6,7 +6,7 @@ using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
 using Microsoft.EntityFrameworkCore;
-using VNextTools.Core.Extensions;
+using DotnetCoreTools.Core.Extensions;
 
 namespace Health.Core.EF
 {
@@ -200,7 +200,7 @@ namespace Health.Core.EF
             var invalidDays = GetCalorieCountAllDays().Where(d => d.TotalCalories < 1500).ToList();
             if (!invalidDays.Any())
                 throw new NullReferenceException("No invalid days were found");
-            invalidDays.Do(d => DeleteDay(d.Id));
+            invalidDays.ForEach(d => DeleteDay(d.Id));
         }
 
         public void DeleteDay(int id)
