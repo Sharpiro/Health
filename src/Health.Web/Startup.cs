@@ -15,7 +15,7 @@ namespace Health.Web
 
         public Startup(IHostingEnvironment env)
         {
-            var Configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
+            _configuration = new ConfigurationBuilder().SetBasePath(env.ContentRootPath)
                 .AddJsonFile("config.json", true).AddEnvironmentVariables().Build();
         }
 
