@@ -1,5 +1,6 @@
 ﻿using Health.Core.EF;
 using Health.Core.Models;
+using Microsoft.AspNet.Builder;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +35,7 @@ namespace Health.Web
             logFactory.AddConsole();
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+            app.UseForceApi();
             app.UseMvc(builder =>
             {
                 builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
