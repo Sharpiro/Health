@@ -3,9 +3,9 @@
 MERGE INTO [dbo].[Foods] AS TARGET
 USING (VALUES 
 	(6, 120, N'Chicken', 4, 0, 1, 0, 0, 26, N'oz', 50, 0),
-	(7, 184, N'Eggs', 1, 0, 10, 0, 75, 21, N'custom', 272, 0),
+	(7, 200, N'Eggs', 1, 0, 10, 0, 75, 21, N'custom', 272, 0),
 	(8, 100, N'Almonds', 18, 1, 9, 2, 130, 4, N'grams', 0, 1),
-	(9, 105, N'Oatmeal', 1, 16, 2, 3, 105, 4, N'item', 75, 0),
+	(9, 210, N'Oatmeal', 2, 32, 4, 6, 210, 8, N'item', 150, 0),
 	(11, 40, N'Apple', 1, 17, 0, 5, 0, 0, N'item', 0, 17),
 	(12, 35, N'Soup', 1, 8, 0, 4, 580, 3, N'half-can', 470, 2),
 	(13, 180, N'Protein Bar', 1, 4, 8, 13, 140, 20, N'item', 170, 1),
@@ -17,7 +17,10 @@ USING (VALUES
 	(20, 150, N'Yasso-Bar', 1, 16, 8, 1, 0, 4, N'item', 40, 12),
 	(21, 140, N'Waffles', 2, 27, 3, 3, 110, 4, N'item', 380, 3),
 	(22, 360, N'Strudles', 2, 54, 14, 1, 0, 4, N'item', 360, 20),
-	(23, 80, N'Banana', 1, 27, 0, 3, 422, 1, N'item', 1, 14)
+	(23, 80, N'Banana', 1, 27, 0, 3, 422, 1, N'item', 1, 14),
+	(24, 100, N'Cheerios', 28, 20, 2, 3, 180, 3, N'grams', 140, 1),
+	(25, 160, N'Yogurt', 300, 12, 0, 0, 320, 29, N'grams', 107, 12)
+
 ) AS SOURCE 
 ([Id], [Calories], [Name], [ServingSize], [Carbs], [Fat], [Fiber], [Potassium], [Protein], [ServingName], [Sodium], [Sugar])
 ON Target.[Id] = Source.[Id]
