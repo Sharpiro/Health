@@ -16,7 +16,16 @@ class NutritionController
         scope.vm = this;
         this.getNutritionTable();
         this.getMostRecentDay();
+        this.loadMealFromCache();
         //this.getAllData();
+    }
+
+    private loadMealFromCache()
+    {
+        var temp = this.nutritionData;
+        var data = sessionStorage.getItem("nextMeal");
+        if (!data) return;
+        this.nextMeal = JSON.parse(data);
     }
 
     private getAllData(): void
@@ -106,6 +115,7 @@ class NutritionController
             Calories: foodCalories,
             MealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
+        sessionStorage.setItem("nextMeal", angular.toJson(this.nextMeal));
         this.selectRandomFood();
     }
 
@@ -120,7 +130,7 @@ class NutritionController
         this.nutritionService.addMeal(this.nextMeal).then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
-            this.nextMeal = undefined;
+            this.clearNextMeal();
             this._responseService.successCallBack(data, "Successfully Saved Day!");
             return null;
         }, this._responseService.errorCallBack);
@@ -138,6 +148,7 @@ class NutritionController
     private clearNextMeal(): void
     {
         this.nextMeal = undefined;
+        sessionStorage.removeItem("nextMeal");
     }
 
     public updateServing(foodId: number, calories: number)
