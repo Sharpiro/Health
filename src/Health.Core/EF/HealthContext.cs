@@ -1,11 +1,12 @@
 ﻿using Health.Core.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
 
 namespace Health.Core.EF
 {
-    public class HealthContext : DbContext
+    public class HealthContext : IdentityDbContext
     {
         public static string ConnectionString;
         public DbSet<Day> Days { get; set; }
@@ -23,13 +24,9 @@ namespace Health.Core.EF
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //modelBuilder.Entity<MealDay>().HasKey(md => new { md.DayId, md.MealId });
-            //modelBuilder.Entity<Day>().Property(e => e.Id).UseSqlServerIdentityColumn();
-            //modelBuilder.Entity<Day>().HasKey(d => new {d.Created });
-            //modelBuilder.Entity<Day>().Index(d => d.Created).Unique();
-            //modelBuilder.Entity<Meal>().Index(m => new { m.MealNumber, m.DayId }).Unique();
             modelBuilder.Entity<Food>().ToTable("Foods");
             modelBuilder.Entity<Day>().ToTable("Days");
+            base.OnModelCreating(modelBuilder);
         }
 
         public void AddLogging()
