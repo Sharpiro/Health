@@ -189,7 +189,7 @@ namespace Health.Core.EF
                         Id = d.Id,
                         TotalCalories = d.Meals.SelectMany(m => m.MealEntries).ToList().Select(me => me.Calories).ToList().Sum()
                     }).ToList();
-                    
+
 
                 return dayCalories;
             }

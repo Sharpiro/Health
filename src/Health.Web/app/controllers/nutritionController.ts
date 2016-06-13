@@ -17,7 +17,6 @@ class NutritionController
         this.getNutritionTable();
         this.getMostRecentDay();
         this.loadMealFromCache();
-        //this.getAllData();
     }
 
     private loadMealFromCache()
@@ -39,7 +38,6 @@ class NutritionController
         {
             this.nutritionData = data.data;
             this.selectRandomFood();
-            return this._responseService.successCallBack(data);
         }, this._responseService.errorCallBack);
     }
 
@@ -63,9 +61,7 @@ class NutritionController
             this.nutritionService.getDayTotals().then((innerData) =>
             {
                 this.dayTotals = innerData.data;
-                this._responseService.successCallBack(innerData);
             });
-            return this._responseService.successCallBack(data);
         }, this._responseService.errorCallBack);
     }
 

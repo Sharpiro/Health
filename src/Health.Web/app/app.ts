@@ -16,5 +16,10 @@ app.config(["$stateProvider", "$urlRouterProvider", ($stateProvider: any, $urlRo
             url: "/foodlist",
             templateUrl: "app/templates/foodListTemplate.html",
             controller: "foodListController"
+        })
+        .state("login", {
+            url: "/login",
+            templateUrl: "app/templates/loginTemplate.html",
+            controller: "loginController"
         });
 }]);

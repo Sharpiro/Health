@@ -1,23 +1,26 @@
 ﻿class ResponseService
 {
-    public successCallBack = (data: any, message?: string): any =>
+    public successCallBack = (response: any, message?: string): any =>
     {
-        let debugObj = { message: "", data: "" };
-        debugObj.data = data.data;
-        debugObj.message = `${data.status}: ${data.statusText}`;
         if (message)
             toastr.success(message);
-        return debugObj;
+        else if (response.data)
+            toastr.success(response.data.data);
     }
 
-    public errorCallBack = (error: any): any =>
+    public errorCallBack = (response: any): any =>
     {
-        let debugObj = { message: "", data: "" };
-        debugObj.message = `${error.status}: ${error.statusText}`;
-        debugObj.data = error.data;
-        console.log(error);
-        toastr.error(`Error: ${error.data}`);
-        return debugObj;
+        if (response.data)
+            toastr.error(`Error: ${response.data}`);
+        else if (response.data.data)
+            toastr.error(`Error: ${response.data.data}`);
+        else
+            toastr.error(`Error: ${response.statusText}`);
+    }
+
+    public callBack = (success: any, error: any): any =>
+    {
+
     }
 }
 

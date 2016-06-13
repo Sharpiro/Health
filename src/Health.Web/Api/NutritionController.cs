@@ -3,6 +3,7 @@ using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Web.Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Health.Web.Api
 {
@@ -35,16 +36,19 @@ namespace Health.Web.Api
             return ExecuteQuery(e => e.GetDayTotals());
         }
 
+        [Authorize]
         public ActionResult AddFood([FromBody]Food meal)
         {
             return ExecuteNonQuery(e => e.AddFood(meal));
         }
 
+        [Authorize]
         public ActionResult AddMealEntry([FromBody]MealEntryModel mealEntry)
         {
             return ExecuteNonQuery(e => e.AddMealEntry(mealEntry.FoodName, mealEntry.Calories, mealEntry.MealId));
         }
 
+        [Authorize]
         public ActionResult AddMeal([FromBody]MealModel meal)
         {
             if (ModelState.IsValid)
@@ -53,22 +57,25 @@ namespace Health.Web.Api
             return BadRequest(ModelState);
         }
 
+        [Authorize]
         public ActionResult AddDay()
         {
             return ExecuteNonQuery(e => e.AddDay());
         }
 
+        [Authorize]
         public ActionResult ClearDay()
         {
             return ExecuteNonQuery(e => e.ClearDay());
         }
 
-        [HttpDelete("/api/Nutrition/DeleteDay/{id}")]
+        [HttpDelete("/api/Nutrition/DeleteDay/{id}"), Authorize]
         public ActionResult DeleteDay(int id)
         {
             return ExecuteNonQuery(e => e.DeleteDay(id));
         }
 
+        [Authorize]
         public ActionResult DeleteInvalidDays()
         {
             return ExecuteNonQuery(e => e.DeleteInvalidDays());
