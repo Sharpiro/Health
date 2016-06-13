@@ -1,8 +1,11 @@
-﻿using Health.Core.EF;
+﻿using Health.Core;
+using Health.Core.EF;
 using Health.Core.Models;
 using Microsoft.AspNet.Builder;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
@@ -26,8 +29,17 @@ namespace Health.Web
             HealthContext.ConnectionString = conn;
             services.AddMvc();
             services.AddTransient<IBusinessService, EfBusinessLayer>();
-            ////services.AddTransient<ILoggerFactory, CustomLoggerFactory>();
-            //services.AddLogging();
+            services.AddTransient<HealthContext, HealthContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>(options =>
+            {
+                options.Cookies.ApplicationCookie.AutomaticChallenge = false;
+                options.Password.RequireDigit = false;
+                options.Password.RequireLowercase = false;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false; ;
+                options.Password.RequiredLength = 6;
+            }).AddEntityFrameworkStores<HealthContext>();
+
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory logFactory)
@@ -35,7 +47,9 @@ namespace Health.Web
             logFactory.AddConsole();
             if (env.IsDevelopment())
                 app.UseDeveloperExceptionPage();
+            //app.UseMiddleware<RedirectMiddleware>();
             app.UseForceApi();
+            app.UseIdentity();
             app.UseMvc(builder =>
             {
                 builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}");
