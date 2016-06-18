@@ -156,11 +156,9 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                var now = DateTime.Now;
-                var day = new Day
-                {
-                    Created = new DateTime(now.Year, now.Month, now.Day)
-                };
+                var eastCoastDiff = TimeSpan.FromHours(4);
+                var now = DateTime.Now == DateTime.UtcNow ? DateTime.UtcNow.Subtract(eastCoastDiff) : DateTime.Now;
+                var day = new Day { Created = new DateTime(now.Year, now.Month, now.Day) };
                 context.Days.Add(day);
                 context.SaveChanges();
             }

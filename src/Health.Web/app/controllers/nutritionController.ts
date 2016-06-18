@@ -22,7 +22,7 @@ class NutritionController
     private loadMealFromCache()
     {
         var temp = this.nutritionData;
-        var data = sessionStorage.getItem("nextMeal");
+        var data = localStorage.getItem("nextMeal");
         if (!data) return;
         this.nextMeal = JSON.parse(data);
     }
@@ -105,13 +105,15 @@ class NutritionController
             this.nextMeal = new Meal();
             this.nextMeal.date = this.currentDay.Date;
         }
+        if (!this.nextMeal.mealNumber)
+            this.nextMeal.mealNumber = this.currentDay.Meals.length + 1;
         this.nextMeal.calories += foodCalories;
         this.nextMeal.mealEntries.push({
             FoodId: currentDropdownFoodId,
             Calories: foodCalories,
             MealEntryNumber: this.nextMeal.mealEntries.length + 1
         });
-        sessionStorage.setItem("nextMeal", angular.toJson(this.nextMeal));
+        localStorage.setItem("nextMeal", angular.toJson(this.nextMeal));
         this.selectRandomFood();
     }
 
@@ -122,7 +124,6 @@ class NutritionController
             toastr.error("Error: Please enter a food");
             return;
         }
-        this.nextMeal.mealNumber = this.currentDay.Meals.length + 1;
         this.nutritionService.addMeal(this.nextMeal).then((data) =>
         {
             this.getMostRecentDay(RequestOptions.Force);
@@ -144,7 +145,7 @@ class NutritionController
     private clearNextMeal(): void
     {
         this.nextMeal = undefined;
-        sessionStorage.removeItem("nextMeal");
+        localStorage.removeItem("nextMeal");
     }
 
     public updateServing(foodId: number, calories: number)

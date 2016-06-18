@@ -15,8 +15,6 @@
     private logout(): void
     {
         this._loginService.logout().then(this._responseService.successCallBack, this._responseService.errorCallBack);
-        //this._loginService.logout().then((data) => this._responseService.successCallBack(data),
-        //    (error) => this._responseService.errorCallBack(error));
     }
 
     private register(username: string, password: string): void
