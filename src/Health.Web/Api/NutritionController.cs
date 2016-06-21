@@ -21,6 +21,13 @@ namespace Health.Web.Api
             return ExecuteQuery(e => e.GetAllData());
         }
 
+        public IActionResult GetNutritonHistory(int days)
+        {
+            if (days <= 0)
+                throw new ArgumentNullException(nameof(days));
+            return ExecuteQuery(e => e.GetNutritionHistory(days));
+        }
+
         public ActionResult GetNutritionTable()
         {
             return ExecuteQuery(e => e.GetNutritionTable());

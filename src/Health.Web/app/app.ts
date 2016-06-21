@@ -4,7 +4,7 @@ var app = angular.module("app", ["iosDblclick", "ui.router"]);
 
 app.config(["$stateProvider", "$urlRouterProvider", ($stateProvider: any, $urlRouterProvider: any) =>
 {
-    $urlRouterProvider.otherwise("/nutrition");
+    $urlRouterProvider.otherwise("/history");
 
     $stateProvider
         .state("nutrition", {
@@ -16,6 +16,11 @@ app.config(["$stateProvider", "$urlRouterProvider", ($stateProvider: any, $urlRo
             url: "/foodlist",
             templateUrl: "app/templates/foodListTemplate.html",
             controller: "foodListController"
+        })
+        .state("history", {
+            url: "/history",
+            templateUrl: "app/templates/historyTemplate.html",
+            controller: "historyController"
         })
         .state("login", {
             url: "/login",

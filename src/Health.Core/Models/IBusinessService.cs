@@ -9,6 +9,7 @@ namespace Health.Core.Models
     {
         List<MealEntry> GetData();
         void AddDefaultData();
+        IEnumerable<object> GetNutritionHistory(int days);
         Food GetFoodByName(string foodName);
         object GetNutritionTable();
         RecentDayModel GetMostRecentDay();

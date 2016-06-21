@@ -40,6 +40,21 @@ namespace Health.Core.EF
             }
         }
 
+        public IEnumerable<object> GetNutritionHistory(int days)
+        {
+            using (var context = new HealthContext())
+            {
+                var history = context.Days.OrderByDescending(day => day.Created).Skip(1).Take(days)
+                    .Include(d => d.Meals).ThenInclude(m => m.MealEntries)
+                    .Select(day => new
+                    {
+                        calories = day.Meals.SelectMany(meal => meal.MealEntries).Sum(mealEntry => mealEntry.Calories),
+                        date = day.Created
+                    }).ToList();
+                return history;
+            }
+        }
+
         public RecentDayModel GetMostRecentDay()
         {
             using (var context = new HealthContext())

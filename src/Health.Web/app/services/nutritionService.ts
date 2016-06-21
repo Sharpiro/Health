@@ -25,6 +25,11 @@
         return this.$http.get("/api/nutrition/getnutritiontable");
     }
 
+    public getNutritionHistory(days: number): ng.IPromise<any>
+    {
+        return this.$http.get(`/api/nutrition/GetNutritonHistory?days=${days}`);
+    }
+
     public addFood(food: any): ng.IPromise<any>
     {
         return this.$http.post("/api/nutrition/addfood", food);
