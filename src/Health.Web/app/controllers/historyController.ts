@@ -1,8 +1,11 @@
 ﻿class HistoryController
 {
     private nutritionTable: Array<IFood>;
-    private array = [{ calories: 2200 }, { calories: 1900 }, { calories: 2500 }, { calories: 3000 }, { calories: 1800 }
-        , { calories: 2500 }, { calories: 2200 }];
+    private history = {
+        Days: [{ Calories: 2200 }, { Calories: 1900 }, { Calories: 2500 }, { Calories: 3000 }, { Calories: 1800 }
+            , { Calories: 2500 }, { Calories: 2200 }],
+        Average: 0
+    };
     private temp = 12;
     private graphHeight = 150;
     private yOffset = 5;
@@ -16,7 +19,7 @@
 
     private getHistory(days: number)
     {
-        this.nutritionService.getNutritionHistory(days).then((data) => this.array = data.data);
+        this.nutritionService.getNutritionHistory(days).then((data) => this.history = data.data);
     }
 
     private getStartY(item: any): number
@@ -27,8 +30,8 @@
 
     private getHeight(item: any): number
     {
-        var temp = this.array.map(obj => obj.calories);
-        var value = (this.graphHeight / Math.max.apply(null, temp)) * item.calories;
+        var temp = this.history.Days.map(obj => obj.Calories);
+        var value = (this.graphHeight / Math.max.apply(null, temp)) * item.Calories;
         return value;
     }
 }
