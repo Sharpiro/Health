@@ -78,6 +78,7 @@ class NutritionController
     {
         this.nutritionService.clearDay().then((data) =>
         {
+            this.clearNextMeal();
             this.getMostRecentDay(RequestOptions.Force);
             return this._responseService.successCallBack(data, "Successfully cleared day.");
         }, this._responseService.errorCallBack);

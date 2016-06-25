@@ -40,6 +40,27 @@ namespace Health.Core.EF
             }
         }
 
+        public NutritionHistoryModel GetNutritionHistory(int days)
+        {
+            using (var context = new HealthContext())
+            {
+                var history = new NutritionHistoryModel
+                {
+                    Days = context.Days.OrderByDescending(day => day.Created).Skip(1).Take(days)
+                    .Include(d => d.Meals).ThenInclude(m => m.MealEntries)
+                    .Select(day => new DayOverviewModel
+                    {
+                        Calories = day.Meals.SelectMany(meal => meal.MealEntries).Sum(mealEntry => mealEntry.Calories),
+                        Date = day.Created
+                    }).ToList()
+                };
+                history.Average = (int)history.Days.Average(day => day.Calories);
+                history.Min = history.Days.Min(day => day.Calories);
+                history.Max = history.Days.Max(day => day.Calories);
+                return history;
+            }
+        }
+
         public RecentDayModel GetMostRecentDay()
         {
             using (var context = new HealthContext())
