@@ -21,10 +21,10 @@
         </div>
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="#/nutrition">Home</a></li>
-                <li><a href="#/foodlist">Foods</a></li>
-                <li><a href="#/history">History</a></li>
-                <li><a href="#/login">Login</a></li>
+                <li ng-click="navCollapsed = !navCollapsed" class="active"><a href="#/nutrition">Home</a></li>
+                <li ng-click="navCollapsed = !navCollapsed"><a href="#/foodlist">Foods</a></li>
+                <li ng-click="navCollapsed = !navCollapsed"><a href="#/history">History</a></li>
+                <li ng-click="navCollapsed = !navCollapsed"><a href="#/login">Login</a></li>
             </ul>
         </div>
     </nav>
