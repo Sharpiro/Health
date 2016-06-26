@@ -9,7 +9,7 @@
     <link href="content/css/site.css" rel="stylesheet" />
 </head>
 <body data-ng-app="app">
-    <nav class="navbar navbar-inverse" role="navigation">
+    <nav class="navbar navbar-inverse" role="navigation" ng-controller="headerController">
         <div class="navbar-header" style="padding-left:15px">
             <button type="button" class="pull-left navbar-toggle" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
                 <span class="sr-only">Toggle navigation</span>
@@ -21,10 +21,10 @@
         </div>
         <div class="collapse navbar-collapse" ng-class="!navCollapsed && 'in'">
             <ul class="nav navbar-nav">
-                <li ng-click="navCollapsed = !navCollapsed" class="active"><a href="#/nutrition">Home</a></li>
-                <li ng-click="navCollapsed = !navCollapsed"><a href="#/foodlist">Foods</a></li>
-                <li ng-click="navCollapsed = !navCollapsed"><a href="#/history">History</a></li>
-                <li ng-click="navCollapsed = !navCollapsed"><a href="#/login">Login</a></li>
+                <li ng-click="navCollapsed = !navCollapsed" ng-class="vm.isActive('/nutrition')"><a href="#/nutrition">Home</a></li>
+                <li ng-click="navCollapsed = !navCollapsed" ng-class="vm.isActive('/foodlist')"><a href="#/foodlist">Foods</a></li>
+                <li ng-click="navCollapsed = !navCollapsed" ng-class="vm.isActive('/history')"><a href="#/history">History</a></li>
+                <li ng-click="navCollapsed = !navCollapsed" ng-class="vm.isActive('/login')"><a href="#/login">Login</a></li>
             </ul>
         </div>
     </nav>
