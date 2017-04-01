@@ -61,6 +61,7 @@
     <Folder Include="dbo\tables" />
     <Folder Include="dbo\post_deployment" />
     <Folder Include="dbo\compares" />
+    <Folder Include="Publish" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\tables\Foods.sql" />
@@ -80,8 +81,8 @@
     <None Include="dbo\post_deployment\FoodsData.sql" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Health.Database.publish.xml" />
     <None Include="dbo\compares\proj_azure_cloudDb.scmp" />
-    <None Include="Health.Database.Azure.publish.xml" />
+    <None Include="Publish\azure.publish.xml" />
+    <None Include="Publish\localdb.publish.xml" />
   </ItemGroup>
 </Project>
