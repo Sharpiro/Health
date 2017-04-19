@@ -7,7 +7,7 @@
 #My Additions
 *.lock.json
 **/app/*.js
-
+**/wwwroot/*
 *.map
 *.vs
 .vs/config/applicationhost.config

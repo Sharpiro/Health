@@ -22,7 +22,7 @@ namespace Health.Next
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseOtherDirectory(env, "node_modules");
+            //app.UseOtherDirectory(env, "node_modules");
             app.UseFileServer();
 
         }
