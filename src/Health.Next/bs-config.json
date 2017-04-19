@@ -1,8 +1,0 @@
-{
-  "server": {
-    "baseDir": "wwwroot",
-    "routes": {
-      "/node_modules": "node_modules"
-    }
-  }
-}
