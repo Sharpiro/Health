@@ -10,3 +10,6 @@
 	CONSTRAINT [FK_MealEntries_Meals] FOREIGN KEY ([MealId]) REFERENCES [dbo].[Meals]([Id])
 	CONSTRAINT [FK_MealEntries_Foods] FOREIGN KEY ([FoodId]) REFERENCES [dbo].[Foods]([Id])
 )
+GO
+
+CREATE UNIQUE NONCLUSTERED INDEX IX_MealEntries_X ON dbo.MealEntries (MealEntryNumber, MealId)

@@ -5,8 +5,8 @@ using Health.Core.EF.Extensions;
 using Health.Core.Entities;
 using Health.Core.Models;
 using Health.Core.Models.ViewModels;
-using Microsoft.Data.Entity;
-using VNextTools.Core.Extensions;
+using Microsoft.EntityFrameworkCore;
+using DotnetCoreTools.Core.Extensions;
 
 namespace Health.Core.EF
 {
@@ -37,6 +37,27 @@ namespace Health.Core.EF
             {
                 var days = context.Days.Include(d => d.Meals).ThenInclude(m => m.MealEntries).ThenInclude(me => me.Food).ToList();
                 return days;
+            }
+        }
+
+        public NutritionHistoryModel GetNutritionHistory(int days)
+        {
+            using (var context = new HealthContext())
+            {
+                var history = new NutritionHistoryModel
+                {
+                    Days = context.Days.OrderByDescending(day => day.Created).Skip(1).Take(days)
+                    .Include(d => d.Meals).ThenInclude(m => m.MealEntries)
+                    .Select(day => new DayOverviewModel
+                    {
+                        Calories = day.Meals.SelectMany(meal => meal.MealEntries).Sum(mealEntry => mealEntry.Calories),
+                        Date = day.Created
+                    }).ToList()
+                };
+                history.Average = (int)history.Days.Average(day => day.Calories);
+                history.Min = history.Days.Min(day => day.Calories);
+                history.Max = history.Days.Max(day => day.Calories);
+                return history;
             }
         }
 
@@ -156,11 +177,9 @@ namespace Health.Core.EF
         {
             using (var context = new HealthContext())
             {
-                var now = DateTime.UtcNow;
-                var day = new Day
-                {
-                    Created = new DateTime(now.Year, now.Month, now.Day)
-                };
+                var eastCoastDiff = TimeSpan.FromHours(4);
+                var now = DateTime.Now == DateTime.UtcNow ? DateTime.UtcNow.Subtract(eastCoastDiff) : DateTime.Now;
+                var day = new Day { Created = new DateTime(now.Year, now.Month, now.Day) };
                 context.Days.Add(day);
                 context.SaveChanges();
             }
@@ -189,7 +208,7 @@ namespace Health.Core.EF
                         Id = d.Id,
                         TotalCalories = d.Meals.SelectMany(m => m.MealEntries).ToList().Select(me => me.Calories).ToList().Sum()
                     }).ToList();
-                    
+
 
                 return dayCalories;
             }
@@ -200,7 +219,7 @@ namespace Health.Core.EF
             var invalidDays = GetCalorieCountAllDays().Where(d => d.TotalCalories < 1500).ToList();
             if (!invalidDays.Any())
                 throw new NullReferenceException("No invalid days were found");
-            invalidDays.Do(d => DeleteDay(d.Id));
+            invalidDays.ForEach(d => DeleteDay(d.Id));
         }
 
         public void DeleteDay(int id)

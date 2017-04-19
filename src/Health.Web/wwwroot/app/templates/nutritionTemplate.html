@@ -6,13 +6,17 @@
                     <div class="col-md-12">
                         <h4>Enter Calories</h4>
                         <label class="">Food:</label>
-                        <select class="form-control" ng-change="vm.dropDownUpdate(vm.activeFood.Id)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="vm.activeFood.Id"></select>
+                        <select class="form-control" ng-change="vm.dropDownUpdate(vm.dropDownFoodId)" ng-options="item.Id as item.Name for item in vm.nutritionData" ng-model="vm.dropDownFoodId"></select>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-xs-6">
                         <label>Calories:</label>
-                        <input class="form-control" type="number" ng-model="vm.activeFood.Calories"/>
+                        <input class="form-control" type="number" ng-model="vm.activeFood.Calories" ng-change="vm.updateServing(vm.activeFood.Id, vm.activeFood.Calories)" />
+                    </div>
+                    <div class="col-xs-6">
+                        <label>Serving Size:</label>
+                        <input class="form-control" type="number" ng-model="vm.activeFood.ServingSize" ng-change="vm.updateCalories(vm.activeFood.Id, vm.activeFood.ServingSize)" />
                     </div>
                 </div>
                 <div class="row">
@@ -79,7 +83,6 @@
             <h4>Functions</h4>
             <button class="btn btn-default" ng-click="vm.addDay()">Add Day</button>
             <button class="btn btn-default" ng-click="vm.clearDay()">Clear Day</button>
-            <!--<button class="btn btn-default" ng-click="vm.deleteDay()">Delete Day</button>-->
             <button class="btn btn-default" ng-click="vm.deleteInvalidDays()">Prune Days</button>
         </div>
     </div>

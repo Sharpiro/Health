@@ -1,7 +1,22 @@
 {
-	"Data": {
-		"DefaultConnection": {
-			"ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;"
-		}
-	}
+  "Data": {
+    "DefaultConnection": {
+      "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;",
+      "name": "DefaultConnection"
+    },
+    "ConnectionStrings": [
+      {
+        "name": "abc123",
+        "value": "abc123",
+        "ConnectionString": "ac123"
+      }
+    ]
+  },
+  "ConnectionStrings": [
+    {
+      "name": "abc123",
+      "value": "abc123",
+      "ConnectionString": "ac123"
+    }
+  ]
 }

@@ -1,11 +1,8 @@
 ﻿{
-    "Data": {
-        "DefaultConnection": {
-            "ConnectionString": "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;"
-        },
-        "TokenAuthority": {
-            "http": "http://localhost:59849/",
-            "https":  "https://localhost:44301/"
-        }
-    }
+  "Data": {
+
+  },
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;"
+  }
 }

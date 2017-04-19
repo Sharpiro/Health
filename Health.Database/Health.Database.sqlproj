@@ -60,12 +60,20 @@
     <Folder Include="dbo" />
     <Folder Include="dbo\tables" />
     <Folder Include="dbo\post_deployment" />
+    <Folder Include="dbo\compares" />
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\tables\Foods.sql" />
     <Build Include="dbo\tables\MealEntries.sql" />
     <Build Include="dbo\tables\Meals.sql" />
     <Build Include="dbo\tables\Days.sql" />
+    <Build Include="dbo\tables\AspNetRoles.sql" />
+    <Build Include="dbo\tables\AspNetUsers.sql" />
+    <Build Include="dbo\tables\AspNetUserTokens.sql" />
+    <Build Include="dbo\tables\AspNetRoleClaims.sql" />
+    <Build Include="dbo\tables\AspNetUserClaims.sql" />
+    <Build Include="dbo\tables\AspNetUserLogins.sql" />
+    <Build Include="dbo\tables\AspNetUserRoles.sql" />
   </ItemGroup>
   <ItemGroup>
     <PostDeploy Include="dbo\post_deployment\PostDeployment.sql" />
@@ -73,5 +81,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Health.Database.publish.xml" />
+    <None Include="dbo\compares\proj_azure_cloudDb.scmp" />
+    <None Include="Health.Database.Azure.publish.xml" />
   </ItemGroup>
 </Project>

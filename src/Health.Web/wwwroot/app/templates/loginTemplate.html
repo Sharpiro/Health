@@ -8,11 +8,13 @@
             </div>
             <div class="row">
                 <label>Password</label>
-                <input class="form-control" type="text" ng-model="password" />
+                <input class="form-control" type="password" ng-model="password" />
             </div>
             <div class="row">
                 <button class="form-control" ng-click="vm.login(userName, password)">Login</button>
-                <button class="form-control" ng-click="vm.getProtectedData()">Get Data</button>
+                <button class="form-control" ng-click="vm.register(userName, password)">Register</button>
+                <button class="form-control" ng-click="vm.logout()">Logout</button>
+                <button class="form-control" ng-click="vm.getData()">Get Data</button>
             </div>
         </form>
     </div>

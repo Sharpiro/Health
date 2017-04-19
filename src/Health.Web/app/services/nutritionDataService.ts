@@ -57,6 +57,7 @@
     public getFoodById(foodId: number): string
     {
         var food: string;
+        if (!this.nutritionTable) return;
         this.nutritionTable.forEach((value) =>
         {
             if (value.Id === foodId)
