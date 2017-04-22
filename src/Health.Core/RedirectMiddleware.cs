@@ -23,19 +23,12 @@ namespace Health.Core
                 if (context.Response.StatusCode == StatusCodes.Status401Unauthorized
                 && context.Response.ContentType == null)
                 {
-                    try
-                    {
-                        context.Response.ContentType = "application/json";
-                        var response = Get401Result("Authorization has been denied for this request");
-                        var jsonString = JsonConvert.SerializeObject(response);
-                        var buffer = Encoding.UTF8.GetBytes(jsonString);
-                        //context.Response.Body = new MemoryStream();
-                        await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
-                    }
-                    catch (Exception ex)
-                    {
-                        throw;
-                    }
+                    context.Response.ContentType = "application/json";
+                    var response = Get401Result("Authorization has been denied for this request");
+                    var jsonString = JsonConvert.SerializeObject(response);
+                    var buffer = Encoding.UTF8.GetBytes(jsonString);
+                    //context.Response.Body = new MemoryStream();
+                    await context.Response.Body.WriteAsync(buffer, 0, buffer.Length);
                 }
             });
             await _next.Invoke(context);
