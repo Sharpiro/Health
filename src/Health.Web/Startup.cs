@@ -32,6 +32,7 @@ namespace Health.Web
             services.AddTransient<HealthContext, HealthContext>();
             services.AddIdentity<IdentityUser, IdentityRole>(options =>
             {
+                options.Cookies.ApplicationCookie.SlidingExpiration = true;
                 options.Cookies.ApplicationCookie.AutomaticChallenge = false;
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;

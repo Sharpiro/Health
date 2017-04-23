@@ -27,7 +27,7 @@
 
     public getNutritionHistory(days: number): ng.IPromise<any>
     {
-        return this.$http.get(`/api/nutrition/GetNutritonHistory?days=${days}`);
+        return this.$http.get(`/api/nutrition/GetNutritionHistory?days=${days}`);
     }
 
     public addFood(food: any): ng.IPromise<any>
