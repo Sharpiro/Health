@@ -13,47 +13,46 @@ namespace Health.Next
 {
     public class Startup
     {
-        private readonly IConfiguration _configuration;
+        //private readonly IConfiguration _configuration;
 
-        public Startup(IHostingEnvironment env)
+        public Startup()
         {
-            var builder = new ConfigurationBuilder()
-            .SetBasePath(env.ContentRootPath)
-            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-            .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
-            .AddEnvironmentVariables();
-            _configuration = builder.Build();
+            //var builder = new ConfigurationBuilder()
+            //.SetBasePath(env.ContentRootPath)
+            //.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            //.AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+            //.AddEnvironmentVariables();
+            //_configuration = builder.Build();
         }
 
-        public void ConfigureServices(IServiceCollection services)
+        public void ConfigureServices()
         {
-            //services.AddTransient(factory =>
-            //    new MapperConfiguration(cfg =>
-            //        cfg.AddProfile<MappingProfile>()).CreateMapper()
-            //);
-            services.AddMvc();
-            services.AddScoped<HealthContext>();
-            services.AddScoped<HealthService>();
-            services.AddDbContext<HealthContext>(options =>
-                options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
-            //services.AddEntityFrameworkSqlServer();
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<HealthContext>()
-                .AddDefaultTokenProviders();
+            ////services.AddTransient(factory =>
+            ////    new MapperConfiguration(cfg =>
+            ////        cfg.AddProfile<MappingProfile>()).CreateMapper()
+            ////);
+            //services.AddMvc();
+            //services.AddScoped<HealthContext>();
+            //services.AddScoped<HealthService>();
+            //services.AddDbContext<HealthContext>(options =>
+            //    options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
+            //services.AddIdentity<IdentityUser, IdentityRole>()
+            //    .AddEntityFrameworkStores<HealthContext>()
+            //    .AddDefaultTokenProviders();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure()
         {
-            loggerFactory.AddConsole();
+            //loggerFactory.AddConsole();
 
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            //if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            //app.UseOtherDirectory(env, "node_modules");
-            app.UseMvc(builder =>
-            {
-                builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}/{id?}");
-            });
-            app.UseFileServer();
+            ////app.UseOtherDirectory(env, "node_modules");
+            //app.UseMvc(builder =>
+            //{
+            //    builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}/{id?}");
+            //});
+            //app.UseFileServer();
         }
 
         public static void Main(string[] args)
