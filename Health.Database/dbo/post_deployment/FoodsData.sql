@@ -13,7 +13,7 @@ USING (VALUES
 	(16, 150, N'Potatoes', 213, 34, 0, 4, 969, 4, N'grams', 38, 3),
 	(17, 130, N'Cheeto-Crunch', 28, 20, 5, 0, 60, 2, N'grams', 230, 0),
 	(18, 150, N'Cheeto-Puff', 28, 16, 9, 0, 0, 2, N'grams', 290, 1),
-	(19, 100, N'Yasso-Pop', 1, 16, 2, 1, 0, 5, N'item', 40, 13),
+	(19, 80, N'Yasso-Pop', 1, 16, 2, 1, 0, 5, N'item', 40, 13),
 	(20, 150, N'Yasso-Bar', 1, 16, 8, 1, 0, 4, N'item', 40, 12),
 	(21, 140, N'Waffles', 2, 27, 3, 3, 110, 4, N'item', 380, 3),
 	(22, 360, N'Strudles', 2, 54, 14, 1, 0, 4, N'item', 360, 20),

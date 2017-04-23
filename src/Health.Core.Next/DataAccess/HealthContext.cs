@@ -10,5 +10,7 @@ namespace Health.Core.Next.DataAccess
         internal DbSet<Meal> Meals { get; set; }
         internal DbSet<MealEntry> MealEntries { get; set; }
         internal DbSet<Food> Foods { get; set; }
+
+        public HealthContext(DbContextOptions<HealthContext> options) : base(options) { }
     }
 }
