@@ -42,6 +42,7 @@ namespace Health.Next
             services.AddIdentity<IdentityUser, IdentityRole>()
                 .AddEntityFrameworkStores<HealthContext>()
                 .AddDefaultTokenProviders();
+            services.AddCors();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
@@ -51,6 +52,7 @@ namespace Health.Next
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             //app.UseOtherDirectory(env, "node_modules");
+            app.UseCors(builder => builder.WithOrigins("http://localhost:4200"));
             app.UseMvc(builder =>
             {
                 builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}/{id?}");
