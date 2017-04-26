@@ -1,19 +1,19 @@
 <!--<ng2-smart-table class="grid" [settings]="settings" [source]="data"></ng2-smart-table>-->
 
-<table>
-    <th>name</th>
-    <th>calories</th>
-    <th>protein</th>
-    <th>fat</th>
-    <th>carbs</th>
-    <th>sugar</th>
-    <th>servingSize</th>
-    <th>servingName</th>
-    <th>fiber</th>
-    <th>sodium</th>
-    <th>potassium</th>
-    <tr *ngFor="let food of data">
-        <td>{{food.name}}</td>
+<table class="table table-condensed table-hover grid">
+    <th>Name</th>
+    <th>Calories</th>
+    <th>Protein</th>
+    <th>Fat</th>
+    <th>Carbs</th>
+    <th>Sugar</th>
+    <th>ServingSize</th>
+    <th>ServingName</th>
+    <th>Fiber</th>
+    <th>Sodium</th>
+    <th>Potassium</th>
+    <tr *ngFor="let food of data" (click)="rowClicked(food)" [ngClass]="{highlightedRow: isHighlighted(food)}" (keypress)="eventHandler($event, food)">
+        <td><input class="cell" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)"/></td>
         <td>{{food.calories}}</td>
         <td>{{food.protein}}</td>
         <td>{{food.fat}}</td>

@@ -63,4 +63,19 @@ export class FoodsComponent implements OnInit {
     // });
     // this.data = this.otherData;
   }
+
+  private rowClicked(food: any): void {
+    food.clicked = !food.clicked;
+    console.log(`clicked ${food.name}`);
+  }
+
+  private isHighlighted(food: any): boolean {
+    return food.clicked;
+  }
+
+  private eventHandler(event, food: any) {
+    // food.clicked = false;
+    console.log(`keyed ${food.name}`);
+    console.log(event, event.keyCode, event.keyIdentifier);
+  }
 }
