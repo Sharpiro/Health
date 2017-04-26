@@ -1,1 +1,28 @@
-<ng2-smart-table class="grid" [settings]="settings" [source]="data"></ng2-smart-table>
+<!--<ng2-smart-table class="grid" [settings]="settings" [source]="data"></ng2-smart-table>-->
+
+<table>
+    <th>name</th>
+    <th>calories</th>
+    <th>protein</th>
+    <th>fat</th>
+    <th>carbs</th>
+    <th>sugar</th>
+    <th>servingSize</th>
+    <th>servingName</th>
+    <th>fiber</th>
+    <th>sodium</th>
+    <th>potassium</th>
+    <tr *ngFor="let food of data">
+        <td>{{food.name}}</td>
+        <td>{{food.calories}}</td>
+        <td>{{food.protein}}</td>
+        <td>{{food.fat}}</td>
+        <td>{{food.carbs}}</td>
+        <td>{{food.sugar}}</td>
+        <td>{{food.servingSize}}</td>
+        <td>{{food.servingName}}</td>
+        <td>{{food.fiber}}</td>
+        <td>{{food.sodium}}</td>
+        <td>{{food.potassium}}</td>
+    </tr>
+</table>
