@@ -12,8 +12,9 @@
     <th>Fiber</th>
     <th>Sodium</th>
     <th>Potassium</th>
-    <tr *ngFor="let food of data" (click)="rowClicked(food)" [ngClass]="{highlightedRow: isHighlighted(food)}" (keypress)="eventHandler($event, food)">
-        <td><input class="cell" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)"/></td>
+    <tr *ngFor="let food of data" (contextmenu)="onContextMenu($event, food)" [ngClass]="{highlightedRow: isHighlighted(food)}"
+        (keypress)="eventHandler($event, food)">
+        <td><input class="cell" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)" /></td>
         <td>{{food.calories}}</td>
         <td>{{food.protein}}</td>
         <td>{{food.fat}}</td>
@@ -26,3 +27,8 @@
         <td>{{food.potassium}}</td>
     </tr>
 </table>
+
+<ul>
+    <li *ngFor="let item of items" (contextmenu)="onContextMenu($event, item)">Right Click: {{item.name}}</li>
+</ul>
+<context-menu></context-menu>

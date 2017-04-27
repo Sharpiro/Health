@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
+import { ContextMenuService, ContextMenuComponent } from 'angular2-contextmenu';
 
 @Component({
   selector: 'app-foods',
@@ -7,61 +8,20 @@ import { NutritionService } from "app/nutrition/nutrition.service";
   styleUrls: ['./foods.component.css']
 })
 export class FoodsComponent implements OnInit {
-  // private settings = {
-  //   columns: {
-  //     name: {
-  //       title: 'name'
-  //     },
-  //     calories: {
-  //       title: 'calories'
-  //     },
-  //     protein: {
-  //       title: 'protein'
-  //     },
-  //     fat: {
-  //       title: 'fat'
-  //     },
-  //     carbs: {
-  //       title: 'carbs'
-  //     },
-  //     sugar: {
-  //       title: 'sugar'
-  //     },
-  //     servingSize: {
-  //       title: 'servingSize'
-  //     },
-  //     servingName: {
-  //       title: 'servingName'
-  //     },
-  //     fiber: {
-  //       title: 'fiber'
-  //     },
-  //     sodium: {
-  //       title: 'sodium'
-  //     },
-  //     potassium: {
-  //       title: 'potassium'
-  //     }
-  //   }
-  // };
-  private data = [
-    { name: "Chicken", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-  ];
-  // private otherData = [
-  //   { name: "ChickenX", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-  // ];
 
-  constructor(private nutritionService: NutritionService) { }
+  private data: Array<any>;
+
+  public items = [
+    { name: 'John', otherProperty: 'Foo' },
+    { name: 'Joe', otherProperty: 'Bar' }
+  ];
+
+  @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
+
+  constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
 
   async ngOnInit() {
     this.data = await this.nutritionService.getAllFoods().toPromise();
-    // this.nutritionService.getAllFoods().subscribe(value => {
-    //   this.data = value;
-    // });
-    // var temp2 = temp.slice(0, 1).map(f => {
-    //   return { name: "ChickenX", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-    // });
-    // this.data = this.otherData;
   }
 
   private rowClicked(food: any): void {
@@ -77,5 +37,20 @@ export class FoodsComponent implements OnInit {
     // food.clicked = false;
     console.log(`keyed ${food.name}`);
     console.log(event, event.keyCode, event.keyIdentifier);
+  }
+
+  public onContextMenu($event: MouseEvent, food: any): void {
+    this.contextMenuService.show.next({
+      actions: [
+        {
+          html: (food) => `Activate`,
+          click: (food) => this.rowClicked(food)
+        }
+      ],
+      event: $event,
+      item: food,
+    });
+    $event.preventDefault();
+    $event.stopPropagation();
   }
 }
