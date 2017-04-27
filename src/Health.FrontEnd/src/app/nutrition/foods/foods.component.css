@@ -19,4 +19,9 @@ th{
     font-family: inherit;
     font-size: inherit;
     text-align: center;
+    width: 100%
+}
+
+.active{
+    background-color: white;
 }

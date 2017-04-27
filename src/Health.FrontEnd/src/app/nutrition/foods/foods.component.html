@@ -1,5 +1,3 @@
-<!--<ng2-smart-table class="grid" [settings]="settings" [source]="data"></ng2-smart-table>-->
-
 <table class="table table-condensed table-hover grid">
     <th>Name</th>
     <th>Calories</th>
@@ -12,23 +10,24 @@
     <th>Fiber</th>
     <th>Sodium</th>
     <th>Potassium</th>
-    <tr *ngFor="let food of data" (contextmenu)="onContextMenu($event, food)" [ngClass]="{highlightedRow: isHighlighted(food)}"
+    <tr *ngFor="let food of data" [contextMenu]="basicMenu" [contextMenuSubject]="food" [ngClass]="{highlightedRow: isHighlighted(food)}"
         (keypress)="eventHandler($event, food)">
-        <td><input class="cell" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)" /></td>
-        <td>{{food.calories}}</td>
-        <td>{{food.protein}}</td>
-        <td>{{food.fat}}</td>
-        <td>{{food.carbs}}</td>
-        <td>{{food.sugar}}</td>
-        <td>{{food.servingSize}}</td>
-        <td>{{food.servingName}}</td>
-        <td>{{food.fiber}}</td>
-        <td>{{food.sodium}}</td>
-        <td>{{food.potassium}}</td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.calories" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.protein" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.fat" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.carbs" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.sugar" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.servingSize" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.servingName" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.fiber" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.sodium" [readonly]="!isHighlighted(food)" /></td>
+        <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.potassium" [readonly]="!isHighlighted(food)" /></td>
     </tr>
 </table>
 
-<ul>
-    <li *ngFor="let item of items" (contextmenu)="onContextMenu($event, item)">Right Click: {{item.name}}</li>
-</ul>
-<context-menu></context-menu>
+<context-menu>
+    <ng-template contextMenuItem (execute)="rowClicked($event.item)">
+        Edit
+    </ng-template>
+</context-menu>

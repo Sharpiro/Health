@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { NutritionRoutingModule } from './nutrition-routing.module';
 import { FoodsComponent } from './foods/foods.component';
 import { NutritionComponent } from './nutrition.component';
-import { ContextMenuModule } from 'angular2-contextmenu';
+import { ContextMenuModule } from 'ngx-contextmenu';
 
 @NgModule({
   imports: [

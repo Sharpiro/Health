@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
-import { ContextMenuService, ContextMenuComponent } from 'angular2-contextmenu';
+import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 
 @Component({
   selector: 'app-foods',
@@ -16,7 +16,7 @@ export class FoodsComponent implements OnInit {
     { name: 'Joe', otherProperty: 'Bar' }
   ];
 
-  @ViewChild('basicMenu') public basicMenu: ContextMenuComponent;
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
 
@@ -35,22 +35,9 @@ export class FoodsComponent implements OnInit {
 
   private eventHandler(event, food: any) {
     // food.clicked = false;
+    if (event.keyCode !== 13) return;
+    food.clicked = false;
     console.log(`keyed ${food.name}`);
     console.log(event, event.keyCode, event.keyIdentifier);
-  }
-
-  public onContextMenu($event: MouseEvent, food: any): void {
-    this.contextMenuService.show.next({
-      actions: [
-        {
-          html: (food) => `Activate`,
-          click: (food) => this.rowClicked(food)
-        }
-      ],
-      event: $event,
-      item: food,
-    });
-    $event.preventDefault();
-    $event.stopPropagation();
   }
 }
