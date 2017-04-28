@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Health.Core.Next.DataAccess;
+using Health.Core.Next.DataAccess.Entities;
 using Health.Core.Next.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,8 @@ namespace Health.Core.Next.Services
 
         public FoodDto Get(int id)
         {
+            if (id <= 0) throw new ArgumentOutOfRangeException(nameof(id));
+
             var foodEntity = _healthContext.Foods.Find(id);
             var foodDto = _mapper.Map<FoodDto>(foodEntity);
             return foodDto;
@@ -30,6 +33,16 @@ namespace Health.Core.Next.Services
             var foodEntities = _healthContext.Foods.ToList();
             var foodDtos = foodEntities.Select(_mapper.Map<FoodDto>);
             return foodDtos;
+        }
+
+        public void UpdateFood(FoodDto foodDto)
+        {
+            if (foodDto == null) throw new ArgumentNullException(nameof(foodDto));
+            if (foodDto.Id <= 0) throw new ArgumentException($"Must provide a valid Id when updating an entity. Id: {foodDto.Id}");
+
+            var foodEntity = _mapper.Map<Food>(foodDto);
+            _healthContext.Foods.Update(foodEntity);
+            _healthContext.SaveChanges();
         }
     }
 }

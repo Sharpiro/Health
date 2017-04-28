@@ -10,7 +10,7 @@
     <th>Fiber</th>
     <th>Sodium</th>
     <th>Potassium</th>
-    <tr *ngFor="let food of data" [contextMenu]="basicMenu" [contextMenuSubject]="food" [ngClass]="{highlightedRow: isHighlighted(food)}"
+    <tr *ngFor="let food of data" [contextMenu]="basicMenu" [contextMenuSubject]="food"
         (keypress)="eventHandler($event, food)">
         <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.name" [readonly]="!isHighlighted(food)" /></td>
         <td><input class="cell" [ngClass]="{active: isHighlighted(food)}" [(ngModel)]="food.calories" [readonly]="!isHighlighted(food)" /></td>

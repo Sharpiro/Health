@@ -3,15 +3,13 @@
     font-size: 20px;
     width: 100%;
     text-align: center;
+    background-color: lightgray;
 }
 
 th{
     text-align: center;
 }
 
-.highlightedRow{
-    background-color: yellow;
-}
 .cell{
     border: none;
     outline: none;
