@@ -9,6 +9,7 @@ namespace Health.Core.Next.Tools
         public MappingProfile()
         {
             CreateMap<Food, FoodDto>();
+            CreateMap<FoodDto, Food>();
         }
     }
 }

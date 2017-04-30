@@ -31,7 +31,7 @@ namespace Health.Next.API
         }
 
         [HttpPut]
-        public void Update(FoodDto foodDto)
+        public void Update([FromBody]FoodDto foodDto)
         {
             _foodService.UpdateFood(foodDto);
         }

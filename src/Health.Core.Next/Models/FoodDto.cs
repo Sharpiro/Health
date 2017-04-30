@@ -14,5 +14,6 @@
         public int? Fiber { get; set; }
         public int? Sodium { get; set; }
         public int? Potassium { get; set; }
+        public bool IsActive { get; set; }
     }
 }

@@ -35,6 +35,13 @@ namespace Health.Core.Next.Services
             return foodDtos;
         }
 
+        public IEnumerable<FoodDto> GetAllActive()
+        {
+            var foodEntities = _healthContext.Foods.Where(f => f.IsActive).ToList();
+            var foodDtos = foodEntities.Select(_mapper.Map<FoodDto>);
+            return foodDtos;
+        }
+
         public void UpdateFood(FoodDto foodDto)
         {
             if (foodDto == null) throw new ArgumentNullException(nameof(foodDto));

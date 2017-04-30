@@ -1,6 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
+import { IFood } from "app/nutrition/shared/ifood";
+import { KeyCode } from "app/nutrition/shared/keycode";
 
 @Component({
   selector: 'app-foods',
@@ -11,11 +13,6 @@ export class FoodsComponent implements OnInit {
 
   private data: Array<any>;
 
-  public items = [
-    { name: 'John', otherProperty: 'Foo' },
-    { name: 'Joe', otherProperty: 'Bar' }
-  ];
-
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
@@ -24,20 +21,39 @@ export class FoodsComponent implements OnInit {
     this.data = await this.nutritionService.getAllFoods().toPromise();
   }
 
-  private rowClicked(food: any): void {
-    food.clicked = !food.clicked;
-    console.log(`clicked ${food.name}`);
+  private async checkBoxChangeHandler(food: IFood, propertyName: string) {
+    var x: boolean = food[propertyName];
+    food[propertyName] = !food[propertyName]
+    await this.nutritionService.updateFood(food);
+    console.log(`updated ${food.id}: ${food.name} as active: ${food.isActive} in database`);
   }
 
-  private isHighlighted(food: any): boolean {
-    return food.clicked;
-  }
+  private async eventHandler(event: KeyboardEvent, food: IFood, propertyName: string, element: HTMLInputElement) {
+    // console.log(event, event.keyCode);
+    if (!food.clicked) return;
+    if (event.keyCode === KeyCode.Esc) resetElement();
+    if (event.keyCode !== KeyCode.Enter && event.keyCode !== KeyCode.Tab) return;
+    var oldValue = food[propertyName].toString();
+    let newValue = element.value;
+    if (event.keyCode === 13) {
+      food.clicked = false;
+    }
+    if (newValue === oldValue)
+      return;
+    if (newValue === '') {
+      resetElement();
+      return;
+    }
+    console.log(`old ${propertyName} ${oldValue}`);
+    console.log(`new ${propertyName} ${newValue}`);
+    food[propertyName] = newValue;
+    await this.nutritionService.updateFood(food);
+    console.log(`updated ${food.id}: ${food.name} in database`);
 
-  private eventHandler(event, food: any) {
-    // food.clicked = false;
-    if (event.keyCode !== 13) return;
-    food.clicked = false;
-    console.log(`keyed ${food.name}`);
-    console.log(event, event.keyCode, event.keyIdentifier);
+    function resetElement() {
+      console.log("resetting..");
+      element.value = food[propertyName];
+      food.clicked = false;
+    }
   }
 }
