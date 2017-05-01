@@ -30,6 +30,12 @@ namespace Health.Next.API
             return _foodService.GetAll();
         }
 
+        [HttpGet]
+        public IEnumerable<FoodDto> GetAllActive()
+        {
+            return _foodService.GetAllActive();
+        }
+
         [HttpPut]
         public void Update([FromBody]FoodDto foodDto)
         {

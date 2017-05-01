@@ -1,0 +1,13 @@
+/*.forms{
+    width:25%;
+}
+
+#filterBox{
+    width: 25%;
+}*/
+
+  input[type="search"]::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+  }
+
+  .top-buffer { margin-top:20px; }

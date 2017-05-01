@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+      <div class="h4">Food</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6">
+      <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="filterString
+          " (ngModelChange)="updateFilter($event) " />
+    </div>
+    <div class="col-xs-6">
+      <select class="form-control forms " [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
+        <option *ngFor="let food of filteredFoods " [ngValue]="food ">{{food.name}}</option>
+      </select>
+    </div>
+  </div>
+
+  <!--<input class="form-control forms " list="testList " type=" " [(ngModel)]="selectedFood " (change)="onChange(food) " />
+      <datalist id="testList " >
+        <option *ngFor="let food of allActiveFoods ">{{food.name}}</option>
+      </datalist>-->
+  <div *ngIf="selectedFood">
+    <div class="row top-buffer">
+      <div class="col-xs-6 ">
+        <div class="h4">Calories</div>
+        <input class="form-control " type="number" [(ngModel)]="activeMealEntry.calories" (ngModelChange)="updateServing()">
+      </div>
+      <div class="col-xs-6 ">
+        <div class="h4">Serving Size</div>
+        <input class="form-control" type="number" [(ngModel)]="activeMealEntry.servingSize" (ngModelChange)="updateCalories()">
+      </div>
+    </div>
+    <div class="row top-buffer ">
+      <div class="col-md-12 ">
+        <button (click)="addFood() ">Add Food</button>
+      </div>
+    </div>
+    <div class="row" *ngIf="mealEntries.length > 0">
+      <div class="col-md-12 ">
+        <table class="table">
+          <th>id</th>
+          <th>mealEntryNumber</th>
+          <th>mealId</th>
+          <th>foodId</th>
+          <th>calories</th>
+          <tr *ngFor="let mealEntry of mealEntries">
+            <td>{{mealEntry.id}}</td>
+            <td>{{mealEntry.mealEntryNumber}}</td>
+            <td>{{mealEntry.mealId}}</td>
+            <td>{{mealEntry.foodId}}</td>
+            <td>{{mealEntry.calories}}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

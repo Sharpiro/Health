@@ -3,6 +3,7 @@ import { NutritionService } from "app/nutrition/nutrition.service";
 import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
 import { IFood } from "app/nutrition/shared/ifood";
 import { KeyCode } from "app/nutrition/shared/keycode";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-foods',
@@ -11,14 +12,14 @@ import { KeyCode } from "app/nutrition/shared/keycode";
 })
 export class FoodsComponent implements OnInit {
 
-  private data: Array<any>;
+  private data: Array<IFood> = [];
 
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
   constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
 
   async ngOnInit() {
-    this.data = await this.nutritionService.getAllFoods().toPromise();
+    await this.nutritionService.getAllFoods().subscribe(value => this.data = value);
   }
 
   private async checkBoxChangeHandler(food: IFood, propertyName: string) {

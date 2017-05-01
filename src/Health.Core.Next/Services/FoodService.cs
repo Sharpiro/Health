@@ -30,14 +30,14 @@ namespace Health.Core.Next.Services
 
         public IEnumerable<FoodDto> GetAll()
         {
-            var foodEntities = _healthContext.Foods.ToList();
+            var foodEntities = _healthContext.Foods.OrderBy(f => f.Name).ToList();
             var foodDtos = foodEntities.Select(_mapper.Map<FoodDto>);
             return foodDtos;
         }
 
         public IEnumerable<FoodDto> GetAllActive()
         {
-            var foodEntities = _healthContext.Foods.Where(f => f.IsActive).ToList();
+            var foodEntities = _healthContext.Foods.Where(f => f.IsActive).OrderBy(f => f.Name).ToList();
             var foodDtos = foodEntities.Select(_mapper.Map<FoodDto>);
             return foodDtos;
         }
