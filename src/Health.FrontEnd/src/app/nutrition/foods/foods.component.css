@@ -1,17 +1,15 @@
 .grid{
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 20px;
+    font-size: 14px;
     width: 100%;
     text-align: center;
+    background-color: lightgray;
 }
 
 th{
     text-align: center;
 }
 
-.highlightedRow{
-    background-color: yellow;
-}
 .cell{
     border: none;
     outline: none;
@@ -19,4 +17,9 @@ th{
     font-family: inherit;
     font-size: inherit;
     text-align: center;
+    width: 100%
+}
+
+.active{
+    background-color: white;
 }

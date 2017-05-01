@@ -1,5 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
+import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
+import { IFood } from "app/nutrition/shared/ifood";
+import { KeyCode } from "app/nutrition/shared/keycode";
 
 @Component({
   selector: 'app-foods',
@@ -7,75 +10,54 @@ import { NutritionService } from "app/nutrition/nutrition.service";
   styleUrls: ['./foods.component.css']
 })
 export class FoodsComponent implements OnInit {
-  // private settings = {
-  //   columns: {
-  //     name: {
-  //       title: 'name'
-  //     },
-  //     calories: {
-  //       title: 'calories'
-  //     },
-  //     protein: {
-  //       title: 'protein'
-  //     },
-  //     fat: {
-  //       title: 'fat'
-  //     },
-  //     carbs: {
-  //       title: 'carbs'
-  //     },
-  //     sugar: {
-  //       title: 'sugar'
-  //     },
-  //     servingSize: {
-  //       title: 'servingSize'
-  //     },
-  //     servingName: {
-  //       title: 'servingName'
-  //     },
-  //     fiber: {
-  //       title: 'fiber'
-  //     },
-  //     sodium: {
-  //       title: 'sodium'
-  //     },
-  //     potassium: {
-  //       title: 'potassium'
-  //     }
-  //   }
-  // };
-  private data = [
-    { name: "Chicken", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-  ];
-  // private otherData = [
-  //   { name: "ChickenX", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-  // ];
 
-  constructor(private nutritionService: NutritionService) { }
+  private data: Array<any>;
+
+  @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
+
+  constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
 
   async ngOnInit() {
     this.data = await this.nutritionService.getAllFoods().toPromise();
-    // this.nutritionService.getAllFoods().subscribe(value => {
-    //   this.data = value;
-    // });
-    // var temp2 = temp.slice(0, 1).map(f => {
-    //   return { name: "ChickenX", "calories": 120, "protein": 26, "fat": 1, "carbs": 0, "sugar": 0, "servingSize": 4, "servingName": "oz", "fiber": 0, "sodium": 50, "potassium": 0 }
-    // });
-    // this.data = this.otherData;
   }
 
-  private rowClicked(food: any): void {
-    food.clicked = !food.clicked;
-    console.log(`clicked ${food.name}`);
+  private async checkBoxChangeHandler(food: IFood, propertyName: string) {
+    var x: boolean = food[propertyName];
+    food[propertyName] = !food[propertyName]
+    await this.nutritionService.updateFood(food);
+    console.log(`updated ${food.id}: ${food.name} as active: ${food.isActive} in database`);
   }
 
-  private isHighlighted(food: any): boolean {
-    return food.clicked;
+  private async updateFood(event: KeyboardEvent, food: IFood, propertyName: string, element: HTMLInputElement) {
+    // console.log(event, event.keyCode);
+    if (!food.clicked) return;
+    if (event.keyCode === KeyCode.Esc) resetElement();
+    if (event.keyCode !== KeyCode.Enter && event.keyCode !== KeyCode.Tab) return;
+    var oldValue = food[propertyName].toString();
+    let newValue = element.value;
+    if (event.keyCode === 13) {
+      food.clicked = false;
+    }
+    if (newValue === oldValue)
+      return;
+    if (newValue === '') {
+      resetElement();
+      return;
+    }
+    console.log(`old ${propertyName} ${oldValue}`);
+    console.log(`new ${propertyName} ${newValue}`);
+    food[propertyName] = newValue;
+    await this.nutritionService.updateFood(food);
+    console.log(`updated ${food.id}: ${food.name} in database`);
+
+    function resetElement() {
+      console.log("resetting..");
+      element.value = food[propertyName];
+      food.clicked = false;
+    }
   }
 
-  private eventHandler(event, food: any) {
-    // food.clicked = false;
-    console.log(`keyed ${food.name}`);
-    console.log(event, event.keyCode, event.keyIdentifier);
+  private cancelAction(event: any): void {
+    event.item.clicked = false;
   }
 }

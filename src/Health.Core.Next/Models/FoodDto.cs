@@ -2,6 +2,7 @@
 {
     public class FoodDto
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public int Calories { get; set; }
         public int Protein { get; set; }
@@ -13,5 +14,6 @@
         public int? Fiber { get; set; }
         public int? Sodium { get; set; }
         public int? Potassium { get; set; }
+        public bool IsActive { get; set; }
     }
 }

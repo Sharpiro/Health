@@ -29,5 +29,11 @@ namespace Health.Next.API
         {
             return _foodService.GetAll();
         }
+
+        [HttpPut]
+        public void Update([FromBody]FoodDto foodDto)
+        {
+            _foodService.UpdateFood(foodDto);
+        }
     }
 }
