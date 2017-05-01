@@ -28,7 +28,7 @@ export class FoodsComponent implements OnInit {
     console.log(`updated ${food.id}: ${food.name} as active: ${food.isActive} in database`);
   }
 
-  private async eventHandler(event: KeyboardEvent, food: IFood, propertyName: string, element: HTMLInputElement) {
+  private async updateFood(event: KeyboardEvent, food: IFood, propertyName: string, element: HTMLInputElement) {
     // console.log(event, event.keyCode);
     if (!food.clicked) return;
     if (event.keyCode === KeyCode.Esc) resetElement();
@@ -55,5 +55,9 @@ export class FoodsComponent implements OnInit {
       element.value = food[propertyName];
       food.clicked = false;
     }
+  }
+
+  private cancelAction(event: any): void {
+    event.item.clicked = false;
   }
 }

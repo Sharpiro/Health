@@ -47,12 +47,11 @@ namespace Health.Next
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            app.UseCors(builder => builder.WithOrigins("http://localhost:4200").AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
             loggerFactory.AddConsole();
 
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
-            //app.UseOtherDirectory(env, "node_modules");
             app.UseMvc(builder =>
             {
                 builder.MapRoute(name: "defaultApi", template: "api/{controller}/{action}/{id?}");
