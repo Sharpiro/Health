@@ -4,6 +4,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import { IFood } from "app/nutrition/shared/ifood";
 import { Observer } from "rxjs/Observer";
+// import { moment } from "moment";
+import * as moment from 'moment';
 
 @Injectable()
 export class NutritionService {
@@ -33,9 +35,13 @@ export class NutritionService {
   }
 
   public addDay(): Promise<Response> {
-    const url = `${this.baseUrl}/api/day/Add`;
-    const currentTime = new Date();
-    var response = this.http.post(url, { currentTime: currentTime, currentTimeString: currentTime.toString() }).toPromise();
+    const currentTime = moment().format('YYYY-MM-DDTHH:mm:ss');
+    const url = `${this.baseUrl}/api/day/Add?currentTime=${currentTime}`;
+    console.log(currentTime);
+    // const currentTime = new Date();
+    // const hours = currentTime.getHours();
+    // currentTime.setHours(hours - 4);
+    var response = this.http.post(url, {}).toPromise();
     return response;
   }
 }

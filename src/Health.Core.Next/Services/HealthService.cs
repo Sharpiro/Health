@@ -3,6 +3,7 @@ using Health.Core.Next.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using AutoMapper;
 using Health.Core.Next.DataAccess.Entities;
 
 namespace Health.Core.Next.Services
@@ -10,10 +11,12 @@ namespace Health.Core.Next.Services
     public class HealthService
     {
         private readonly HealthContext _healthContext;
+        private readonly IMapper _mapper;
 
-        public HealthService(HealthContext healthContext)
+        public HealthService(HealthContext healthContext, IMapper mapper)
         {
             _healthContext = healthContext ?? throw new ArgumentNullException(nameof(healthContext));
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
         public NutritionHistoryModel GetNutritionHistory(int days)
@@ -32,13 +35,13 @@ namespace Health.Core.Next.Services
             return history;
         }
 
-        public void AddDay()
+        public DayDto AddDay(DateTime clientDateTime)
         {
-            var eastCoastDiff = TimeSpan.FromHours(4);
-            var now = DateTime.Now == DateTime.UtcNow ? DateTime.UtcNow.Subtract(eastCoastDiff) : DateTime.Now;
-            var day = new Day { Created = new DateTime(now.Year, now.Month, now.Day) };
+            var day = new Day { Created = new DateTime(clientDateTime.Year, clientDateTime.Month, clientDateTime.Day) };
             _healthContext.Days.Add(day);
             _healthContext.SaveChanges();
+            var dayDto = _mapper.Map<DayDto>(day);
+            return dayDto;
         }
     }
 }

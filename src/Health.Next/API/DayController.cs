@@ -18,11 +18,16 @@ namespace Health.Next.API
             _healthService = healthService ?? throw new ArgumentNullException(nameof(healthService));
         }
 
-        [HttpPost]
-        public void Add([FromBody] Temp obj)
+        [HttpGet]
+        public void Get()
         {
-            var x = obj.CurrentTime;
-            //_healthService.AddDay();
+            throw new Exception("bad");
+        }
+
+        [HttpPost]
+        public void Add(DateTime currentTime)
+        {
+            _healthService.AddDay(currentTime);
         }
 
         //[Authorize]

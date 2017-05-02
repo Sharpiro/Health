@@ -10,6 +10,8 @@ namespace Health.Core.Next.Tools
         {
             CreateMap<Food, FoodDto>();
             CreateMap<FoodDto, Food>();
+            CreateMap<Day, DayDto>();
+            CreateMap<DayDto, Day>();
         }
     }
 }
