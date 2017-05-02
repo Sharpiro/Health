@@ -31,4 +31,11 @@ export class NutritionService {
     var response = this.http.put(url, food).toPromise();
     return response;
   }
+
+  public addDay(): Promise<Response> {
+    const url = `${this.baseUrl}/api/day/Add`;
+    const currentTime = new Date();
+    var response = this.http.post(url, { currentTime: currentTime, currentTimeString: currentTime.toString() }).toPromise();
+    return response;
+  }
 }

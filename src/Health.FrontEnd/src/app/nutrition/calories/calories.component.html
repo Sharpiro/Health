@@ -36,15 +36,16 @@
         <button (click)="addFood() ">Add Food</button>
       </div>
     </div>
-    <div class="row" *ngIf="mealEntries.length > 0">
+    <div class="row top-buffer" *ngIf="activeMeal?.mealEntries?.length > 0">
       <div class="col-md-12 ">
+        <div class="h4">Current Meal</div>
         <table class="table">
           <th>id</th>
           <th>mealEntryNumber</th>
           <th>mealId</th>
           <th>foodId</th>
           <th>calories</th>
-          <tr *ngFor="let mealEntry of mealEntries">
+          <tr *ngFor="let mealEntry of activeMeal.mealEntries">
             <td>{{mealEntry.id}}</td>
             <td>{{mealEntry.mealEntryNumber}}</td>
             <td>{{mealEntry.mealId}}</td>
@@ -52,6 +53,31 @@
             <td>{{mealEntry.calories}}</td>
           </tr>
         </table>
+      </div>
+    </div>
+    <div class="row top-buffer" *ngIf="activeMeal?.mealEntries?.length > 0">
+      <div class="col-md-12 ">
+        <button (click)="clearMeal()">Clear Meal</button>
+      </div>
+    </div>
+    <div class="row top-buffer labels">
+      <div class="col-xs-4">
+        <label>Total: </label>
+        <span>500</span>
+      </div>
+      <div class="col-xs-4">
+        <label>Remaining: </label>
+        <span>500</span>
+      </div>
+      <div class="col-xs-4">
+        <label>Goal: </label>
+        <span>500</span>
+      </div>
+    </div>
+    <div class="row top-buffer">
+      <div class="col-xs-12 ">
+        <div class="h4">Functions</div>
+        <button (click)="addDay()">Add Day</button>
       </div>
     </div>
   </div>

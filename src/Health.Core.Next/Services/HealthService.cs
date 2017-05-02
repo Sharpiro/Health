@@ -3,6 +3,7 @@ using Health.Core.Next.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
+using Health.Core.Next.DataAccess.Entities;
 
 namespace Health.Core.Next.Services
 {
@@ -29,6 +30,15 @@ namespace Health.Core.Next.Services
                 }).ToList()
             };
             return history;
+        }
+
+        public void AddDay()
+        {
+            var eastCoastDiff = TimeSpan.FromHours(4);
+            var now = DateTime.Now == DateTime.UtcNow ? DateTime.UtcNow.Subtract(eastCoastDiff) : DateTime.Now;
+            var day = new Day { Created = new DateTime(now.Year, now.Month, now.Day) };
+            _healthContext.Days.Add(day);
+            _healthContext.SaveChanges();
         }
     }
 }

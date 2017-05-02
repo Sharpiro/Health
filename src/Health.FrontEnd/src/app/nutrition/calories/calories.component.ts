@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { IFood, ISimpleFood } from "app/nutrition/shared/ifood";
-import { IMealEntry } from "app/nutrition/shared/imealEntry";
+import { MealEntry } from "app/nutrition/shared/mealEntry";
+import { Meal } from "app/nutrition/shared/meal";
 
 @Component({
   selector: 'app-calories',
@@ -13,8 +14,8 @@ export class CaloriesComponent implements OnInit {
   private filteredFoods: Array<IFood> = [];
   private filterString: string;
   private selectedFood: IFood;
-  private mealEntries: IMealEntry[] = [];
   private activeMealEntry: ISimpleFood;
+  private activeMeal: Meal;
 
   constructor(private nutritionService: NutritionService) { }
 
@@ -33,12 +34,24 @@ export class CaloriesComponent implements OnInit {
       this.selectedFood = this.filteredFoods[0];
   }
 
+  private async addDay() {
+    await this.nutritionService.addDay();
+  }
+
   private addFood(calories: number, servingSize: number): void {
-    this.mealEntries.push({
-      id: 0, mealEntryNumber: this.mealEntries.length + 1, mealId: 0,
+    if (!this.activeMeal)
+      this.activeMeal = new Meal();
+
+    this.activeMeal.mealEntries.push(new MealEntry({
+      mealEntryNumber: this.activeMeal.mealEntries.length + 1,
       foodId: this.selectedFood.id, calories: this.activeMealEntry.calories
-    })
-    console.log(this.mealEntries);
+    }))
+    console.log(this.activeMeal);
+  }
+
+  private clearMeal() {
+    this.activeMeal = new Meal();
+    console.log("clearning...")
   }
 
   private updateCalories() {
