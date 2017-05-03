@@ -21,6 +21,7 @@ export class CaloriesComponent implements OnInit {
 
   async ngOnInit() {
     this.allActiveFoods = await this.nutritionService.getallActiveFoods().toPromise();
+    await this.nutritionService.getMostRecentDay().toPromise();
     this.filteredFoods = this.allActiveFoods;
     if (this.filteredFoods.length > 0) {
       this.selectedFood = this.allActiveFoods[0];

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using Health.Core.Next.DataAccess.Entities;
 
 namespace Health.Core.Next.Models
 {

@@ -24,7 +24,7 @@ export class NutritionService {
 
   public getallActiveFoods(): Observable<IFood[]> {
     const url = `${this.baseUrl}/api/food/getallactive`;
-    var observable = this.http.get(url).map((res, index) => res.json()).publishReplay(1).refCount();;
+    var observable = this.http.get(url).map((res, index) => res.json())
     return observable;
   }
 
@@ -38,10 +38,13 @@ export class NutritionService {
     const currentTime = moment().format('YYYY-MM-DDTHH:mm:ss');
     const url = `${this.baseUrl}/api/day/Add?currentTime=${currentTime}`;
     console.log(currentTime);
-    // const currentTime = new Date();
-    // const hours = currentTime.getHours();
-    // currentTime.setHours(hours - 4);
     var response = this.http.post(url, {}).toPromise();
     return response;
+  }
+
+  public getMostRecentDay(): any {
+    const url = `${this.baseUrl}/api/day/getlatest`;
+    var observable = this.http.get(url).map((res, index) => res.json())
+    return observable;
   }
 }

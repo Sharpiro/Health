@@ -2,7 +2,7 @@
 
 namespace Health.Core.Next.Models
 {
-    public class DayOverviewModel
+    public class DayOverviewDto
     {
         public int Calories { get; set; }
         public DateTime Date { get; set; }

@@ -4,11 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Health.Next.API
 {
-    public class Temp
-    {
-        public DateTime CurrentTime { get; set; }
-        public string CurrentTimeString { get; set; }
-    }
     public class DayController
     {
         private readonly HealthService _healthService;
@@ -28,6 +23,12 @@ namespace Health.Next.API
         public void Add(DateTime currentTime)
         {
             _healthService.AddDay(currentTime);
+        }
+
+        [HttpGet]
+        public object GetLatest()
+        {
+            return _healthService.GetLatest();
         }
 
         //[Authorize]
@@ -51,11 +52,6 @@ namespace Health.Next.API
         //public ActionResult GetDayTotals()
         //{
         //    return ExecuteQuery(e => e.GetDayTotals());
-        //}
-
-        //public ActionResult GetMostRecentDay()
-        //{
-        //    return ExecuteQuery(e => e.GetMostRecentDay());
         //}
     }
 }

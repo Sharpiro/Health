@@ -5,9 +5,9 @@ using System.Linq;
 
 namespace Health.Core.Next.Models
 {
-    public class NutritionHistoryModel
+    public class NutritionHistoryDto
     {
-        public IList<DayOverviewModel> Days { get; set; } = ImmutableList.Create<DayOverviewModel>();
+        public IList<DayOverviewDto> Days { get; set; } = ImmutableList.Create<DayOverviewDto>();
         public int Average
         {
             get
