@@ -1,5 +1,5 @@
 ﻿using Health.Core.Next.DataAccess;
-using Health.Core.Next.Models;
+using Health.Core.Next.Dtos;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -24,29 +24,32 @@ namespace Health.Core.Next.Services
         {
             var history = new NutritionHistoryDto
             {
-                Days = _healthContext.Days.OrderByDescending(day => day.Created).Skip(1).Take(days)
+                Days = _healthContext.Days.OrderByDescending(day => day.Date).Skip(1).Take(days)
                 .Include(d => d.Meals).ThenInclude(m => m.MealEntries)
                 .Select(day => new DayOverviewDto
                 {
                     Calories = day.Meals.SelectMany(meal => meal.MealEntries)
                         .Sum(mealEntry => mealEntry.Calories),
-                    Date = day.Created
+                    Date = day.Date
                 }).ToList()
             };
             return history;
         }
 
-        public object GetLatest()
+        public object GetLatestDay()
         {
-            var day = _healthContext.Days.OrderByDescending(d => d.Created).FirstOrDefault();
-            if (day == null)
-                throw new NullReferenceException("There is no day information in the database");
-            var meals =
-            //List<List<(int FoodId, int Calories)>> meals =
-            _healthContext.Meals
+            var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
+            if (day == null) throw new NullReferenceException("There is no day information in the database");
+            var meals = _healthContext.Meals
                 .Where(m => m.DayId == day.Id)
                 .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
-                .ToList();
+                .Select(m => new Meal
+                {
+                    Id = m.Id,
+                    MealNumber = m.MealNumber,
+                    DayId = m.DayId,
+                    MealEntries = m.MealEntries.OrderBy(me => me.MealEntryNumber).ToList()
+                });
             //_healthContext.Meals
             //.Where(m => m.DayId == day.Id)
             //.OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
@@ -56,10 +59,11 @@ namespace Health.Core.Next.Services
             //    me.Calories
             //)).ToList()).ToList();
             var mealDtos = _mapper.Map<List<MealDto>>(meals);
+            _healthContext.Dispose();
             var recentDay = new DayDto
             {
                 Id = day.Id,
-                Date = day.Created,
+                Date = day.Date,
                 Meals = mealDtos
             };
             return recentDay;
@@ -67,8 +71,28 @@ namespace Health.Core.Next.Services
 
         public DayDto AddDay(DateTime clientDateTime)
         {
-            var day = new Day { Created = new DateTime(clientDateTime.Year, clientDateTime.Month, clientDateTime.Day) };
+            var day = new Day { Date = new DateTime(clientDateTime.Year, clientDateTime.Month, clientDateTime.Day) };
             _healthContext.Days.Add(day);
+            _healthContext.SaveChanges();
+            var dayDto = _mapper.Map<DayDto>(day);
+            return dayDto;
+        }
+
+        public DayDto UpdateDay(DayDto dayDto)
+        {
+            var dayEntity = _mapper.Map<Day>(dayDto);
+            _healthContext.Update(dayEntity);
+            _healthContext.SaveChanges();
+            dayDto = _mapper.Map<DayDto>(dayEntity);
+            return dayDto;
+        }
+
+        public DayDto ClearDay()
+        {
+            var day = _healthContext.Days.OrderByDescending(d => d.Date)
+                .Include(d => d.Meals).FirstOrDefault();
+            if (day == null) throw new NullReferenceException("No days found in the database");
+            _healthContext.RemoveRange(day.Meals);
             _healthContext.SaveChanges();
             var dayDto = _mapper.Map<DayDto>(day);
             return dayDto;

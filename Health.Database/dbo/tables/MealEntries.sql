@@ -7,7 +7,7 @@
     [Calories] INT NOT NULL
 
 	CONSTRAINT [PK_MealEntries] PRIMARY KEY CLUSTERED ([Id] ASC)
-	CONSTRAINT [FK_MealEntries_Meals] FOREIGN KEY ([MealId]) REFERENCES [dbo].[Meals]([Id])
+	CONSTRAINT [FK_MealEntries_Meals] FOREIGN KEY ([MealId]) REFERENCES [dbo].[Meals]([Id]) ON DELETE CASCADE
 	CONSTRAINT [FK_MealEntries_Foods] FOREIGN KEY ([FoodId]) REFERENCES [dbo].[Foods]([Id])
 )
 GO

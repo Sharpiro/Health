@@ -1,26 +1,21 @@
 <div class="container">
-  <div class="row">
-    <div class="col-xs-12">
-      <div class="h4">Food</div>
+  <div *ngIf="latestDay">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="h4">Food</div>
+      </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6">
-      <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="filterString
+    <div class="row">
+      <div class="col-xs-6">
+        <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="filterString
           " (ngModelChange)="updateFilter($event) " />
-    </div>
-    <div class="col-xs-6">
-      <select class="form-control forms " [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
+      </div>
+      <div class="col-xs-6">
+        <select class="form-control forms " [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
         <option *ngFor="let food of filteredFoods " [ngValue]="food ">{{food.name}}</option>
       </select>
+      </div>
     </div>
-  </div>
-
-  <!--<input class="form-control forms " list="testList " type=" " [(ngModel)]="selectedFood " (change)="onChange(food) " />
-      <datalist id="testList " >
-        <option *ngFor="let food of allActiveFoods ">{{food.name}}</option>
-      </datalist>-->
-  <div *ngIf="selectedFood">
     <div class="row top-buffer">
       <div class="col-xs-6 ">
         <div class="h4">Calories</div>
@@ -31,33 +26,38 @@
         <input class="form-control" type="number" [(ngModel)]="activeMealEntry.servingSize" (ngModelChange)="updateCalories()">
       </div>
     </div>
-    <div class="row top-buffer ">
-      <div class="col-md-12 ">
+    <div class="row top-buffer">
+      <div class="col-xs-6 ">
         <button (click)="addFood() ">Add Food</button>
       </div>
-    </div>
-    <div class="row top-buffer" *ngIf="activeMeal?.mealEntries?.length > 0">
-      <div class="col-md-12 ">
-        <div class="h4">Current Meal</div>
-        <table class="table">
-          <th>id</th>
-          <th>mealEntryNumber</th>
-          <th>mealId</th>
-          <th>foodId</th>
-          <th>calories</th>
-          <tr *ngFor="let mealEntry of activeMeal.mealEntries">
-            <td>{{mealEntry.id}}</td>
-            <td>{{mealEntry.mealEntryNumber}}</td>
-            <td>{{mealEntry.mealId}}</td>
-            <td>{{mealEntry.foodId}}</td>
-            <td>{{mealEntry.calories}}</td>
-          </tr>
-        </table>
+      <div class="col-xs-6">
+        <button (click)="saveMeal() ">Save Meal</button>
       </div>
     </div>
-    <div class="row top-buffer" *ngIf="activeMeal?.mealEntries?.length > 0">
-      <div class="col-md-12 ">
-        <button (click)="clearMeal()">Clear Meal</button>
+    <div *ngIf="activeMeal?.mealEntries?.length > 0">
+      <div class="row top-buffer">
+        <div class="col-md-12 ">
+          <div class="h4">Current Meal</div>
+          <table class="table">
+            <th>id</th>
+            <th>mealEntryNumber</th>
+            <th>mealId</th>
+            <th>foodId</th>
+            <th>calories</th>
+            <tr *ngFor="let mealEntry of activeMeal.mealEntries">
+              <td>{{mealEntry.id}}</td>
+              <td>{{mealEntry.mealEntryNumber}}</td>
+              <td>{{mealEntry.mealId}}</td>
+              <td>{{mealEntry.foodId}}</td>
+              <td>{{mealEntry.calories}}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="clearMeal()">Clear Meal</button>
+        </div>
       </div>
     </div>
     <div class="row top-buffer labels">
@@ -74,11 +74,38 @@
         <span>500</span>
       </div>
     </div>
-    <div class="row top-buffer">
-      <div class="col-xs-12 ">
-        <div class="h4">Functions</div>
-        <button (click)="addDay()">Add Day</button>
+    <div>
+      <div class="row top-buffer">
+        <div class="col-md-12 ">
+          <div class="h4">Meals</div>
+          <table class="table">
+            <th>Id</th>
+            <tr *ngFor="let meal of latestDay.meals">
+              <td *ngFor="let mealEntry of meal.mealEntries">
+                {{mealEntry.foodId}}: {{mealEntry.calories}}
+              </td>
+            </tr>
+          </table>
+        </div>
       </div>
+      <div class="row">
+        <div class="col-md-12 ">
+          <button (click)="clearMeal()">Clear Meal</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row top-buffer">
+    <div class="col-xs-12 ">
+      <div class="h4">Functions</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-4">
+      <button (click)="addDay()">Add Day</button>
+    </div>
+    <div class="col-xs-4">
+      <button (click)="clearDay()">Clear Day</button>
     </div>
   </div>
 </div>

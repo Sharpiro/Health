@@ -1,6 +1,7 @@
 ﻿using System;
 using Health.Core.Next.Services;
 using Microsoft.AspNetCore.Mvc;
+using Health.Core.Next.Dtos;
 
 namespace Health.Next.API
 {
@@ -20,15 +21,27 @@ namespace Health.Next.API
         }
 
         [HttpPost]
-        public void Add(DateTime currentTime)
+        public DayDto Add(DateTime currentTime)
         {
-            _healthService.AddDay(currentTime);
+            return _healthService.AddDay(currentTime);
         }
 
         [HttpGet]
         public object GetLatest()
         {
-            return _healthService.GetLatest();
+            return _healthService.GetLatestDay();
+        }
+
+        [HttpPut]
+        public DayDto Update([FromBody]DayDto day)
+        {
+            return _healthService.UpdateDay(day);
+        }
+
+        [HttpPut]
+        public DayDto Clear()
+        {
+            return _healthService.ClearDay();
         }
 
         //[Authorize]

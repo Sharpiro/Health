@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
-import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
+import { ContextMenuComponent } from 'ngx-contextmenu';
 import { IFood } from "app/nutrition/shared/ifood";
 import { KeyCode } from "app/nutrition/shared/keycode";
 import { Observable } from "rxjs/Observable";
@@ -16,7 +16,7 @@ export class FoodsComponent implements OnInit {
 
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
-  constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
+  constructor(private nutritionService: NutritionService) { }
 
   async ngOnInit() {
     await this.nutritionService.getAllFoods().subscribe(value => this.data = value);

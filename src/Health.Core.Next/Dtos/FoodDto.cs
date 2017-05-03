@@ -1,4 +1,4 @@
-﻿namespace Health.Core.Next.Models
+﻿namespace Health.Core.Next.Dtos
 {
     public class FoodDto
     {

@@ -1,4 +1,4 @@
-﻿using Health.Core.Next.Models;
+﻿using Health.Core.Next.Dtos;
 using Health.Core.Next.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

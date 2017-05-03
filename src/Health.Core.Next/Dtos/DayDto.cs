@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Health.Core.Next.Models
+namespace Health.Core.Next.Dtos
 {
     public class DayDto
     {

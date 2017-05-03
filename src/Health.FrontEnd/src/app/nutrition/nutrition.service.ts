@@ -6,6 +6,7 @@ import { IFood } from "app/nutrition/shared/ifood";
 import { Observer } from "rxjs/Observer";
 // import { moment } from "moment";
 import * as moment from 'moment';
+import { Day } from "app/nutrition/shared/day";
 
 @Injectable()
 export class NutritionService {
@@ -34,17 +35,28 @@ export class NutritionService {
     return response;
   }
 
-  public addDay(): Promise<Response> {
+  public addDay(): Observable<Day> {
     const currentTime = moment().format('YYYY-MM-DDTHH:mm:ss');
     const url = `${this.baseUrl}/api/day/Add?currentTime=${currentTime}`;
-    console.log(currentTime);
-    var response = this.http.post(url, {}).toPromise();
+    var response = this.http.post(url, {}).map((res, index) => res.json());
     return response;
   }
 
-  public getMostRecentDay(): any {
+  public getLatestDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/getlatest`;
-    var observable = this.http.get(url).map((res, index) => res.json())
+    var observable = this.http.get(url).map((res, index) => res.json());
     return observable;
+  }
+
+  public updateDay(day: Day): Observable<Day> {
+    const url = `${this.baseUrl}/api/day/Update`;
+    var response = this.http.put(url, day ).map((res, index) => res.json());
+    return response;
+  }
+
+  public clearDay(): Observable<Day> {
+    const url = `${this.baseUrl}/api/day/Clear`;
+    var response = this.http.put(url, {}).map((res, index) => res.json());
+    return response;
   }
 }

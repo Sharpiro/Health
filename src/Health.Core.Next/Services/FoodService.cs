@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Health.Core.Next.DataAccess;
 using Health.Core.Next.DataAccess.Entities;
-using Health.Core.Next.Models;
+using Health.Core.Next.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
