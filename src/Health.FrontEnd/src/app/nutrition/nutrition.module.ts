@@ -8,6 +8,7 @@ import { NutritionComponent } from './nutrition.component';
 import { ContextMenuModule } from 'ngx-contextmenu';
 import { CaloriesComponent } from './calories/calories.component';
 import { NutritionService } from "app/nutrition/nutrition.service";
+import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
 
 @NgModule({
   imports: [
@@ -16,7 +17,7 @@ import { NutritionService } from "app/nutrition/nutrition.service";
     FormsModule,
     ContextMenuModule
   ],
-  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent],
+  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe],
   providers: [NutritionService]
 })
 export class NutritionModule { }

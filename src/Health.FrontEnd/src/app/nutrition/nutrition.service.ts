@@ -2,24 +2,24 @@ import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
-import { IFood } from "app/nutrition/shared/ifood";
+import { IFood } from "app/nutrition/shared/dtos/ifood";
 import { Observer } from "rxjs/Observer";
-// import { moment } from "moment";
 import * as moment from 'moment';
-import { Day } from "app/nutrition/shared/day";
+import { Day } from "app/nutrition/shared/dtos//day";
 
 @Injectable()
 export class NutritionService {
   private baseUrl = "http://localhost:32159"
-  // private allFoodsData: any;
+  private allFoodsData: IFood[];
 
   constructor(private http: Http) { }
 
   public getAllFoods(): Observable<IFood[]> {
-    // if (this.allFoodsData) return Observable.create((observer) => observer.next(this.allFoodsData));
+    if (this.allFoodsData) return Observable.of(this.allFoodsData);
     const url = `${this.baseUrl}/api/food/getall`;
-    var observable = this.http.get(url).map((res, index) => res.json());
-    // observable.subscribe(value => this.allFoodsData = value);
+    var observable: Observable<IFood[]> = this.http.get(url).map((res) => res.json())
+      .share();
+    observable.subscribe(foods => this.allFoodsData = foods);
     return observable;
   }
 
@@ -50,7 +50,7 @@ export class NutritionService {
 
   public updateDay(day: Day): Observable<Day> {
     const url = `${this.baseUrl}/api/day/Update`;
-    var response = this.http.put(url, day ).map((res, index) => res.json());
+    var response = this.http.put(url, day).map((res, index) => res.json());
     return response;
   }
 

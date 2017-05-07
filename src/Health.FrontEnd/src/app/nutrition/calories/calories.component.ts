@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
-import { IFood, ISimpleFood } from "app/nutrition/shared/ifood";
-import { MealEntry } from "app/nutrition/shared/mealEntry";
-import { Meal } from "app/nutrition/shared/meal";
-import { Day } from "app/nutrition/shared/day";
+import { IFood, ISimpleFood } from "app/nutrition/shared/dtos/ifood";
+import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
+import { Meal } from "app/nutrition/shared/dtos/meal";
+import { Day } from "app/nutrition/shared/dtos/day";
 
 @Component({
   selector: 'app-calories',
@@ -33,12 +33,6 @@ export class CaloriesComponent implements OnInit {
     console.log(this.latestDay);
   }
 
-  private updateFilter(event: KeyboardEvent): void {
-    this.filteredFoods = this.allActiveFoods.filter(f => f.name.toLowerCase().includes(this.filterString.toLowerCase()));
-    if (this.filteredFoods.length > 0)
-      this.selectedFood = this.filteredFoods[0];
-  }
-
   private async addDay() {
     this.latestDay = await this.nutritionService.addDay().toPromise();
   }
@@ -61,7 +55,7 @@ export class CaloriesComponent implements OnInit {
   }
 
   private clearMeal(): void {
-    this.activeMeal = new Meal();
+    this.activeMeal = null;
     console.log("clearning...")
   }
 
@@ -87,6 +81,14 @@ export class CaloriesComponent implements OnInit {
 
   private foodSelectionChanged(newValue: IFood) {
     this.selectedFood = newValue;
-    this.activeMealEntry = { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize };
+    this.activeMealEntry = this.selectedFood ?
+      { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize } :
+      { calories: 0, servingSize: 0 };
+  }
+
+  private updateFilter(event: KeyboardEvent): void {
+    this.filteredFoods = this.allActiveFoods.filter(f => f.name.toLowerCase().includes(this.filterString.toLowerCase()));
+    var filteredFood = this.filteredFoods.length > 0 ? this.filteredFoods[0] : null;
+    this.foodSelectionChanged(filteredFood);
   }
 }

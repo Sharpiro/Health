@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { ContextMenuComponent } from 'ngx-contextmenu';
-import { IFood } from "app/nutrition/shared/ifood";
-import { KeyCode } from "app/nutrition/shared/keycode";
+import { IFood } from "app/nutrition/shared/dtos/ifood";
+import { KeyCode } from "app/nutrition/shared/enums/keycode";
 import { Observable } from "rxjs/Observable";
 
 @Component({

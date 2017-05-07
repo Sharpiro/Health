@@ -1,4 +1,4 @@
-import { Meal } from "app/nutrition/shared/meal";
+import { Meal } from "app/nutrition/shared/dtos/meal";
 
 export class Day {
     public id: number = 0;

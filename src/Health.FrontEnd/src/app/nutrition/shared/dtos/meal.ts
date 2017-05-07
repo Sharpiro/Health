@@ -1,4 +1,4 @@
-import { MealEntry } from "app/nutrition/shared/mealEntry";
+import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 
 export class Meal {
     public id: number = 0;
