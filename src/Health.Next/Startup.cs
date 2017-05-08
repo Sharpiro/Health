@@ -39,7 +39,7 @@ namespace Health.Next
             services.AddScoped<FoodService>();
             services.AddDbContext<HealthContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
                 .AddEntityFrameworkStores<HealthContext>()
                 .AddDefaultTokenProviders();
             services.AddCors();

@@ -57,15 +57,15 @@
     <div class="row top-buffer labels">
       <div class="col-xs-4">
         <label>Total: </label>
-        <span>500</span>
+        <span>{{latestDay.totalCalories}}</span>
       </div>
       <div class="col-xs-4">
         <label>Remaining: </label>
-        <span>500</span>
+        <span>0</span>
       </div>
       <div class="col-xs-4">
         <label>Goal: </label>
-        <span>500</span>
+        <span>0</span>
       </div>
     </div>
     <div class="row top-buffer" *ngIf="latestDay.meals.length > 0">
