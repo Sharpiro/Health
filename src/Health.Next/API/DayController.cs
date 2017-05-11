@@ -5,7 +5,7 @@ using Health.Core.Next.Dtos;
 
 namespace Health.Next.API
 {
-    public class DayController
+    public class DayController: Controller
     {
         private readonly HealthService _healthService;
 

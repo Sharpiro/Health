@@ -4,6 +4,7 @@ import { IFood, ISimpleFood } from "app/nutrition/shared/dtos/ifood";
 import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 import { Meal } from "app/nutrition/shared/dtos/meal";
 import { Day } from "app/nutrition/shared/dtos/day";
+import { ToastrErrorService } from "app/shared/toastr-error.service";
 
 @Component({
   selector: 'app-calories',
@@ -19,22 +20,26 @@ export class CaloriesComponent implements OnInit {
   private activeMeal: Meal;
   private latestDay: Day;
 
-  constructor(private nutritionService: NutritionService) { }
+  constructor(private nutritionService: NutritionService, private toastrErrorService: ToastrErrorService) { }
 
   async ngOnInit() {
-    var latestDayPromise = this.nutritionService.getLatestDay().toPromise();
+    this.nutritionService.getLatestDay().subscribe(value => this.latestDay = value, error => console.error(error));
     this.allActiveFoods = await this.nutritionService.getallActiveFoods().toPromise();
     this.filteredFoods = this.allActiveFoods;
     if (this.filteredFoods.length > 0) {
       this.selectedFood = this.allActiveFoods[0];
       this.activeMealEntry = { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize };
     }
-    this.latestDay = await latestDayPromise;
     console.log(this.latestDay);
   }
 
   private async addDay() {
-    this.latestDay = await this.nutritionService.addDay().toPromise();
+    try {
+      this.latestDay = await this.nutritionService.addDay().toPromise();
+    }
+    catch (e) {
+      console.log(e);
+    }
   }
 
   private async clearDay() {
