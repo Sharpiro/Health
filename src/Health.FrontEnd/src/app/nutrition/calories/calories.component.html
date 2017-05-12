@@ -11,8 +11,8 @@
           " (ngModelChange)="updateFilter($event) " />
       </div>
       <div class="col-xs-6">
-        <select class="form-control forms " [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
-        <option *ngFor="let food of filteredFoods " [ngValue]="food">{{food.name}}</option>
+        <select class="form-control forms" [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
+        <option *ngFor="let food of filteredFoods" [ngValue]="food">{{food.name}}</option>
       </select>
       </div>
     </div>

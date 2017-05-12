@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+﻿import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
@@ -17,46 +17,50 @@ export class NutritionService {
   public getAllFoods(): Observable<IFood[]> {
     if (this.allFoodsData) return Observable.of(this.allFoodsData);
     const url = `${this.baseUrl}/api/food/getall`;
-    var observable: Observable<IFood[]> = this.http.get(url).map((res) => res.json())
-      .share();
+    var observable = this.getMappedObservable(this.http.get(url)).share();
     observable.subscribe(foods => this.allFoodsData = foods);
     return observable;
   }
 
   public getallActiveFoods(): Observable<IFood[]> {
     const url = `${this.baseUrl}/api/food/getallactive`;
-    var observable = this.http.get(url).map((res, index) => res.json())
+    var observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
 
-  public updateFood(food: IFood): Promise<Response> {
+  public updateFood(food: IFood): Observable<IFood[]> {
     const url = `${this.baseUrl}/api/food/Update`;
-    var response = this.http.put(url, food).toPromise();
-    return response;
+    var observable = this.getMappedObservable(this.http.put(url, food));
+    return observable;
   }
 
   public addDay(): Observable<Day> {
     const currentTime = moment().format('YYYY-MM-DDTHH:mm:ss');
     const url = `${this.baseUrl}/api/day/Add?currentTime=${currentTime}`;
-    var response = this.http.post(url, {}).map((res, index) => res.json());
-    return response;
+    var observable = this.getMappedObservable(this.http.post(url, {}));
+    return observable;
   }
 
   public getLatestDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/getlatest`;
-    var observable = this.http.get(url).map((res, index) => res.json());
+    var observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
 
   public updateDay(day: Day): Observable<Day> {
     const url = `${this.baseUrl}/api/day/Update`;
-    var response = this.http.put(url, day).map((res, index) => res.json());
-    return response;
+    var observable = this.getMappedObservable(this.http.put(url, day));
+    return observable;
   }
 
   public clearDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/Clear`;
-    var response = this.http.put(url, {}).map((res, index) => res.json());
-    return response;
+    var observable = this.getMappedObservable(this.http.put(url, {}));
+    return observable;
+  }
+
+  private getMappedObservable(observable: Observable<Response>) {
+    return observable.map((res, index) => res.json())
+      .catch((err, observable) => Observable.throw(JSON.parse(err._body)));
   }
 }

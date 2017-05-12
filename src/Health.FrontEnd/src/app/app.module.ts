@@ -6,7 +6,8 @@ import { HttpModule } from '@angular/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NutritionModule } from "app/nutrition/nutrition.module";
-import { ToastrErrorService } from "app/shared/toastr-error.service";
+import { ToastrNotificationService } from "app/shared/toastr-notification.service";
+import { INotificationService } from "app/shared/i-notification-service";
 
 @NgModule({
   declarations: [
@@ -19,7 +20,10 @@ import { ToastrErrorService } from "app/shared/toastr-error.service";
     AppRoutingModule,
     NutritionModule
   ],
-  providers: [ToastrErrorService],
+  // providers: [ToastrNotificationService],
+  providers: [
+  { provide: 'INotificationService', useValue: ToastrNotificationService}
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

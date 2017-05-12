@@ -1,15 +1,15 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { ToastrErrorService } from './toastr-error.service';
+import { ToastrNotificationService } from './toastr-notification.service';
 
 describe('ToastrErrorService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [ToastrErrorService]
+      providers: [ToastrNotificationService]
     });
   });
 
-  it('should ...', inject([ToastrErrorService], (service: ToastrErrorService) => {
+  it('should ...', inject([ToastrNotificationService], (service: ToastrNotificationService) => {
     expect(service).toBeTruthy();
   }));
 });

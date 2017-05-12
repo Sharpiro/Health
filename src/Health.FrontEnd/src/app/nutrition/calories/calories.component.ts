@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { IFood, ISimpleFood } from "app/nutrition/shared/dtos/ifood";
 import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 import { Meal } from "app/nutrition/shared/dtos/meal";
 import { Day } from "app/nutrition/shared/dtos/day";
-import { ToastrErrorService } from "app/shared/toastr-error.service";
+// import { ToastrNotificationService } from "app/shared/toastr-notification.service";
+import { INotificationService } from "app/shared/i-notification-service";
 
 @Component({
   selector: 'app-calories',
@@ -20,30 +21,32 @@ export class CaloriesComponent implements OnInit {
   private activeMeal: Meal;
   private latestDay: Day;
 
-  constructor(private nutritionService: NutritionService, private toastrErrorService: ToastrErrorService) { }
+  constructor(private nutritionService: NutritionService, @Inject('INotificationService') private notificationService: INotificationService) { }
 
-  async ngOnInit() {
-    this.nutritionService.getLatestDay().subscribe(value => this.latestDay = value, error => console.error(error));
-    this.allActiveFoods = await this.nutritionService.getallActiveFoods().toPromise();
-    this.filteredFoods = this.allActiveFoods;
-    if (this.filteredFoods.length > 0) {
-      this.selectedFood = this.allActiveFoods[0];
-      this.activeMealEntry = { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize };
-    }
-    console.log(this.latestDay);
+  ngOnInit() {
+    this.nutritionService.getLatestDay().subscribe(value => this.latestDay = value, error => this.notificationService.error(error.message));
+    this.nutritionService.getallActiveFoods().subscribe(value => {
+      this.allActiveFoods = value
+      this.filteredFoods = this.allActiveFoods;
+      if (this.filteredFoods.length > 0) {
+        this.selectedFood = this.allActiveFoods[0];
+        this.activeMealEntry = { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize };
+      }
+    }, error => this.notificationService.error(error.message));
   }
 
-  private async addDay() {
-    try {
-      this.latestDay = await this.nutritionService.addDay().toPromise();
-    }
-    catch (e) {
-      console.log(e);
-    }
+  private addDay(): void {
+    this.nutritionService.addDay().subscribe(value => {
+      this.latestDay = value
+      this.notificationService.success("Successfully added day");
+    }, error => this.notificationService.error(error.message));
   }
 
-  private async clearDay() {
-    this.latestDay = await this.nutritionService.clearDay().toPromise();;
+  private clearDay(): void {
+    this.nutritionService.clearDay().subscribe(value => {
+      this.latestDay = value;
+      this.notificationService.success("Successfully cleared day");
+    }, error => this.notificationService.error(error.message));
   }
 
   private addFood(calories: number, servingSize: number): void {
@@ -64,11 +67,14 @@ export class CaloriesComponent implements OnInit {
     console.log("clearning...")
   }
 
-  private async saveMeal() {
+  private saveMeal() {
     if (!this.activeMeal) return;
     this.latestDay.meals.push(this.activeMeal);
     this.activeMeal = null;
-    this.latestDay = await this.nutritionService.updateDay(this.latestDay).toPromise();
+    this.nutritionService.updateDay(this.latestDay).subscribe(value => {
+      this.latestDay = value
+      this.notificationService.success("Successfully saved meal");
+    }, error => this.notificationService.error(error.message));
     console.log(this.latestDay);
   }
 

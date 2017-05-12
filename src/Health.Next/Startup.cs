@@ -12,7 +12,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using System;
+using Newtonsoft.Json.Serialization;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -65,7 +65,8 @@ namespace Health.Next
                     if (error != null)
                     {
                         var errorDto = new { Message = error.Error?.Message };
-                        var errorDtoJson = JsonConvert.SerializeObject(errorDto);
+                        var serializationSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+                        var errorDtoJson = JsonConvert.SerializeObject(errorDto, serializationSettings);
                         await context.Response.WriteAsync(errorDtoJson).ConfigureAwait(false);
                     }
                 });
