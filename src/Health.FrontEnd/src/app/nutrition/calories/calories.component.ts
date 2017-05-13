@@ -4,7 +4,6 @@ import { IFood, ISimpleFood } from "app/nutrition/shared/dtos/ifood";
 import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 import { Meal } from "app/nutrition/shared/dtos/meal";
 import { Day } from "app/nutrition/shared/dtos/day";
-// import { ToastrNotificationService } from "app/shared/toastr-notification.service";
 import { INotificationService } from "app/shared/i-notification-service";
 
 @Component({

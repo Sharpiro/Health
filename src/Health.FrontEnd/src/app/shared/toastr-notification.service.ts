@@ -12,6 +12,6 @@ export class ToastrNotificationService implements INotificationService {
   }
 
   public success(message: string): void {
-    toastr.success(message, "Error");
+    toastr.success(message, "Success");
   }
 }

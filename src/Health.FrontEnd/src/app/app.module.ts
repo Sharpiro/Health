@@ -20,9 +20,8 @@ import { INotificationService } from "app/shared/i-notification-service";
     AppRoutingModule,
     NutritionModule
   ],
-  // providers: [ToastrNotificationService],
   providers: [
-  { provide: 'INotificationService', useValue: ToastrNotificationService}
+  { provide: 'INotificationService', useClass: ToastrNotificationService}
 ],
   bootstrap: [AppComponent]
 })
