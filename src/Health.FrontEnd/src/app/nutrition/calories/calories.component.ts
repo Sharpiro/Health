@@ -5,6 +5,7 @@ import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 import { Meal } from "app/nutrition/shared/dtos/meal";
 import { Day } from "app/nutrition/shared/dtos/day";
 import { INotificationService } from "app/shared/i-notification-service";
+import { CaloriesViewModel } from "app/nutrition/calories/calories-view-model";
 
 @Component({
   selector: 'app-calories',
@@ -12,93 +13,97 @@ import { INotificationService } from "app/shared/i-notification-service";
   styleUrls: ['./calories.component.css']
 })
 export class CaloriesComponent implements OnInit {
-  private allActiveFoods: Array<IFood> = [];
-  private filteredFoods: Array<IFood> = [];
-  private filterString: string;
-  private selectedFood: IFood;
-  private activeMealEntry: ISimpleFood;
-  private activeMeal: Meal;
-  private latestDay: Day;
+  private viewModel = new CaloriesViewModel();
 
   constructor(private nutritionService: NutritionService, @Inject('INotificationService') private notificationService: INotificationService) { }
 
   ngOnInit() {
-    this.nutritionService.getLatestDay().subscribe(value => this.latestDay = value, error => this.notificationService.error(error.message));
+    this.nutritionService.getLatestDay().subscribe(value => this.viewModel.latestDay = value, error => this.notificationService.error(error.message));
     this.nutritionService.getallActiveFoods().subscribe(value => {
-      this.allActiveFoods = value
-      this.filteredFoods = this.allActiveFoods;
-      if (this.filteredFoods.length > 0) {
-        this.selectedFood = this.allActiveFoods[0];
-        this.activeMealEntry = { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize };
+      this.viewModel.allActiveFoods = value
+      this.viewModel.filteredFoods = this.viewModel.allActiveFoods;
+      if (this.viewModel.filteredFoods.length > 0) {
+        this.viewModel.selectedFood = this.viewModel.allActiveFoods[0];
+        this.viewModel.activeMealEntry = { calories: this.viewModel.selectedFood.calories, servingSize: this.viewModel.selectedFood.servingSize };
       }
     }, error => this.notificationService.error(error.message));
+    this.loadFromLocalStorage();
+  }
+
+  private loadFromLocalStorage() {
+    var data = localStorage.getItem("activeMeal");
+    if (!data) return;
+    this.viewModel.activeMeal = JSON.parse(data);
   }
 
   private addDay(): void {
     this.nutritionService.addDay().subscribe(value => {
-      this.latestDay = value
+      this.viewModel.latestDay = value
       this.notificationService.success("Successfully added day");
     }, error => this.notificationService.error(error.message));
   }
 
   private clearDay(): void {
+    var response = confirm("Are you sure you want to clear the day?");
+    if (!response) return;
     this.nutritionService.clearDay().subscribe(value => {
-      this.latestDay = value;
+      this.viewModel.latestDay = value;
+      this.clearMeal();
       this.notificationService.success("Successfully cleared day");
     }, error => this.notificationService.error(error.message));
   }
 
-  private addFood(calories: number, servingSize: number): void {
-    if (!this.activeMeal)
-      this.activeMeal = new Meal(
-        { dayId: this.latestDay.id, mealNumber: this.latestDay.meals.length + 1 }
+  private addFood(): void {
+    if (!this.viewModel.activeMeal)
+      this.viewModel.activeMeal = new Meal(
+        { dayId: this.viewModel.latestDay.id, mealNumber: this.viewModel.latestDay.meals.length + 1 }
       );
 
-    this.activeMeal.mealEntries.push(new MealEntry({
-      mealEntryNumber: this.activeMeal.mealEntries.length + 1,
-      foodId: this.selectedFood.id, calories: this.activeMealEntry.calories
+    this.viewModel.activeMeal.mealEntries.push(new MealEntry({
+      mealEntryNumber: this.viewModel.activeMeal.mealEntries.length + 1,
+      foodId: this.viewModel.selectedFood.id, calories: this.viewModel.activeMealEntry.calories
     }))
-    console.log(this.latestDay);
+    localStorage.setItem("activeMeal", JSON.stringify(this.viewModel.activeMeal));
   }
 
   private clearMeal(): void {
-    this.activeMeal = null;
-    console.log("clearning...")
+    this.viewModel.activeMeal = null;
+    localStorage.removeItem("activeMeal");
   }
 
   private saveMeal() {
-    if (!this.activeMeal) return;
-    this.latestDay.meals.push(this.activeMeal);
-    this.activeMeal = null;
-    this.nutritionService.updateDay(this.latestDay).subscribe(value => {
-      this.latestDay = value
+    if (!this.viewModel.activeMeal) return;
+    this.viewModel.latestDay.meals.push(this.viewModel.activeMeal);
+    this.nutritionService.updateDay(this.viewModel.latestDay).subscribe(value => {
+      this.viewModel.latestDay = value
+      this.clearMeal();
       this.notificationService.success("Successfully saved meal");
     }, error => this.notificationService.error(error.message));
-    console.log(this.latestDay);
+    console.log(this.viewModel.latestDay);
   }
 
   private updateCalories() {
-    let caloriesPerServing = this.selectedFood.calories / this.selectedFood.servingSize;
-    let calories = Math.ceil(this.activeMealEntry.servingSize * caloriesPerServing);
-    this.activeMealEntry.calories = calories;
+    let caloriesPerServing = this.viewModel.selectedFood.calories / this.viewModel.selectedFood.servingSize;
+    let calories = Math.ceil(this.viewModel.activeMealEntry.servingSize * caloriesPerServing);
+    this.viewModel.activeMealEntry.calories = calories;
   }
 
   private updateServing() {
-    let numberOfServings = this.activeMealEntry.calories / this.selectedFood.calories;
-    let servingSize = numberOfServings * this.selectedFood.servingSize;
-    this.activeMealEntry.servingSize = servingSize;
+    let numberOfServings = this.viewModel.activeMealEntry.calories / this.viewModel.selectedFood.calories;
+    let servingSize = numberOfServings * this.viewModel.selectedFood.servingSize;
+    this.viewModel.activeMealEntry.servingSize = servingSize;
   }
 
   private foodSelectionChanged(newValue: IFood) {
-    this.selectedFood = newValue;
-    this.activeMealEntry = this.selectedFood ?
-      { calories: this.selectedFood.calories, servingSize: this.selectedFood.servingSize } :
+    this.viewModel.selectedFood = newValue;
+    this.viewModel.activeMealEntry = this.viewModel.selectedFood ?
+      { calories: this.viewModel.selectedFood.calories, servingSize: this.viewModel.selectedFood.servingSize } :
       { calories: 0, servingSize: 0 };
   }
 
   private updateFilter(event: KeyboardEvent): void {
-    this.filteredFoods = this.allActiveFoods.filter(f => f.name.toLowerCase().includes(this.filterString.toLowerCase()));
-    var filteredFood = this.filteredFoods.length > 0 ? this.filteredFoods[0] : null;
+    this.viewModel.filteredFoods = this.viewModel.allActiveFoods.filter(f => f.name.toLowerCase().includes(this.viewModel.filterString.toLowerCase()));
+    var filteredFood = this.viewModel.filteredFoods.length > 0 ? this.viewModel.filteredFoods[0] : null;
     this.foodSelectionChanged(filteredFood);
   }
 }

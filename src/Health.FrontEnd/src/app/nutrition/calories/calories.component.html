@@ -1,5 +1,5 @@
 <div class="container">
-  <div *ngIf="latestDay">
+  <div *ngIf="viewModel.latestDay">
     <div class="row">
       <div class="col-xs-12">
         <div class="h4">Food</div>
@@ -7,41 +7,43 @@
     </div>
     <div class="row">
       <div class="col-xs-6">
-        <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="filterString
-          " (ngModelChange)="updateFilter($event) " />
+        <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="viewModel.filterString" (ngModelChange)="updateFilter($event)"
+        />
       </div>
       <div class="col-xs-6">
-        <select class="form-control forms" [ngModel]="selectedFood" (ngModelChange)="foodSelectionChanged($event)">
-        <option *ngFor="let food of filteredFoods" [ngValue]="food">{{food.name}}</option>
+        <select class="form-control forms" [ngModel]="viewModel.selectedFood" (ngModelChange)="foodSelectionChanged($event)">
+        <option *ngFor="let food of viewModel.filteredFoods" [ngValue]="food">{{food.name}}</option>
       </select>
       </div>
     </div>
-    <div class="row top-buffer">
-      <div class="col-xs-6 ">
-        <div class="h4">Calories</div>
-        <input class="form-control " type="number" [(ngModel)]="activeMealEntry.calories" (ngModelChange)="updateServing()">
+    <form>
+      <div class="row top-buffer">
+        <div class="col-xs-6 ">
+          <div class="h4">Calories</div>
+          <input class="form-control " type="number" name="calories" [(ngModel)]="viewModel.activeMealEntry.calories" (ngModelChange)="updateServing()">
+        </div>
+        <div class="col-xs-6 ">
+          <div class="h4">Serving Size</div>
+          <input class="form-control" type="number" name="servingSize" [(ngModel)]="viewModel.activeMealEntry.servingSize" (ngModelChange)="updateCalories()">
+        </div>
       </div>
-      <div class="col-xs-6 ">
-        <div class="h4">Serving Size</div>
-        <input class="form-control" type="number" [(ngModel)]="activeMealEntry.servingSize" (ngModelChange)="updateCalories()">
+      <div class="row top-buffer">
+        <div class="col-xs-6 ">
+          <button class="btn" (click)="addFood()" [attr.disabled]="(!viewModel.selectedFood) ? 'disabled' : null">Add Food</button>
+        </div>
+        <div class="col-xs-6">
+          <button class="btn" (click)="saveMeal()" [attr.disabled]="(!viewModel.activeMeal) ? 'disabled' : null">Save Meal</button>
+        </div>
       </div>
-    </div>
-    <div class="row top-buffer">
-      <div class="col-xs-6 ">
-        <button class="btn" (click)="addFood()" [attr.disabled]="(!this.selectedFood) ? 'disabled' : null">Add Food</button>
-      </div>
-      <div class="col-xs-6">
-        <button class="btn" (click)="saveMeal()" [attr.disabled]="(!this.activeMeal) ? 'disabled' : null">Save Meal</button>
-      </div>
-    </div>
-    <div *ngIf="activeMeal?.mealEntries?.length > 0">
+    </form>
+    <div *ngIf="viewModel.activeMeal?.mealEntries?.length > 0">
       <div class="row top-buffer">
         <div class="col-md-12 ">
           <div class="h4">Current Meal</div>
           <table class="table">
             <th>Food</th>
             <th>Calories</th>
-            <tr *ngFor="let mealEntry of activeMeal.mealEntries">
+            <tr *ngFor="let mealEntry of viewModel.activeMeal.mealEntries">
               <td>{{mealEntry.foodId | foodDisplay | async}}</td>
               <td>{{mealEntry.calories}}</td>
             </tr>
@@ -57,7 +59,7 @@
     <div class="row top-buffer labels">
       <div class="col-xs-4">
         <label>Total: </label>
-        <span>{{latestDay.totalCalories}}</span>
+        <span>{{viewModel.getTotalCalories()}}</span>
       </div>
       <div class="col-xs-4">
         <label>Remaining: </label>
@@ -68,12 +70,12 @@
         <span>0</span>
       </div>
     </div>
-    <div class="row top-buffer" *ngIf="latestDay.meals.length > 0">
+    <div class="row top-buffer" *ngIf="viewModel.latestDay.meals.length > 0">
       <div class="col-md-12 ">
         <div class="h4">Meals</div>
         <table class="table">
           <th>Id</th>
-          <tr *ngFor="let meal of latestDay.meals">
+          <tr *ngFor="let meal of viewModel.latestDay.meals">
             <td *ngFor="let mealEntry of meal.mealEntries">
               {{mealEntry.foodId | foodDisplay | async}}: {{mealEntry.calories}}
             </td>

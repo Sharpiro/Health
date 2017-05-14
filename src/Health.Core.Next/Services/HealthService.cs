@@ -97,5 +97,42 @@ namespace Health.Core.Next.Services
             var dayDto = _mapper.Map<DayDto>(day);
             return dayDto;
         }
+
+        public int GetMaintenanceCalories(int age, Gender gender, int heightInInches, double weightInPounds, ActivityLevel activityLevel)
+        {
+            const double kiloConversion = 0.45359237;
+            const double centiMeterConversion = 2.54;
+            var genderError = gender == Gender.Female ? 161 : 5;
+            var kilograms = weightInPounds * kiloConversion;
+            var centimeters = heightInInches * centiMeterConversion;
+            double activityBoost;
+
+            switch (activityLevel)
+            {
+                case ActivityLevel.BasalMetabolicRate:
+                    activityBoost = 1;
+                    break;
+                case ActivityLevel.Sedentary:
+                    activityBoost = 1.2002032520325203252032520325203;
+                    break;
+                case ActivityLevel.LightlyActive:
+                    activityBoost = 1.375;
+                    break;
+                case ActivityLevel.ModeratelyActive:
+                    activityBoost = 1.5503048780487804878048780487805;
+                    break;
+                case ActivityLevel.VeryActive:
+                    activityBoost = 1.7251016260162601626016260162602;
+                    break;
+                case ActivityLevel.ExtraActive:
+                    activityBoost = 1.9004065040650406504065040650407;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(activityLevel));
+            }
+            var bmr = Math.Round(10 * kilograms) + (6.25 * centimeters) - (5 * age) + genderError;
+            var maintenance = (int)Math.Round(bmr * activityBoost);
+            return maintenance;
+        }
     }
 }

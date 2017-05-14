@@ -75,7 +75,7 @@
     <Build Include="dbo\tables\AspNetUserClaims.sql" />
     <Build Include="dbo\tables\AspNetUserLogins.sql" />
     <Build Include="dbo\tables\AspNetUserRoles.sql" />
-    <Build Include="dbo\tables\UserDetails.sql" />
+    <Build Include="dbo\tables\UserHistory.sql" />
     <Build Include="dbo\tables\UsersFoods.sql" />
   </ItemGroup>
   <ItemGroup>
