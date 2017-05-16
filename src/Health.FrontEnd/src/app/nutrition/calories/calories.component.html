@@ -6,11 +6,11 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-xs-6">
+      <div class="col-sm-6">
         <input id="filterBox" type="search" placeholder="Filter... " class="form-control " [(ngModel)]="viewModel.filterString" (ngModelChange)="updateFilter($event)"
         />
       </div>
-      <div class="col-xs-6">
+      <div class="col-sm-6">
         <select class="form-control forms" [ngModel]="viewModel.selectedFood" (ngModelChange)="foodSelectionChanged($event)">
         <option *ngFor="let food of viewModel.filteredFoods" [ngValue]="food">{{food.name}}</option>
       </select>
@@ -18,20 +18,20 @@
     </div>
     <form>
       <div class="row top-buffer">
-        <div class="col-xs-6 ">
+        <div class="col-sm-6 ">
           <div class="h4">Calories</div>
           <input class="form-control " type="number" name="calories" [(ngModel)]="viewModel.activeMealEntry.calories" (ngModelChange)="updateServing()">
         </div>
-        <div class="col-xs-6 ">
+        <div class="col-sm-6 ">
           <div class="h4">Serving Size</div>
           <input class="form-control" type="number" name="servingSize" [(ngModel)]="viewModel.activeMealEntry.servingSize" (ngModelChange)="updateCalories()">
         </div>
       </div>
       <div class="row top-buffer">
-        <div class="col-xs-6 ">
+        <div class="col-sm-6 ">
           <button class="btn" (click)="addFood()" [attr.disabled]="(!viewModel.selectedFood) ? 'disabled' : null">Add Food</button>
         </div>
-        <div class="col-xs-6">
+        <div class="col-smxs-6">
           <button class="btn" (click)="saveMeal()" [attr.disabled]="(!viewModel.activeMeal) ? 'disabled' : null">Save Meal</button>
         </div>
       </div>
@@ -57,15 +57,15 @@
       </div>
     </div>
     <div class="row top-buffer labels">
-      <div class="col-xs-4">
+      <div class="col-sm-4">
         <label>Total: </label>
         <span>{{viewModel.getTotalCalories()}}</span>
       </div>
-      <div class="col-xs-4">
+      <div class="col-sm-4">
         <label>Remaining: </label>
         <span>0</span>
       </div>
-      <div class="col-xs-4">
+      <div class="col-sm-4">
         <label>Goal: </label>
         <span>0</span>
       </div>
@@ -85,16 +85,16 @@
     </div>
   </div>
   <div class="row top-buffer">
-    <div class="col-xs-12 ">
+    <div class="col-sm-12 ">
       <div class="h4">Functions</div>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-sm-4">
       <button class="btn" (click)="addDay()">Add Day</button>
     </div>
-    <div class="col-xs-4">
-      <button class="btn" (click)="clearDay()">Clear Day</button>
+    <div class="col-sm-4">
+      <button class="btn" (click)="clearDay()" [attr.disabled]="(viewModel.latestDay.totalCalories == 0) ? 'disabled' : null">Clear Day</button>
     </div>
   </div>
 </div>

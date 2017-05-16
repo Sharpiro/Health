@@ -113,24 +113,24 @@ namespace Health.Core.Next.Services
                     activityBoost = 1;
                     break;
                 case ActivityLevel.Sedentary:
-                    activityBoost = 1.2002032520325203252032520325203;
+                    activityBoost = 1.2;
                     break;
                 case ActivityLevel.LightlyActive:
                     activityBoost = 1.375;
                     break;
                 case ActivityLevel.ModeratelyActive:
-                    activityBoost = 1.5503048780487804878048780487805;
+                    activityBoost = 1.55;
                     break;
                 case ActivityLevel.VeryActive:
-                    activityBoost = 1.7251016260162601626016260162602;
+                    activityBoost = 1.725;
                     break;
                 case ActivityLevel.ExtraActive:
-                    activityBoost = 1.9004065040650406504065040650407;
+                    activityBoost = 1.9;
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(activityLevel));
             }
-            var bmr = Math.Round(10 * kilograms) + (6.25 * centimeters) - (5 * age) + genderError;
+            var bmr = (10 * kilograms) + (6.25 * centimeters) - (5 * age) + genderError;
             var maintenance = (int)Math.Round(bmr * activityBoost);
             return maintenance;
         }

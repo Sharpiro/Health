@@ -3,13 +3,15 @@ import { Routes, RouterModule } from '@angular/router';
 import { FoodsComponent } from "app/nutrition/foods/foods.component";
 import { NutritionComponent } from "app/nutrition/nutrition.component";
 import { CaloriesComponent } from "app/nutrition/calories/calories.component";
+import { ToolsComponent } from "app/nutrition/tools/tools.component";
 
 const routes: Routes = [
   {
     path: "nutrition", component: NutritionComponent, children: [
       { path: '', pathMatch: 'full', redirectTo: 'calories' },
       { path: "foods", component: FoodsComponent },
-      { path: "calories", component: CaloriesComponent }
+      { path: "calories", component: CaloriesComponent },
+      { path: "tools", component: ToolsComponent }
     ]
   }
 ];

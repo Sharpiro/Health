@@ -64,7 +64,7 @@ namespace Health.Next
                     var error = context.Features.Get<IExceptionHandlerFeature>();
                     if (error != null)
                     {
-                        var errorDto = new { Message = error.Error?.Message };
+                        var errorDto = new { error.Error?.Message };
                         var serializationSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
                         var errorDtoJson = JsonConvert.SerializeObject(errorDto, serializationSettings);
                         await context.Response.WriteAsync(errorDtoJson).ConfigureAwait(false);

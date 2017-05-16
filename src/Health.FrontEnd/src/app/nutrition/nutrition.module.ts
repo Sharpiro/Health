@@ -9,6 +9,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
 import { CaloriesComponent } from './calories/calories.component';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
+import { ToolsComponent } from './tools/tools.component';
 
 @NgModule({
   imports: [
@@ -17,7 +18,7 @@ import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
     FormsModule,
     ContextMenuModule
   ],
-  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe],
+  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe, ToolsComponent],
   providers: [NutritionService]
 })
 export class NutritionModule { }
