@@ -54,6 +54,17 @@ namespace Health.Next
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.Use(async (context, next) =>
+            {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/";
+                    context.Response.StatusCode = 200;
+                    await next();
+                }
+            });
             app.UseExceptionHandler(builder =>
             {
                 builder.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());

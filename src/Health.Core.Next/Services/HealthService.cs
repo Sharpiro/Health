@@ -36,7 +36,20 @@ namespace Health.Core.Next.Services
             return history;
         }
 
-        public object GetLatestDay()
+        public void PruneInvalidDays()
+        {
+            var invalidDays = _healthContext.Days
+                .OrderByDescending(d => d.Date)
+                .Where(d => !d.Meals.Any() || d.Meals.SelectMany(m => m.MealEntries).Select(me => me.Calories).Sum() < 1500)
+                .Skip(1)
+                .ToList();
+
+            if (invalidDays.Count == 0) throw new InvalidOperationException("No invalid days were found");
+            _healthContext.RemoveRange(invalidDays);
+            _healthContext.SaveChanges();
+        }
+
+        public DayDto GetLatestDay()
         {
             var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
             if (day == null) throw new NullReferenceException("There is no day information in the database");
@@ -50,23 +63,13 @@ namespace Health.Core.Next.Services
                     DayId = m.DayId,
                     MealEntries = m.MealEntries.OrderBy(me => me.MealEntryNumber).ToList()
                 });
-            //_healthContext.Meals
-            //.Where(m => m.DayId == day.Id)
-            //.OrderBy(m => m.MealNumber).Include(m => m.MealEntries).ToList()
-            //.Select(m => m.MealEntries.OrderBy(me => me.MealEntryNumber)
-            //.Select(me => (
-            //    me.FoodId,
-            //    me.Calories
-            //)).ToList()).ToList();
             var mealDtos = _mapper.Map<List<MealDto>>(meals);
-            _healthContext.Dispose();
-            var recentDay = new DayDto
+            return new DayDto
             {
                 Id = day.Id,
                 Date = day.Date,
                 Meals = mealDtos
             };
-            return recentDay;
         }
 
         public DayDto AddDay(DateTime clientDateTime)

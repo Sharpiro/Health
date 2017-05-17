@@ -5,7 +5,7 @@ using Health.Core.Next.Dtos;
 
 namespace Health.Next.API
 {
-    public class DayController: Controller
+    public class DayController : Controller
     {
         private readonly HealthService _healthService;
 
@@ -27,7 +27,7 @@ namespace Health.Next.API
         }
 
         [HttpGet]
-        public object GetLatest()
+        public DayDto GetLatest()
         {
             return _healthService.GetLatestDay();
         }
@@ -44,27 +44,10 @@ namespace Health.Next.API
             return _healthService.ClearDay();
         }
 
-        //[Authorize]
-        //public ActionResult ClearDay()
-        //{
-        //    return ExecuteNonQuery(e => e.ClearDay());
-        //}
-
-        //[HttpDelete("/api/Nutrition/DeleteDay/{id}"), Authorize]
-        //public ActionResult DeleteDay(int id)
-        //{
-        //    return ExecuteNonQuery(e => e.DeleteDay(id));
-        //}
-
-        //[Authorize]
-        //public ActionResult DeleteInvalidDays()
-        //{
-        //    return ExecuteNonQuery(e => e.DeleteInvalidDays());
-        //}
-
-        //public ActionResult GetDayTotals()
-        //{
-        //    return ExecuteQuery(e => e.GetDayTotals());
-        //}
+        [HttpPut]
+        public void PruneInvalidDays()
+        {
+            _healthService.PruneInvalidDays();
+        }
     }
 }

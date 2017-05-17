@@ -9,10 +9,10 @@ import { ActivityLevel, ActivityLevels } from "app/shared/enums/activity-level.e
   styleUrls: ['./tools.component.css']
 })
 export class ToolsComponent implements OnInit {
-  private activityLevels = ActivityLevels;
+  public activityLevels = ActivityLevels;
   public genders = Genders;
   public user = { age: 27, gender: Gender.Male, height: 73, weight: 209, activityLevel: this.activityLevels[3] };
-  private maintenance = 0;
+  public maintenance = 0;
 
   constructor(private nutritionService: NutritionService) { }
 
@@ -20,7 +20,7 @@ export class ToolsComponent implements OnInit {
     this.maintenance = this.nutritionService.getMaintenanceCalories(this.user.age, this.user.gender, this.user.height, this.user.weight, this.user.activityLevel.level);
   }
 
-  private submit(): void {
+  public submit(): void {
     this.maintenance = this.nutritionService.getMaintenanceCalories(this.user.age, this.user.gender, this.user.height, this.user.weight, this.user.activityLevel.level);
   }
 }

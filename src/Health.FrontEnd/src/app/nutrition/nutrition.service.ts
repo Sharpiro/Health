@@ -11,7 +11,8 @@ import { Gender } from "app/shared/enums/gender.enum";
 
 @Injectable()
 export class NutritionService {
-  private baseUrl = "http://localhost:32159"
+  // private baseUrl = "http://localhost:32159"
+  private baseUrl = ""
   private allFoodsData: IFood[];
 
   constructor(private http: Http) { }
@@ -58,6 +59,12 @@ export class NutritionService {
   public clearDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/Clear`;
     var observable = this.getMappedObservable(this.http.put(url, {}));
+    return observable;
+  }
+
+  public pruneDays(): Observable<any> {
+    const url = `${this.baseUrl}/api/day/PruneInvalidDays`;
+    var observable = this.http.put(url, {}).catch((err, observable) => Observable.throw(JSON.parse(err._body)));
     return observable;
   }
 

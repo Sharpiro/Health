@@ -7,6 +7,6 @@ namespace Health.Core.Next.DataAccess.Entities
     {
         public int Id { get; set; }
         public DateTime Date { get; set; }
-        public virtual ICollection<Meal> Meals { get; set; }
+        public virtual ICollection<Meal> Meals { get; set; } = new List<Meal>();
     }
 }

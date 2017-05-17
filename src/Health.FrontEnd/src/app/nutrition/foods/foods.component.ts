@@ -12,7 +12,7 @@ import { Observable } from "rxjs/Observable";
 })
 export class FoodsComponent implements OnInit {
 
-  private data: Array<IFood> = [];
+  public data: Array<IFood> = [];
 
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
@@ -22,7 +22,7 @@ export class FoodsComponent implements OnInit {
     await this.nutritionService.getAllFoods().subscribe(value => this.data = value);
   }
 
-  private async checkBoxChangeHandler(food: IFood, propertyName: string) {
+  public async checkBoxChangeHandler(food: IFood, propertyName: string) {
     var x: boolean = food[propertyName];
     food[propertyName] = !food[propertyName]
     await this.nutritionService.updateFood(food);
@@ -58,7 +58,7 @@ export class FoodsComponent implements OnInit {
     }
   }
 
-  private cancelAction(event: any): void {
+  public cancelAction(event: any): void {
     event.item.clicked = false;
   }
 }
