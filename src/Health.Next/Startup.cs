@@ -3,13 +3,18 @@ using Health.Core.Next.DataAccess;
 using Health.Core.Next.Services;
 using Health.Core.Next.Tools;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace Health.Next
 {
@@ -39,8 +44,9 @@ namespace Health.Next
             services.AddScoped<FoodService>();
             services.AddDbContext<HealthContext>(options =>
                 options.UseSqlServer(_configuration.GetConnectionString("DefaultConnection")));
-            services.AddIdentity<IdentityUser, IdentityRole>()
-                .AddEntityFrameworkStores<HealthContext>()
+            //https://github.com/aspnet/Identity/issues/1082#issuecomment-273514725
+            services.AddIdentity<IdentityUser<int>, IdentityRole<int>>()
+                //.AddEntityFrameworkStores<HealthContext>()
                 .AddDefaultTokenProviders();
             services.AddCors();
         }
@@ -48,9 +54,37 @@ namespace Health.Next
         public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
             app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+            app.Use(async (context, next) =>
+            {
+                await next();
+
+                if (context.Response.StatusCode == 404 && !Path.HasExtension(context.Request.Path.Value))
+                {
+                    context.Request.Path = "/";
+                    context.Response.StatusCode = 200;
+                    await next();
+                }
+            });
+            app.UseExceptionHandler(builder =>
+            {
+                builder.UseCors(options => options.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin());
+                builder.Run(async context =>
+                {
+                    await Task.Yield();
+                    context.Response.ContentType = "application/json";
+                    var error = context.Features.Get<IExceptionHandlerFeature>();
+                    if (error != null)
+                    {
+                        var errorDto = new { error.Error?.Message };
+                        var serializationSettings = new JsonSerializerSettings { ContractResolver = new CamelCasePropertyNamesContractResolver() };
+                        var errorDtoJson = JsonConvert.SerializeObject(errorDto, serializationSettings);
+                        await context.Response.WriteAsync(errorDtoJson).ConfigureAwait(false);
+                    }
+                });
+            });
             loggerFactory.AddConsole();
 
-            if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
+            //if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
 
             app.UseMvc(builder =>
             {

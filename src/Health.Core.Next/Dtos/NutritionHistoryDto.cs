@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Health.Core.Next.Models
+namespace Health.Core.Next.Dtos
 {
-    public class NutritionHistoryModel
+    public class NutritionHistoryDto
     {
-        public IList<DayOverviewModel> Days { get; set; } = ImmutableList.Create<DayOverviewModel>();
+        public IList<DayOverviewDto> Days { get; set; } = ImmutableList.Create<DayOverviewDto>();
         public int Average
         {
             get

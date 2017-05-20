@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { NutritionService } from "app/nutrition/nutrition.service";
 
 @Component({
   selector: 'app-nutrition',
   template: `<router-outlet></router-outlet>`,
-  styles: [],
-  providers: [NutritionService]
+  styles: []
 })
 export class NutritionComponent implements OnInit {
 
@@ -13,5 +11,4 @@ export class NutritionComponent implements OnInit {
 
   ngOnInit() {
   }
-
 }

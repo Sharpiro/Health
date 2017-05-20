@@ -2,7 +2,7 @@
 
 namespace Health.Core.Next.DataAccess.Entities
 {
-    internal class MealEntry
+    public class MealEntry
     {
         public int Id { get; set; }
         public int MealEntryNumber { get; set; }

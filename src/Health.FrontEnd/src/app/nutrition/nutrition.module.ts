@@ -6,6 +6,10 @@ import { NutritionRoutingModule } from './nutrition-routing.module';
 import { FoodsComponent } from './foods/foods.component';
 import { NutritionComponent } from './nutrition.component';
 import { ContextMenuModule } from 'ngx-contextmenu';
+import { CaloriesComponent } from './calories/calories.component';
+import { NutritionService } from "app/nutrition/nutrition.service";
+import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
+import { ToolsComponent } from './tools/tools.component';
 
 @NgModule({
   imports: [
@@ -14,6 +18,7 @@ import { ContextMenuModule } from 'ngx-contextmenu';
     FormsModule,
     ContextMenuModule
   ],
-  declarations: [FoodsComponent, NutritionComponent]
+  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe, ToolsComponent],
+  providers: [NutritionService]
 })
 export class NutritionModule { }

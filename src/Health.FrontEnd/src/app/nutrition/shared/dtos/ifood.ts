@@ -14,3 +14,8 @@ export interface IFood {
     isActive: boolean;
     clicked: boolean;
 }
+
+export interface ISimpleFood {
+    calories: number;
+    servingSize: number;
+}

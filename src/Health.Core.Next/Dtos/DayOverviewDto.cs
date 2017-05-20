@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Health.Core.Next.Models
+namespace Health.Core.Next.Dtos
 {
-    public class DayOverviewModel
+    public class DayOverviewDto
     {
         public int Calories { get; set; }
         public DateTime Date { get; set; }

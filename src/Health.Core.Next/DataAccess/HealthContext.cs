@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Health.Core.Next.DataAccess
 {
-    public class HealthContext : IdentityDbContext
+    public class HealthContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {
         internal DbSet<Day> Days { get; set; }
         internal DbSet<Meal> Meals { get; set; }

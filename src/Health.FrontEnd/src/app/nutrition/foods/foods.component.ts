@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { NutritionService } from "app/nutrition/nutrition.service";
-import { ContextMenuService, ContextMenuComponent } from 'ngx-contextmenu';
-import { IFood } from "app/nutrition/shared/ifood";
-import { KeyCode } from "app/nutrition/shared/keycode";
+import { ContextMenuComponent } from 'ngx-contextmenu';
+import { IFood } from "app/nutrition/shared/dtos/ifood";
+import { KeyCode } from "app/nutrition/shared/enums/keycode";
+import { Observable } from "rxjs/Observable";
 
 @Component({
   selector: 'app-foods',
@@ -11,17 +12,17 @@ import { KeyCode } from "app/nutrition/shared/keycode";
 })
 export class FoodsComponent implements OnInit {
 
-  private data: Array<any>;
+  public data: Array<IFood> = [];
 
   @ViewChild(ContextMenuComponent) public basicMenu: ContextMenuComponent;
 
-  constructor(private nutritionService: NutritionService, private contextMenuService: ContextMenuService) { }
+  constructor(private nutritionService: NutritionService) { }
 
   async ngOnInit() {
-    this.data = await this.nutritionService.getAllFoods().toPromise();
+    await this.nutritionService.getAllFoods().subscribe(value => this.data = value);
   }
 
-  private async checkBoxChangeHandler(food: IFood, propertyName: string) {
+  public async checkBoxChangeHandler(food: IFood, propertyName: string) {
     var x: boolean = food[propertyName];
     food[propertyName] = !food[propertyName]
     await this.nutritionService.updateFood(food);
@@ -57,7 +58,7 @@ export class FoodsComponent implements OnInit {
     }
   }
 
-  private cancelAction(event: any): void {
+  public cancelAction(event: any): void {
     event.item.clicked = false;
   }
 }

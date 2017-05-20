@@ -139,7 +139,7 @@ DocProject/Help/Html2
 DocProject/Help/html
 
 # Click-Once directory
-publish/
+
 
 # Publish Web Output
 *.[Pp]ublish.xml
@@ -210,5 +210,5 @@ FakesAssemblies/
 # Visual Studio 6 workspace options file
 *.opt
 
-!Health.Database/Health.Database.publish.xml
 *.jfm
+!Health.Database/Publish/*.publish.xml

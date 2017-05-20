@@ -1,4 +1,4 @@
-﻿using Health.Core.Next.Models;
+﻿using Health.Core.Next.Dtos;
 using Health.Core.Next.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -28,6 +28,12 @@ namespace Health.Next.API
         public IEnumerable<FoodDto> GetAll()
         {
             return _foodService.GetAll();
+        }
+
+        [HttpGet]
+        public IEnumerable<FoodDto> GetAllActive()
+        {
+            return _foodService.GetAllActive();
         }
 
         [HttpPut]

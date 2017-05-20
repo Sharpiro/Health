@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [AspNetRoles] (
-    [Id] nvarchar(450) NOT NULL,
+    [Id] int NOT NULL,
     [ConcurrencyStamp] nvarchar(max),
     [Name] nvarchar(256),
     [NormalizedName] nvarchar(256),
