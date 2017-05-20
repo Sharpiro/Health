@@ -88,12 +88,14 @@ export class CaloriesComponent implements OnInit {
   }
 
   public updateCalories() {
+    if (!this.viewModel.selectedFood) return;
     let caloriesPerServing = this.viewModel.selectedFood.calories / this.viewModel.selectedFood.servingSize;
     let calories = Math.ceil(this.viewModel.activeMealEntry.servingSize * caloriesPerServing);
     this.viewModel.activeMealEntry.calories = calories;
   }
 
   public updateServing() {
+    if (!this.viewModel.selectedFood) return;
     let numberOfServings = this.viewModel.activeMealEntry.calories / this.viewModel.selectedFood.calories;
     let servingSize = numberOfServings * this.viewModel.selectedFood.servingSize;
     this.viewModel.activeMealEntry.servingSize = servingSize;

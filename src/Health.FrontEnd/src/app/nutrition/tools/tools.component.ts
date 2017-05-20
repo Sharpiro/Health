@@ -11,7 +11,7 @@ import { ActivityLevel, ActivityLevels } from "app/shared/enums/activity-level.e
 export class ToolsComponent implements OnInit {
   public activityLevels = ActivityLevels;
   public genders = Genders;
-  public user = { age: 27, gender: Gender.Male, height: 73, weight: 209, activityLevel: this.activityLevels[3] };
+  public user = { age: 27, gender: Gender.Male, height: 73, weight: 208.1, activityLevel: this.activityLevels[3] };
   public maintenance = 0;
 
   constructor(private nutritionService: NutritionService) { }
