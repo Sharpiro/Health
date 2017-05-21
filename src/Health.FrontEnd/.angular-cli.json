@@ -22,7 +22,8 @@
         "styles.css",
         "../node_modules/tether/dist/css/tether.min.css",
         "../node_modules/bootstrap/dist/css/bootstrap.min.css",
-        "../node_modules/toastr/build/toastr.min.css"
+        "../node_modules/toastr/build/toastr.min.css",
+        "../node_modules/chartist/dist/chartist.min.css"
       ],
       "scripts": [
         "../node_modules/jquery/dist/jquery.min.js",
