@@ -2,7 +2,13 @@
   <div class="row">
     <div class="col-12">
       <h4>Async</h4>
-      <x-chartist [data]="data" [type]="type" [options]="options"></x-chartist>
+      <x-chartist id="testChart" [data]="data" [type]="type" [options]="options"></x-chartist>
+      <!--<div class="ct-chart ct-perfect-fourth"></div>-->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <button (click)="click()">Test</button>
     </div>
   </div>
 </div>

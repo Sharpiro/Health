@@ -11,7 +11,6 @@ import { NutritionService } from "app/nutrition/nutrition.service";
 import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
 import { ToolsComponent } from './tools/tools.component';
 import { HistoryComponent } from './history/history.component';
-// import { ChartistModule } from 'ng-chartist';
 import { ChartistModule } from "ng-chartist/src/chartist.component"
 
 @NgModule({
