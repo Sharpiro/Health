@@ -13,8 +13,8 @@ import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 
 @Injectable()
 export class NutritionService {
-  private baseUrl = "http://localhost:32159";
-  // private baseUrl = "";
+  // private baseUrl = "http://localhost:32159";
+  private baseUrl = "";
   private allFoodsData: IFood[];
 
   constructor(private http: Http) { }

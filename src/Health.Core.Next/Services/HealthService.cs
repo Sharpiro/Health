@@ -115,9 +115,29 @@ namespace Health.Core.Next.Services
         public IEnumerable<MealEntryDto> GetLatestMealEntries()
         {
             var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
-            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id);
-            var mealEntryDtos = _mapper.Map<List<MealEntryDto>>(mealEntries);
-            return mealEntryDtos;
+            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id).ToList();
+
+            var groupedDtos = mealEntries.Select(med =>
+            {
+                var roundError = med.TimeStamp.Minute >= 30 ? 1 : 0;
+                return new MealEntryDto
+                {
+                    Id = med.Id,
+                    Calories = med.Calories,
+                    FoodId = med.FoodId,
+                    MealEntryNumber = med.MealEntryNumber,
+                    MealId = med.MealId,
+                    TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour + roundError, 0, 0)
+                    //TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour, med.TimeStamp.Minute, 0)
+                };
+            }).GroupBy(med => med.TimeStamp)
+                .Select(g => new MealEntryDto
+                {
+                    TimeStamp = g.Key,
+                    Calories = g.Sum(med => med.Calories)
+                });
+
+            return groupedDtos;
         }
 
         public DayDto AddDay(DateTime clientDateTime)
