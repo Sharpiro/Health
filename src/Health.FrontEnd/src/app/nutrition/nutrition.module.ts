@@ -10,15 +10,18 @@ import { CaloriesComponent } from './calories/calories.component';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import { FoodDisplayPipe } from './shared/pipes/food-display.pipe';
 import { ToolsComponent } from './tools/tools.component';
+import { HistoryComponent } from './history/history.component';
+import { ChartistModule } from "ng-chartist/src/chartist.component"
 
 @NgModule({
   imports: [
     CommonModule,
     NutritionRoutingModule,
     FormsModule,
-    ContextMenuModule
+    ContextMenuModule,
+    ChartistModule
   ],
-  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe, ToolsComponent],
+  declarations: [FoodsComponent, NutritionComponent, CaloriesComponent, FoodDisplayPipe, ToolsComponent, HistoryComponent],
   providers: [NutritionService]
 })
 export class NutritionModule { }

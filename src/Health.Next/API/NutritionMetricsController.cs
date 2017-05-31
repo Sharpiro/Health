@@ -17,12 +17,12 @@ namespace Health.Next.API
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
 
-        [Route("/api/NutritionMetrics/GetNutritionHistory/{days?}")]
-        public IActionResult GetNutritionHistory(int days)
+        [Route("/api/NutritionMetrics/GetNutritionHistory/{date?}")]
+        public IActionResult GetNutritionHistory(DateTime date)
         {
-            if (days <= 0) throw new ArgumentOutOfRangeException(nameof(days));
+            if (date == DateTime.MinValue) throw new ArgumentOutOfRangeException(nameof(date), "Invalid date");
 
-            return Execute(() => _healthService.GetNutritionHistory(days));
+            return Execute(() => _healthService.GetNutritionHistory(date));
         }
 
         private IActionResult Execute<TOut>(Func<TOut> func)

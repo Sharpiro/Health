@@ -7,7 +7,7 @@ namespace Health.Core.Next.Dtos
 {
     public class NutritionHistoryDto
     {
-        public IList<DayOverviewDto> Days { get; set; } = ImmutableList.Create<DayOverviewDto>();
+        public IEnumerable<DayOverviewDto> Days { get; set; } = ImmutableList.Create<DayOverviewDto>();
         public int Average
         {
             get
