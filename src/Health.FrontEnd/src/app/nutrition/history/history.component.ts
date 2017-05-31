@@ -11,13 +11,13 @@ import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
 })
 export class HistoryComponent implements OnInit {
 
-  private nutritionHistory: NutritionHistory;
-  private historicalData: Chartist.IChartistData = {
+  public nutritionHistory: NutritionHistory;
+  public historicalData: Chartist.IChartistData = {
     labels: [],
     series: [[]]
   };
-  private type = "Line";
-  private options = {
+  public type = "Line";
+  public options = {
     // low: 0
   };
 
