@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace Health.Core.Next.Dtos
 {
@@ -11,5 +12,6 @@ namespace Health.Core.Next.Dtos
         public virtual FoodDto Food { get; set; }
         [Range(0, 2000, ErrorMessage = "Value must be between 0 and 2000")]
         public int Calories { get; set; }
+        public DateTime TimeStamp { get; set; }
     }
 }

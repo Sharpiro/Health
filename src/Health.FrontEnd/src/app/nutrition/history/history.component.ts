@@ -3,6 +3,7 @@ import * as Chartist from 'chartist';
 import { NutritionService } from "app/nutrition/nutrition.service";
 import * as moment from 'moment';
 import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
+import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 
 @Component({
   selector: 'app-history',
@@ -12,7 +13,13 @@ import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
 export class HistoryComponent implements OnInit {
 
   public nutritionHistory: NutritionHistory;
+  public mealEntries: MealEntry[];
+
   public historicalData: Chartist.IChartistData = {
+    labels: [],
+    series: [[]]
+  };
+  public mealEntryData: Chartist.IChartistData = {
     labels: [],
     series: [[]]
   };
@@ -24,7 +31,8 @@ export class HistoryComponent implements OnInit {
   constructor(private nutritionService: NutritionService) { }
 
   ngOnInit() {
-    this.updateChart();
+    this.updateDayHistoryChart();
+    this.updateMealTimingChart();
   }
 
   public click() {
@@ -32,10 +40,9 @@ export class HistoryComponent implements OnInit {
     console.log(element);
   }
 
-  private updateChart(): void {
+  private updateDayHistoryChart(): void {
     this.nutritionService.getNutritionHistory().subscribe(nh => {
       this.nutritionHistory = nh;
-      // const labels = nh.days.map(d => moment(d.date).format("MM/DD"));
       const labels = nh.days.map(d => `${moment(d.date).format("MM/DD")}: ${d.calories}`);
       const series = [
         nh.days.map(d => {
@@ -45,5 +52,17 @@ export class HistoryComponent implements OnInit {
       this.historicalData = { labels: labels, series: series };
     });
   }
-}
 
+  private updateMealTimingChart() {
+    this.nutritionService.GetLatestMealEntries().subscribe(mealEntries => {
+      this.mealEntries = mealEntries;
+      const labels = mealEntries.map(me => moment(me.timeStamp).format("H:mm"));
+      const series = [
+        mealEntries.map(me => {
+          return { meta: moment(me.timeStamp).format("MM/DD"), value: me.calories };
+        })
+      ];
+      this.mealEntryData = { labels: labels, series: series };
+    });
+  }
+}

@@ -112,6 +112,14 @@ namespace Health.Core.Next.Services
             };
         }
 
+        public IEnumerable<MealEntryDto> GetLatestMealEntries()
+        {
+            var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
+            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id);
+            var mealEntryDtos = _mapper.Map<List<MealEntryDto>>(mealEntries);
+            return mealEntryDtos;
+        }
+
         public DayDto AddDay(DateTime clientDateTime)
         {
             var day = new Day { Date = new DateTime(clientDateTime.Year, clientDateTime.Month, clientDateTime.Day) };

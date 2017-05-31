@@ -9,11 +9,12 @@ import { Day } from "app/nutrition/shared/dtos//day";
 import { ActivityLevel } from "app/shared/enums/activity-level.enum";
 import { Gender } from "app/shared/enums/gender.enum";
 import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
+import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 
 @Injectable()
 export class NutritionService {
-  // private baseUrl = "http://localhost:32159";
-  private baseUrl = "";
+  private baseUrl = "http://localhost:32159";
+  // private baseUrl = "";
   private allFoodsData: IFood[];
 
   constructor(private http: Http) { }
@@ -54,6 +55,12 @@ export class NutritionService {
 
   public getLatestDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/getlatest`;
+    const observable = this.getMappedObservable(this.http.get(url));
+    return observable;
+  }
+
+  public GetLatestMealEntries(): Observable<MealEntry[]> {
+    const url = `${this.baseUrl}/api/day/GetLatestMealEntries`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
