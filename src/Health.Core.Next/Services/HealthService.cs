@@ -33,7 +33,47 @@ namespace Health.Core.Next.Services
                     Date = day.Date
                 }).ToList()
             };
+
             return history;
+        }
+
+        public NutritionHistoryDto GetNutritionHistory(DateTime currentDate, int daysBack = 7)
+        {
+            var currentDateNoTime = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day);
+            var sevenDaysAgo = currentDateNoTime.Subtract(TimeSpan.FromDays(daysBack));
+
+            var calorieDictionary = _healthContext.Days.OrderByDescending(day => day.Date)
+            .Where(d => d.Date < currentDateNoTime && d.Date >= sevenDaysAgo)
+            .Take(daysBack)
+            .Include(d => d.Meals).ThenInclude(m => m.MealEntries)
+            .ToDictionary(d => d.Date, d =>
+            {
+                return d.Meals.SelectMany(meal => meal.MealEntries)
+                .Sum(mealEntry => mealEntry.Calories);
+            });
+
+            var history = new NutritionHistoryDto
+            {
+                Days = GetDateList().Select(d =>
+                {
+                    var parseSuccess = calorieDictionary.TryGetValue(d, out int calories);
+                    calories = parseSuccess ? calories : 3100;
+                    return new DayOverviewDto
+                    {
+                        Date = d,
+                        Calories = calories
+                    };
+                })
+            };
+
+            return history;
+
+            IEnumerable<DateTime> GetDateList()
+            {
+                var startDate = currentDateNoTime.Subtract(TimeSpan.FromDays(1));
+                for (DateTime date = startDate; date >= sevenDaysAgo; date = date.Subtract(TimeSpan.FromDays(1)))
+                    yield return date;
+            }
         }
 
         public void PruneInvalidDays()
