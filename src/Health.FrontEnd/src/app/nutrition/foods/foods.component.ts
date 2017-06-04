@@ -23,8 +23,8 @@ export class FoodsComponent implements OnInit {
   }
 
   public async checkBoxChangeHandler(food: IFood, propertyName: string) {
-    var x: boolean = food[propertyName];
-    food[propertyName] = !food[propertyName]
+    const x: boolean = food[propertyName];
+    food[propertyName] = !food[propertyName];
     await this.nutritionService.updateFood(food);
     console.log(`updated ${food.id}: ${food.name} as active: ${food.isActive} in database`);
   }
@@ -34,8 +34,8 @@ export class FoodsComponent implements OnInit {
     if (!food.clicked) return;
     if (event.keyCode === KeyCode.Esc) resetElement();
     if (event.keyCode !== KeyCode.Enter && event.keyCode !== KeyCode.Tab) return;
-    var oldValue = food[propertyName].toString();
-    let newValue = element.value;
+    const oldValue = food[propertyName].toString();
+    const newValue = element.value;
     if (event.keyCode === 13) {
       food.clicked = false;
     }

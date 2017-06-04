@@ -59,8 +59,17 @@ export class NutritionService {
     return observable;
   }
 
-  public GetLatestMealEntries(): Observable<MealEntry[]> {
-    const url = `${this.baseUrl}/api/day/GetLatestMealEntries`;
+  public getLatestMealEntries(date?: moment.Moment | null): Observable<MealEntry[]> {
+    let currentTime: string | null = null;
+    if (date)
+      currentTime = date.format('YYYY-MM-DDTHH:mm:ss');
+    const url = `${this.baseUrl}/api/day/GetLatestMealEntries?dayTimeStamp=${currentTime}`;
+    const observable = this.getMappedObservable(this.http.get(url));
+    return observable;
+  }
+
+  public getDayList(numberOfDays: number): Observable<Day[]> {
+    const url = `${this.baseUrl}/api/day/GetDayList?numberOfDays=${numberOfDays}`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }

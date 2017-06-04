@@ -34,9 +34,15 @@ namespace Health.Next.API
         }
 
         [HttpGet]
-        public IEnumerable<MealEntryDto> GetLatestMealEntries()
+        public IEnumerable<DayDto> GetDayList(int numberOfDays)
         {
-            return _healthService.GetLatestMealEntries();
+            return _healthService.GetDayList(numberOfDays);
+        }
+
+        [HttpGet]
+        public IEnumerable<MealEntryDto> GetLatestMealEntries(DateTime? dayTimeStamp = null)
+        {
+            return _healthService.GetLatestMealEntries(dayTimeStamp);
         }
 
         [HttpPut]

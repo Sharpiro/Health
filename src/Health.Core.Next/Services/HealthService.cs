@@ -37,6 +37,14 @@ namespace Health.Core.Next.Services
             return history;
         }
 
+        public IEnumerable<DayDto> GetDayList(int numberOfDays)
+        {
+            var days = _healthContext.Days.OrderByDescending(d => d.Date).Take(numberOfDays);
+            var dayDtos = _mapper.Map<IEnumerable<DayDto>>(days);
+            var actualType = dayDtos.GetType();
+            return dayDtos;
+        }
+
         public NutritionHistoryDto GetNutritionHistory(DateTime currentDate, int daysBack = 7)
         {
             var currentDateNoTime = new DateTime(currentDate.Year, currentDate.Month, currentDate.Day);
@@ -57,7 +65,7 @@ namespace Health.Core.Next.Services
                 Days = GetDateList().Select(d =>
                 {
                     var parseSuccess = calorieDictionary.TryGetValue(d, out int calories);
-                    calories = parseSuccess ? calories : 3100;
+                    calories = parseSuccess ? calories : 3000;
                     return new DayOverviewDto
                     {
                         Date = d,
@@ -112,14 +120,17 @@ namespace Health.Core.Next.Services
             };
         }
 
-        public IEnumerable<MealEntryDto> GetLatestMealEntries()
+        public IEnumerable<MealEntryDto> GetLatestMealEntries(DateTime? dayTimeStamp = null)
         {
-            var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
-            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id).ToList();
+            dayTimeStamp = dayTimeStamp.HasValue ? (DateTime?)new DateTime(dayTimeStamp.Value.Year, dayTimeStamp.Value.Month, dayTimeStamp.Value.Day) : null;
+            var day = dayTimeStamp.HasValue ? _healthContext.Days.SingleOrDefault(d => d.Date == dayTimeStamp)
+                : _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
+            if (day == null) throw new NullReferenceException("Could not find relevant day information in the database");
 
+            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id).ToList();
             var groupedDtos = mealEntries.Select(med =>
             {
-                var roundError = med.TimeStamp.Minute >= 30 ? 1 : 0;
+                var roundError = med.TimeStamp.Minute >= 30 && med.TimeStamp.Hour < 23 ? 1 : 0;
                 return new MealEntryDto
                 {
                     Id = med.Id,
