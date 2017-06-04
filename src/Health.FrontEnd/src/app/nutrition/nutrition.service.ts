@@ -9,6 +9,7 @@ import { Day } from "app/nutrition/shared/dtos//day";
 import { ActivityLevel } from "app/shared/enums/activity-level.enum";
 import { Gender } from "app/shared/enums/gender.enum";
 import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
+import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
 
 @Injectable()
 export class NutritionService {
@@ -54,6 +55,21 @@ export class NutritionService {
 
   public getLatestDay(): Observable<Day> {
     const url = `${this.baseUrl}/api/day/getlatest`;
+    const observable = this.getMappedObservable(this.http.get(url));
+    return observable;
+  }
+
+  public getLatestMealEntries(date?: moment.Moment | null): Observable<MealEntry[]> {
+    let currentTime: string | null = null;
+    if (date)
+      currentTime = date.format('YYYY-MM-DDTHH:mm:ss');
+    const url = `${this.baseUrl}/api/day/GetLatestMealEntries?dayTimeStamp=${currentTime}`;
+    const observable = this.getMappedObservable(this.http.get(url));
+    return observable;
+  }
+
+  public getDayList(numberOfDays: number): Observable<Day[]> {
+    const url = `${this.baseUrl}/api/day/GetDayList?numberOfDays=${numberOfDays}`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }

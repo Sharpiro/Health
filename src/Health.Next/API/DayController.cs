@@ -2,6 +2,7 @@
 using Health.Core.Next.Services;
 using Microsoft.AspNetCore.Mvc;
 using Health.Core.Next.Dtos;
+using System.Collections.Generic;
 
 namespace Health.Next.API
 {
@@ -30,6 +31,18 @@ namespace Health.Next.API
         public DayDto GetLatest()
         {
             return _healthService.GetLatestDay();
+        }
+
+        [HttpGet]
+        public IEnumerable<DayDto> GetDayList(int numberOfDays)
+        {
+            return _healthService.GetDayList(numberOfDays);
+        }
+
+        [HttpGet]
+        public IEnumerable<MealEntryDto> GetLatestMealEntries(DateTime? dayTimeStamp = null)
+        {
+            return _healthService.GetLatestMealEntries(dayTimeStamp);
         }
 
         [HttpPut]

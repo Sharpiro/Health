@@ -13,8 +13,8 @@ export class CaloriesViewModel {
     public latestDay: Day;
 
     public getTotalCalories(): number {
-        let mealCalories = this.activeMeal ? this.activeMeal.mealEntries.map(m => m.calories).reduce((a, b) => a + b, 0) : 0;
-        let latestDayCalories = this.latestDay ? this.latestDay.totalCalories : 0;
+        const mealCalories = this.activeMeal ? this.activeMeal.mealEntries.map(m => m.calories).reduce((a, b) => a + b, 0) : 0;
+        const latestDayCalories = this.latestDay ? this.latestDay.totalCalories : 0;
         return mealCalories + latestDayCalories;
     }
 }

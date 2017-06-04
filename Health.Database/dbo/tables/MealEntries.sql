@@ -4,7 +4,8 @@
     [MealEntryNumber] INT NOT NULL, 
     [MealId] INT NOT NULL, 
     [FoodId] INT NOT NULL, 
-    [Calories] INT NOT NULL
+    [Calories] INT NOT NULL,
+	[TimeStamp] DATETIME
 
 	CONSTRAINT [PK_MealEntries] PRIMARY KEY CLUSTERED ([Id] ASC)
 	CONSTRAINT [FK_MealEntries_Meals] FOREIGN KEY ([MealId]) REFERENCES [dbo].[Meals]([Id]) ON DELETE CASCADE

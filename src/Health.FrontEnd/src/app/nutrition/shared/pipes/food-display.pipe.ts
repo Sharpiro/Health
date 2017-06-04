@@ -15,9 +15,9 @@ export class FoodDisplayPipe implements PipeTransform {
   async transform(value: any, args?: any) {
     if (!this.foodsPromise)
       this.foodsPromise = this.nutritionService.getAllFoods().toPromise();
-    var foods = await this.foodsPromise;
-    var foodName = foods.filter(f => f.id == value);
-    var transformedValue = foodName.length > 0 ? foodName[0].name : value;
+    const foods = await this.foodsPromise;
+    const foodName = foods.filter(f => f.id === value);
+    const transformedValue = foodName.length > 0 ? foodName[0].name : value;
     return transformedValue;
   }
 }
