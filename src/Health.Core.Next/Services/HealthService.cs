@@ -20,6 +20,38 @@ namespace Health.Core.Next.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
+        public (int Protein, int Carbs, int Fat) GetMacros()
+        {
+            var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
+            if (day == null) throw new NullReferenceException("There is no day information in the database");
+
+            var dailyMacros = _healthContext.Meals
+                .Where(m => m.DayId == day.Id)
+                .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
+                .ThenInclude(me => me.Food).ToList()
+                .SelectMany(m => m.MealEntries.OrderBy(me => me.MealEntryNumber))
+                .GroupBy(me => me.Food)
+                .Select(g => GetFoodMacros(g))
+                .Aggregate((a, b) => (
+                    a.Protein + b.Protein,
+                    a.Carbs + b.Carbs,
+                    a.Fat + b.Fat
+                ));
+
+            (int Protein, int Carbs, int Fat) GetFoodMacros(IGrouping<Food, MealEntry> g)
+            {
+                var food = g.Key;
+                var dailyFoodTotal = g.Sum(me => me.Calories);
+                return (
+                    (int)Math.Round((double)dailyFoodTotal / food.Calories * food.Protein),
+                    (int)Math.Round((double)dailyFoodTotal / food.Calories * food.Carbs),
+                    (int)Math.Round((double)dailyFoodTotal / food.Calories * food.Fat)
+                );
+            }
+
+            return dailyMacros;
+        }
+
         public NutritionHistoryDto GetNutritionHistory(int days)
         {
             var history = new NutritionHistoryDto

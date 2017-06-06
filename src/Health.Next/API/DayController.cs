@@ -21,6 +21,12 @@ namespace Health.Next.API
             throw new Exception("bad");
         }
 
+        [HttpGet]
+        public object GetMacros()
+        {
+            return _healthService.GetMacros();
+        }
+
         [HttpPost]
         public DayDto Add(DateTime currentTime)
         {

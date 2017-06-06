@@ -1,8 +1,8 @@
-<div class="container">
+﻿<div class="container">
   <div class="row">
     <div class="col-12">
       <h4>Nutrition History</h4>
-      <x-chartist [data]="historicalData" [type]="type"></x-chartist>
+      <x-chartist [data]="historicalData" [type]="lineChartTypeName"></x-chartist>
     </div>
   </div>
   <div class="row row-padding">
@@ -20,13 +20,19 @@
   <div class="row">
     <div class="col-3">
       <select class="form-control forms" [ngModel]="selectedDay" (ngModelChange)="mealTimingDateChanged($event)">
-        <option *ngFor="let day of days" [ngValue]="day">{{day.date}}</option>
+        <option *ngFor="let day of days" [ngValue]="day">{{day.date | date}}</option>
       </select>
     </div>
   </div>
   <div class="row">
     <div class="col-12">
-      <x-chartist [data]="mealEntryData" [type]="type" [options]="options"></x-chartist>
+      <x-chartist [data]="mealEntryData" [type]="lineChartTypeName" [options]="options"></x-chartist>
+    </div>
+  </div>
+  <div class="row row-padding" style="height:400px">
+    <div class="col-12">
+      <h4>Macros</h4>
+      <x-chartist [data]="macrosData" [type]="pieChartTypeName"></x-chartist>
     </div>
   </div>
 </div>

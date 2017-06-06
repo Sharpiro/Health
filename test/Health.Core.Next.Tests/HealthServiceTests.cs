@@ -5,6 +5,8 @@ using Health.Core.Next.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using Newtonsoft.Json.Linq;
+using System.Linq;
 
 namespace Health.Core.Next.Tests
 {
@@ -41,6 +43,45 @@ namespace Health.Core.Next.Tests
             Assert.AreEqual(expectedModerateMaintenance, moderateMaintenance);
             Assert.AreEqual(expectedVeryActiveMaintenance, veryActiveMaintenance);
             Assert.AreEqual(expectedExtraActiveMaintenance, extraActiveMaintenance);
+        }
+
+        [TestMethod]
+        public void MacroAggregateTest()
+        {
+            const string testJson = @"[ 
+                {'Calories':100,'Protein':4,'Carbs':1,'Fat':9},
+                {'Calories':540,'Protein':20,'Carbs':17,'Fat':51},
+                {'Calories':120,'Protein':16,'Carbs':0,'Fat':5},
+                {'Calories':180,'Protein':20,'Carbs':4,'Fat':8},
+                {'Calories':40,'Protein':0,'Carbs':17,'Fat':0},
+                {'Calories':300,'Protein':4,'Carbs':101,'Fat':0},
+                {'Calories':600,'Protein':23,'Carbs':91,'Fat':11}
+            ]";
+
+            var data = JArray.Parse(testJson)
+                .Select(j => new
+                {
+                    Calories = (int)j["Calories"],
+                    Protein = (int)j["Protein"],
+                    Carbs = (int)j["Carbs"],
+                    Fat = (int)j["Fat"]
+                }).ToList();
+
+            var agg = data.Aggregate((a, b) =>
+            {
+                return new
+                {
+                    Calories = a.Calories + b.Calories,
+                    Protein = a.Protein + b.Protein,
+                    Carbs = a.Carbs + b.Carbs,
+                    Fat = a.Fat + b.Fat
+                };
+            });
+
+            Assert.AreEqual(1880, agg.Calories);
+            Assert.AreEqual(87, agg.Protein);
+            Assert.AreEqual(231, agg.Carbs);
+            Assert.AreEqual(84, agg.Fat);
         }
     }
 }

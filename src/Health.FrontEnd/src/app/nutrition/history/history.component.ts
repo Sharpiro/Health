@@ -17,6 +17,7 @@ export class HistoryComponent implements OnInit {
   public mealEntries: MealEntry[];
   public days: Day[];
   public selectedDay: Day;
+  public macros: any;
 
   public historicalData: Chartist.IChartistData = {
     labels: [],
@@ -26,7 +27,14 @@ export class HistoryComponent implements OnInit {
     labels: [],
     series: [[]]
   };
-  public type = "Line";
+
+  public macrosData: any = {
+    labels: [],
+    series: []
+  };
+
+  public lineChartTypeName = "Line";
+  public pieChartTypeName = "Pie";
   public options = {
     showLine: false,
     axisX: {
@@ -44,6 +52,7 @@ export class HistoryComponent implements OnInit {
     this.getDayList();
     this.updateDayHistoryChart();
     this.updateMealTimingChart();
+    this.updateMacrosChart();
   }
 
   public mealTimingDateChanged(event: Day) {
@@ -85,6 +94,15 @@ export class HistoryComponent implements OnInit {
         }
       ];
       this.mealEntryData = { series: series };
+    });
+  }
+
+  private updateMacrosChart() {
+    this.nutritionService.getMacros().subscribe(macros => {
+      this.macros = macros;
+      const labels = [`Carbs: ${macros.carbs}`, `Protein: ${macros.protein}`, `Fat: ${macros.fat}`];
+      const series = [macros.carbs, macros.protein, macros.fat];
+      this.macrosData = { labels: labels, series: series };
     });
   }
 }
