@@ -3,6 +3,7 @@ using Health.Core.Next.Services;
 using Microsoft.AspNetCore.Mvc;
 using Health.Core.Next.Dtos;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Health.Next.API
 {
@@ -24,7 +25,13 @@ namespace Health.Next.API
         [HttpGet]
         public object GetMacros()
         {
-            return _healthService.GetMacros();
+            var macros = _healthService.GetMacros();
+            return new
+            {
+                Protein = macros.Protein,
+                Carbs = macros.Carbs,
+                Fat = macros.Fat
+            };
         }
 
         [HttpPost]

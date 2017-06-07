@@ -29,8 +29,8 @@ export class HistoryComponent implements OnInit {
   };
 
   public macrosData: any = {
-    labels: [],
-    series: []
+    labels: [" "],
+    series: [1]
   };
 
   public lineChartTypeName = "Line";
@@ -99,7 +99,7 @@ export class HistoryComponent implements OnInit {
 
   private updateMacrosChart() {
     this.nutritionService.getMacros().subscribe(macros => {
-      this.macros = macros;
+      if (macros.carbs === 0 && macros.protein === 0 && macros.fat === 0) return;
       const labels = [`Carbs: ${macros.carbs}`, `Protein: ${macros.protein}`, `Fat: ${macros.fat}`];
       const series = [macros.carbs, macros.protein, macros.fat];
       this.macrosData = { labels: labels, series: series };

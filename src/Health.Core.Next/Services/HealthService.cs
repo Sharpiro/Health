@@ -25,18 +25,19 @@ namespace Health.Core.Next.Services
             var day = _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
             if (day == null) throw new NullReferenceException("There is no day information in the database");
 
+            (int Protein, int Carbs, int Fat) seed = (0, 0, 0);
             var dailyMacros = _healthContext.Meals
-                .Where(m => m.DayId == day.Id)
-                .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
-                .ThenInclude(me => me.Food).ToList()
-                .SelectMany(m => m.MealEntries.OrderBy(me => me.MealEntryNumber))
+            .Where(m => m.DayId == day.Id)
+            .OrderBy(m => m.MealNumber).Include(m => m.MealEntries)
+            .ThenInclude(me => me.Food).ToList()
+            .SelectMany(m => m.MealEntries.OrderBy(me => me.MealEntryNumber))
                 .GroupBy(me => me.Food)
                 .Select(g => GetFoodMacros(g))
-                .Aggregate((a, b) => (
-                    a.Protein + b.Protein,
-                    a.Carbs + b.Carbs,
-                    a.Fat + b.Fat
-                ));
+                .Aggregate(seed, (a, b) => (
+                 a.Protein + b.Protein,
+                 a.Carbs + b.Carbs,
+                 a.Fat + b.Fat
+             ));
 
             (int Protein, int Carbs, int Fat) GetFoodMacros(IGrouping<Food, MealEntry> g)
             {
