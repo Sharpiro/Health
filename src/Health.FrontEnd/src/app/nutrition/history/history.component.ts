@@ -39,7 +39,7 @@ export class HistoryComponent implements OnInit {
     showLine: false,
     axisX: {
       type: Chartist.FixedScaleAxis,
-      divisor: 12,
+      divisor: 8,
       labelInterpolationFnc: function (value) {
         return moment(value).format('H:mm');
       }
@@ -100,7 +100,11 @@ export class HistoryComponent implements OnInit {
   private updateMacrosChart() {
     this.nutritionService.getMacros().subscribe(macros => {
       if (macros.carbs === 0 && macros.protein === 0 && macros.fat === 0) return;
-      const labels = [`Carbs: ${macros.carbs}`, `Protein: ${macros.protein}`, `Fat: ${macros.fat}`];
+      const totalMacros = macros.carbs + macros.protein + macros.fat;
+      const labels = [
+        `Carbs: ${Math.round(macros.carbs / totalMacros * 100)}% - ${macros.carbs}g`,
+        `Protein: ${Math.round(macros.protein / totalMacros * 100)}% - ${macros.protein}g`,
+        `Fat: ${Math.round(macros.fat / totalMacros * 100)}% - ${macros.fat}g`];
       const series = [macros.carbs, macros.protein, macros.fat];
       this.macrosData = { labels: labels, series: series };
     });
