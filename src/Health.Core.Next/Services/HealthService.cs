@@ -6,6 +6,8 @@ using System.Linq;
 using AutoMapper;
 using Health.Core.Next.DataAccess.Entities;
 using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace Health.Core.Next.Services
 {
@@ -160,28 +162,27 @@ namespace Health.Core.Next.Services
                 : _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
             if (day == null) throw new NullReferenceException("Could not find relevant day information in the database");
 
-            var mealEntries = _healthContext.MealEntries.Where(me => me.Meal.DayId == day.Id).ToList();
-            var groupedDtos = mealEntries.Select(med =>
-            {
-                var roundError = med.TimeStamp.Minute >= 30 && med.TimeStamp.Hour < 23 ? 1 : 0;
-                return new MealEntryDto
-                {
-                    Id = med.Id,
-                    Calories = med.Calories,
-                    FoodId = med.FoodId,
-                    MealEntryNumber = med.MealEntryNumber,
-                    MealId = med.MealId,
-                    TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour + roundError, 0, 0)
-                    //TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour, med.TimeStamp.Minute, 0)
-                };
-            }).GroupBy(med => med.TimeStamp)
-                .Select(g => new MealEntryDto
-                {
-                    TimeStamp = g.Key,
-                    Calories = g.Sum(med => med.Calories)
-                });
+            //var mealEntries = _healthContext.MealEntries
+            //.Where(me => me.Meal.DayId == day.Id).ToList()
+            //.Select(med =>
+            //{
+            //    var roundError = med.TimeStamp.Minute >= 30 && med.TimeStamp.Hour < 23 ? 1 : 0;
+            //    med.TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour + roundError, 0, 0);
+            //    return med;
+            //})
+            //.GroupBy(med => med.TimeStamp)
+            //.Select(g => new MealEntryDto
+            //{
+            //    TimeStamp = g.Key,
+            //    Calories = g.Sum(med => med.Calories)
+            //});
 
-            return groupedDtos;
+            var temp = _healthContext.MealEntries
+                //.Include(me => me.Food)
+                .Where(me => me.Meal.DayId == day.Id).ToList()
+                .GroupBy(me => me.;
+
+            throw new NotImplementedException();
         }
 
         public DayDto AddDay(DateTime clientDateTime)

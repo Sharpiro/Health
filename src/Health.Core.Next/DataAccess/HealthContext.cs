@@ -6,11 +6,12 @@ namespace Health.Core.Next.DataAccess
 {
     public class HealthContext : IdentityDbContext<IdentityUser<int>, IdentityRole<int>, int>
     {
-        internal DbSet<Day> Days { get; set; }
-        internal DbSet<Meal> Meals { get; set; }
-        internal DbSet<MealEntry> MealEntries { get; set; }
-        internal DbSet<Food> Foods { get; set; }
+        public DbSet<Day> Days { get; set; }
+        public DbSet<Meal> Meals { get; set; }
+        public DbSet<MealEntry> MealEntries { get; set; }
+        public DbSet<Food> Foods { get; set; }
 
+        public HealthContext() { }
         public HealthContext(DbContextOptions<HealthContext> options) : base(options) { }
     }
 }
