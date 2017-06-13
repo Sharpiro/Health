@@ -83,12 +83,24 @@ export class HistoryComponent implements OnInit {
   }
 
   private updateMealTimingChart(date?: moment.Moment) {
-    this.nutritionService.getLatestMealEntries(date).subscribe(mealEntries => {
-      this.mealEntries = mealEntries;
+    this.nutritionService.GetMacroTiming(date).subscribe(obj => {
+      this.mealEntries = obj;
       const series = [
         {
           name: 'series-1',
-          data: mealEntries.map(me => {
+          data: obj.carbsList.map(me => {
+            return { x: moment(me.timeStamp).toDate(), y: me.calories };
+          })
+        },
+        {
+          name: 'series-2',
+          data: obj.fatList.map(me => {
+            return { x: moment(me.timeStamp).toDate(), y: me.calories };
+          })
+        },
+        {
+          name: 'series-3',
+          data: obj.proteinList.map(me => {
             return { x: moment(me.timeStamp).toDate(), y: me.calories };
           })
         }

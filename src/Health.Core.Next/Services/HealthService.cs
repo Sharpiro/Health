@@ -8,6 +8,8 @@ using Health.Core.Next.DataAccess.Entities;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json.Serialization;
 
 namespace Health.Core.Next.Services
 {
@@ -155,34 +157,48 @@ namespace Health.Core.Next.Services
             };
         }
 
-        public IEnumerable<MealEntryDto> GetLatestMealEntries(DateTime? dayTimeStamp = null)
+        public MacroTimingDto GetMacroTiming(DateTime? dayTimeStamp = null)
         {
+            const int carbCost = 4;
+            const int fatCost = 9;
+            const int proteinCost = 4;
+
             dayTimeStamp = dayTimeStamp.HasValue ? (DateTime?)new DateTime(dayTimeStamp.Value.Year, dayTimeStamp.Value.Month, dayTimeStamp.Value.Day) : null;
             var day = dayTimeStamp.HasValue ? _healthContext.Days.SingleOrDefault(d => d.Date == dayTimeStamp)
                 : _healthContext.Days.OrderByDescending(d => d.Date).FirstOrDefault();
             if (day == null) throw new NullReferenceException("Could not find relevant day information in the database");
 
-            //var mealEntries = _healthContext.MealEntries
-            //.Where(me => me.Meal.DayId == day.Id).ToList()
-            //.Select(med =>
-            //{
-            //    var roundError = med.TimeStamp.Minute >= 30 && med.TimeStamp.Hour < 23 ? 1 : 0;
-            //    med.TimeStamp = new DateTime(med.TimeStamp.Year, med.TimeStamp.Month, med.TimeStamp.Day, med.TimeStamp.Hour + roundError, 0, 0);
-            //    return med;
-            //})
-            //.GroupBy(med => med.TimeStamp)
-            //.Select(g => new MealEntryDto
-            //{
-            //    TimeStamp = g.Key,
-            //    Calories = g.Sum(med => med.Calories)
-            //});
-
-            var temp = _healthContext.MealEntries
-                //.Include(me => me.Food)
+            var mealEntries = _healthContext.MealEntries.Include(me => me.Food)
                 .Where(me => me.Meal.DayId == day.Id).ToList()
-                .GroupBy(me => me.;
+                .Select(me =>
+                {
+                    var servings = (double)me.Calories / me.Food.Calories;
+                    var roundError = me.TimeStamp.Minute >= 30 && me.TimeStamp.Hour < 23 ? 1 : 0;
+                    return new
+                    {
+                        Carbs = (int)Math.Round(me.Food.Carbs * servings),
+                        Fat = (int)Math.Round(me.Food.Fat * servings),
+                        Protein = (int)Math.Round(me.Food.Protein * servings),
+                        TimeStamp = new DateTime(me.TimeStamp.Year, me.TimeStamp.Month, me.TimeStamp.Day, me.TimeStamp.Hour + roundError, 0, 0)
+                    };
+                })
+                .GroupBy(me => me.TimeStamp)
+                .Select(g => new
+                {
+                    Carbs = g.Sum(me => me.Carbs),
+                    Fat = g.Sum(me => me.Fat),
+                    Protein = g.Sum(me => me.Protein),
+                    TimeStamp = g.Key,
+                }).ToList();
 
-            throw new NotImplementedException();
+            var macroSeriesLists = new MacroTimingDto
+            {
+                CarbsList = mealEntries.Select(t => (t.Carbs, t.TimeStamp, t.Carbs * carbCost)),
+                FatList = mealEntries.Select(t => (t.Fat, t.TimeStamp, t.Fat * fatCost)),
+                ProteinList = mealEntries.Select(t => (t.Protein, t.TimeStamp, t.Protein * proteinCost)),
+            };
+
+            return macroSeriesLists;
         }
 
         public DayDto AddDay(DateTime clientDateTime)

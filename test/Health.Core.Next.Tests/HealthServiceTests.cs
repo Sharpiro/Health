@@ -10,6 +10,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System;
+using Health.Core.Next.DataAccess.Entities;
 
 namespace Health.Core.Next.Tests
 {
@@ -111,16 +112,6 @@ namespace Health.Core.Next.Tests
                     (int)j["Carbs"],
                     (int)j["Fat"]
                 )).ToImmutableList();
-        }
-
-        [TestMethod]
-        public void GetMacrosTimingBreakdownTest()
-        {
-            var mapperMock = new Mock<IMapper>();
-            //var healthContextMock = new Mock<IHealthContext>();
-            var healthContextMock = new Mock<HealthContext>();
-            var healthService = new HealthService(healthContextMock.Object, mapperMock.Object);
-            var mealEntires = healthService.GetLatestMealEntries();
         }
     }
 }

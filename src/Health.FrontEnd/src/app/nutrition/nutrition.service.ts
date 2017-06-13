@@ -66,11 +66,11 @@ export class NutritionService {
     return observable;
   }
 
-  public getLatestMealEntries(date?: moment.Moment | null): Observable<MealEntry[]> {
+  public GetMacroTiming(date?: moment.Moment | null): Observable<any> {
     let currentTime: string | null = null;
     if (date)
       currentTime = date.format('YYYY-MM-DDTHH:mm:ss');
-    const url = `${this.baseUrl}/api/day/GetLatestMealEntries?dayTimeStamp=${currentTime}`;
+    const url = `${this.baseUrl}/api/day/GetMacroTiming?dayTimeStamp=${currentTime}`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
