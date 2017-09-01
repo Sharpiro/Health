@@ -17,6 +17,7 @@ export class HistoryComponent implements OnInit {
   public mealEntries: MealEntry[];
   public days: Day[];
   public selectedDay: Day;
+  public macros: any;
 
   public historicalData: Chartist.IChartistData = {
     labels: [],
@@ -26,12 +27,19 @@ export class HistoryComponent implements OnInit {
     labels: [],
     series: [[]]
   };
-  public type = "Line";
+
+  public macrosData: any = {
+    labels: [" "],
+    series: [1]
+  };
+
+  public lineChartTypeName = "Line";
+  public pieChartTypeName = "Pie";
   public options = {
     showLine: false,
     axisX: {
       type: Chartist.FixedScaleAxis,
-      divisor: 12,
+      divisor: 8,
       labelInterpolationFnc: function (value) {
         return moment(value).format('H:mm');
       }
@@ -44,6 +52,7 @@ export class HistoryComponent implements OnInit {
     this.getDayList();
     this.updateDayHistoryChart();
     this.updateMealTimingChart();
+    this.updateMacrosChart();
   }
 
   public mealTimingDateChanged(event: Day) {
@@ -74,17 +83,42 @@ export class HistoryComponent implements OnInit {
   }
 
   private updateMealTimingChart(date?: moment.Moment) {
-    this.nutritionService.getLatestMealEntries(date).subscribe(mealEntries => {
-      this.mealEntries = mealEntries;
+    this.nutritionService.GetMacroTiming(date).subscribe(obj => {
+      this.mealEntries = obj;
       const series = [
         {
           name: 'series-1',
-          data: mealEntries.map(me => {
+          data: obj.carbsList.map(me => {
+            return { x: moment(me.timeStamp).toDate(), y: me.calories };
+          })
+        },
+        {
+          name: 'series-2',
+          data: obj.fatList.map(me => {
+            return { x: moment(me.timeStamp).toDate(), y: me.calories };
+          })
+        },
+        {
+          name: 'series-3',
+          data: obj.proteinList.map(me => {
             return { x: moment(me.timeStamp).toDate(), y: me.calories };
           })
         }
       ];
       this.mealEntryData = { series: series };
+    });
+  }
+
+  private updateMacrosChart() {
+    this.nutritionService.getMacros().subscribe(macros => {
+      if (macros.carbs === 0 && macros.protein === 0 && macros.fat === 0) return;
+      const totalMacros = macros.carbs + macros.protein + macros.fat;
+      const labels = [
+        `Carbs: ${Math.round(macros.carbs / totalMacros * 100)}% - ${macros.carbs}g`,
+        `Protein: ${Math.round(macros.protein / totalMacros * 100)}% - ${macros.protein}g`,
+        `Fat: ${Math.round(macros.fat / totalMacros * 100)}% - ${macros.fat}g`];
+      const series = [macros.carbs, macros.protein, macros.fat];
+      this.macrosData = { labels: labels, series: series };
     });
   }
 }

@@ -10,6 +10,7 @@ import { ActivityLevel } from "app/shared/enums/activity-level.enum";
 import { Gender } from "app/shared/enums/gender.enum";
 import { NutritionHistory } from "app/nutrition/shared/dtos/nutrition-history";
 import { MealEntry } from "app/nutrition/shared/dtos/mealEntry";
+import { Macros } from "app/nutrition/shared/dtos/macros";
 
 @Injectable()
 export class NutritionService {
@@ -29,6 +30,12 @@ export class NutritionService {
 
   public getallActiveFoods(): Observable<IFood[]> {
     const url = `${this.baseUrl}/api/food/getallactive`;
+    const observable = this.getMappedObservable(this.http.get(url));
+    return observable;
+  }
+
+  public getMacros(): Observable<Macros> {
+    const url = `${this.baseUrl}/api/Day/getMacros`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
@@ -59,11 +66,11 @@ export class NutritionService {
     return observable;
   }
 
-  public getLatestMealEntries(date?: moment.Moment | null): Observable<MealEntry[]> {
+  public GetMacroTiming(date?: moment.Moment | null): Observable<any> {
     let currentTime: string | null = null;
     if (date)
       currentTime = date.format('YYYY-MM-DDTHH:mm:ss');
-    const url = `${this.baseUrl}/api/day/GetLatestMealEntries?dayTimeStamp=${currentTime}`;
+    const url = `${this.baseUrl}/api/day/GetMacroTiming?dayTimeStamp=${currentTime}`;
     const observable = this.getMappedObservable(this.http.get(url));
     return observable;
   }
