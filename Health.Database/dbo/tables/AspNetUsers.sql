@@ -1,5 +1,5 @@
 ﻿CREATE TABLE [AspNetUsers] (
-    [Id] nvarchar(450) NOT NULL,
+    [Id] int NOT NULL,
     [AccessFailedCount] int NOT NULL,
     [ConcurrencyStamp] nvarchar(max),
     [Email] nvarchar(256),

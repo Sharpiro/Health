@@ -11,7 +11,8 @@
     [ServingName] NVARCHAR(50) NULL, 
     [Fiber] INT NULL, 
     [Sodium] INT NULL, 
-    [Potassium] INT NULL
+    [Potassium] INT NULL,
+	[IsActive] BIT NOT NULL
 
 	CONSTRAINT [PK_Foods] PRIMARY KEY CLUSTERED ([Id] ASC) ON [PRIMARY], 
 )

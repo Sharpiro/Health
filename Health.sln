@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+# Visual Studio 15
+VisualStudioVersion = 15.0.26403.7
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ADF8419-43D4-4732-A47A-4BD9A990FB8F}"
 EndProject
@@ -10,11 +10,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		global.json = global.json
 	EndProjectSection
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Health.Core", "src\Health.Core\Health.Core.xproj", "{703D96E7-3585-47E7-9892-6F42FF656E22}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Core", "src\Health.Core\Health.Core.csproj", "{703D96E7-3585-47E7-9892-6F42FF656E22}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Health.Web", "src\Health.Web\Health.Web.xproj", "{C6EE8362-465A-4E9E-9858-458CEF4FBE56}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Web", "src\Health.Web\Health.Web.csproj", "{C6EE8362-465A-4E9E-9858-458CEF4FBE56}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Health.Database", "Health.Database\Health.Database.sqlproj", "{EA58D006-356B-493B-979C-E612A43195FA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Next", "src\Health.Next\Health.Next.csproj", "{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Core.Next", "src\Health.Core.Next\Health.Core.Next.csproj", "{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "database", "database", "{D32917EF-1297-4B89-902B-7733AB2AEEC5}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{D5A3BC5F-8D1A-49AA-AFC7-A435E0F09975}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Core.Next.Tests", "test\Health.Core.Next.Tests\Health.Core.Next.Tests.csproj", "{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +46,18 @@ Global
 		{EA58D006-356B-493B-979C-E612A43195FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA58D006-356B-493B-979C-E612A43195FA}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA58D006-356B-493B-979C-E612A43195FA}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +65,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{703D96E7-3585-47E7-9892-6F42FF656E22} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
 		{C6EE8362-465A-4E9E-9858-458CEF4FBE56} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
-		{EA58D006-356B-493B-979C-E612A43195FA} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
+		{EA58D006-356B-493B-979C-E612A43195FA} = {D32917EF-1297-4B89-902B-7733AB2AEEC5}
+		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
+		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
+		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9} = {D5A3BC5F-8D1A-49AA-AFC7-A435E0F09975}
 	EndGlobalSection
 EndGlobal

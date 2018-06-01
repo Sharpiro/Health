@@ -1,0 +1,25 @@
+.grid{
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 14px;
+    width: 100%;
+    text-align: center;
+    background-color: lightgray;
+}
+
+th{
+    text-align: center;
+}
+
+.cell{
+    border: none;
+    outline: none;
+    background-color: transparent;
+    font-family: inherit;
+    font-size: inherit;
+    text-align: center;
+    width: 100%
+}
+
+.active{
+    background-color: white;
+}

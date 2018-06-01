@@ -2,7 +2,7 @@
     [Id] int NOT NULL IDENTITY,
     [ClaimType] nvarchar(max),
     [ClaimValue] nvarchar(max),
-    [RoleId] nvarchar(450) NOT NULL,
+    [RoleId] int NOT NULL,
     CONSTRAINT [PK_AspNetRoleClaims] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_AspNetRoleClaims_AspNetRoles_RoleId] FOREIGN KEY ([RoleId]) REFERENCES [AspNetRoles] ([Id]) ON DELETE CASCADE
 );
