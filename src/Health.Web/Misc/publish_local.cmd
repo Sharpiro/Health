@@ -1,1 +1,0 @@
-﻿C:\Users\sharpiro\.dnx\runtimes\dnx-clr-win-x86.1.0.0-beta7\bin\dnu.cmd publish "F:\Git_Base\ASP5_Template\src\Health.Web" --out "C:\Users\sharpiro\desktop\temp\Health.Web71" --configuration Release --runtime dnx-coreclr-win-x64.1.0.0-beta7 --wwwroot "wwwroot" --wwwroot-out "wwwroot" --quiet --no-source

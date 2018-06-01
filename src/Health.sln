@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26403.7
+VisualStudioVersion = 15.0.27130.2003
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{6ADF8419-43D4-4732-A47A-4BD9A990FB8F}"
 EndProject
@@ -9,10 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 	ProjectSection(SolutionItems) = preProject
 		global.json = global.json
 	EndProjectSection
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Core", "src\Health.Core\Health.Core.csproj", "{703D96E7-3585-47E7-9892-6F42FF656E22}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Health.Web", "src\Health.Web\Health.Web.csproj", "{C6EE8362-465A-4E9E-9858-458CEF4FBE56}"
 EndProject
 Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "Health.Database", "Health.Database\Health.Database.sqlproj", "{EA58D006-356B-493B-979C-E612A43195FA}"
 EndProject
@@ -32,14 +28,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{703D96E7-3585-47E7-9892-6F42FF656E22}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{703D96E7-3585-47E7-9892-6F42FF656E22}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{703D96E7-3585-47E7-9892-6F42FF656E22}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{703D96E7-3585-47E7-9892-6F42FF656E22}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C6EE8362-465A-4E9E-9858-458CEF4FBE56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C6EE8362-465A-4E9E-9858-458CEF4FBE56}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C6EE8362-465A-4E9E-9858-458CEF4FBE56}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C6EE8362-465A-4E9E-9858-458CEF4FBE56}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EA58D006-356B-493B-979C-E612A43195FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EA58D006-356B-493B-979C-E612A43195FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA58D006-356B-493B-979C-E612A43195FA}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
@@ -63,11 +51,12 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{703D96E7-3585-47E7-9892-6F42FF656E22} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
-		{C6EE8362-465A-4E9E-9858-458CEF4FBE56} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
 		{EA58D006-356B-493B-979C-E612A43195FA} = {D32917EF-1297-4B89-902B-7733AB2AEEC5}
 		{5E9B54F8-0D4F-4054-ADB8-7E2DBB4EB44E} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
 		{8CB5C481-0E23-48B7-ACC4-B7C4EDB3230B} = {6ADF8419-43D4-4732-A47A-4BD9A990FB8F}
 		{46D72A7C-5C7F-4F7E-AD61-07B5F1E00FB9} = {D5A3BC5F-8D1A-49AA-AFC7-A435E0F09975}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {588ED01D-A34F-4098-9A9F-68A70FA1EB73}
 	EndGlobalSection
 EndGlobal

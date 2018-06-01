@@ -1,8 +1,0 @@
-﻿{
-  "Data": {
-
-  },
-  "ConnectionStrings": {
-    "DefaultConnection": "Server=(localdb)\\MSSQLLocalDB;Database=Health;Trusted_Connection=True;"
-  }
-}
