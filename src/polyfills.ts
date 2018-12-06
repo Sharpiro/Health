@@ -17,6 +17,10 @@
 /***************************************************************************************************
  * BROWSER POLYFILLS
  */
+// fix Buffer
+// https://github.com/angular/angular-cli/issues/9920#issuecomment-393424161
+// https://stackoverflow.com/a/50488337/5344498
+(window as any).global = window;
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol';

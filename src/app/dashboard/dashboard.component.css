@@ -1,0 +1,18 @@
+.container{
+    padding-top: 25px;
+    margin: auto;
+    width: 90%;
+}
+
+mat-form-field{
+    width:100%;
+}
+
+.divider{
+    padding: 25px 0px 25px 0px;
+}
+
+table{
+    margin: auto;
+    width: 75%;
+}
