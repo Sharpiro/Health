@@ -4,8 +4,12 @@
     width: 90%;
 }
 
-mat-form-field{
+.full-page-input{
     width:100%;
+}
+
+.half-page-input{
+    width:45%;
 }
 
 .divider{
@@ -14,5 +18,5 @@ mat-form-field{
 
 table{
     margin: auto;
-    width: 75%;
+    width: 100%;
 }
