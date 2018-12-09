@@ -20,7 +20,7 @@
 // fix Buffer
 // https://github.com/angular/angular-cli/issues/9920#issuecomment-393424161
 // https://stackoverflow.com/a/50488337/5344498
-(window as any).global = window;
+(window as any).global = window
 
 /** IE9, IE10 and IE11 requires all of the following polyfills. **/
 // import 'core-js/es6/symbol';
@@ -76,7 +76,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
-import 'zone.js/dist/zone';  // Included with Angular CLI.
+import 'zone.js/dist/zone'  // Included with Angular CLI.
 
 
 /***************************************************************************************************

@@ -1,5 +1,5 @@
 export interface MealEntry {
-  foodId: number;
-  foodName: string;
-  calories: number;
+  foodId: number
+  foodName: string
+  calories: number
 }

@@ -1,10 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatTableDataSource } from '@angular/material/table';
-import { Meal } from './models/meal';
-import { MealEntry } from "./models/mealEntry";
-import { Food } from './models/food';
+import { Component, OnInit } from '@angular/core'
+import { FormControl, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
+import { MatTableDataSource } from '@angular/material/table'
+import { Meal } from './models/meal'
+import { MealEntry } from "./models/mealEntry"
+import { Food } from './models/food'
 
 @Component({
   selector: 'app-dashboard',
@@ -13,14 +13,14 @@ import { Food } from './models/food';
 })
 export class DashboardComponent implements OnInit {
   meals: Meal[] = []
-  displayedColumns: string[] = ['foodName', 'calories'];
+  displayedColumns: string[] = ['foodName', 'calories']
   foods = FoodList
-  currentMealEntriesDataSource = new MatTableDataSource<MealEntry>();
-  mealEntryCalorieFormControl = new FormControl('', [Validators.required]);
-  mealEntryServingSizeFormControl = new FormControl('', [Validators.required]);
-  foodFormControl = new FormControl('', [Validators.required]);
-  currentMealCaloriesControl = new FormControl('', [Validators.required]);
-  allMealsCaloriesControl = new FormControl('', [Validators.required]);
+  currentMealEntriesDataSource = new MatTableDataSource<MealEntry>()
+  mealEntryCalorieFormControl = new FormControl('', [Validators.required])
+  mealEntryServingSizeFormControl = new FormControl('', [Validators.required])
+  foodFormControl = new FormControl('', [Validators.required])
+  currentMealCaloriesControl = new FormControl('', [Validators.required])
+  allMealsCaloriesControl = new FormControl('', [Validators.required])
 
   constructor(public snackBar: MatSnackBar) { }
 
@@ -43,11 +43,11 @@ export class DashboardComponent implements OnInit {
     if (!this.foodFormControl.value) {
       this.snackBar.open("Enter valid food", "OK", {
         duration: 2000,
-      });
+      })
       return
     }
     if (this.mealEntryCalorieFormControl.value <= 0) {
-      this.snackBar.open("Enter valid calories", "OK", { duration: 2000, });
+      this.snackBar.open("Enter valid calories", "OK", { duration: 2000, })
       return
     }
 
@@ -60,7 +60,7 @@ export class DashboardComponent implements OnInit {
   }
 
   onSaveMeal() {
-    if (this.currentMealEntriesDataSource.data.length == 0) {
+    if (this.currentMealEntriesDataSource.data.length === 0) {
       this.snackBar.open("Enter Meal Information", "OK", { duration: 2000, })
       return
     }

@@ -1,4 +1,4 @@
-import { MealEntry } from './MealEntry';
+import { MealEntry } from './mealEntry'
 
 export class Meal {
   mealEntries: MealEntry[] = []
