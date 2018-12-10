@@ -12,8 +12,9 @@ import { MatSelectModule } from '@angular/material/select'
 import { MatDividerModule } from '@angular/material/divider'
 import { MatListModule } from '@angular/material/list'
 import { MatTableModule } from '@angular/material/table'
-import {MatTabsModule} from '@angular/material/tabs'
-import {MatTreeModule} from '@angular/material/tree'
+import { MatTabsModule } from '@angular/material/tabs'
+import { MatTreeModule } from '@angular/material/tree'
+import { MatToolbarModule } from '@angular/material/toolbar'
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {MatTreeModule} from '@angular/material/tree'
     MatListModule,
     MatTableModule,
     MatTabsModule,
-    MatTreeModule
+    MatTreeModule,
+    MatToolbarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
