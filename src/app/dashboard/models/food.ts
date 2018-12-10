@@ -3,5 +3,13 @@ export interface Food {
   name: string
   calories: number
   servingSize: number
-  servingSizeType: "Grams" | "Egg" | "Ounces"
+  servingSizeType: "Grams" | "Item" | "Ounces"
+  carbs: number
+  fat: number
+  fiber: number
+  potassium: number
+  protein: number
+  sodium: number
+  sugar: number
+  active: boolean
 }

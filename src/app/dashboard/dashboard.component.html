@@ -12,7 +12,7 @@
 
   <div>
     <mat-form-field class="full-page-input">
-      <input matInput type="number" placeholder="Calories" [formControl]="mealEntryCalorieFormControl" (input)="updateServingSizeFromCalories()">
+      <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl" (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
       <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
         Required
       </mat-error>
@@ -21,7 +21,7 @@
 
   <div>
     <mat-form-field class="full-page-input">
-      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()">
+      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()">
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
