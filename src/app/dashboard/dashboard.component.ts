@@ -142,7 +142,7 @@ const FoodList =
     {
       "id": 7,
       "calories": 120,
-      "name": "Eggs",
+      "name": "Egg w/ whites",
       "servingSize": 1,
       "carbs": 0,
       "fat": 5,
@@ -227,6 +227,21 @@ const FoodList =
       "servingSizeType": "Item",
       "sodium": 0,
       "sugar": 0,
+      "active": true
+    },
+    {
+      "id": 11,
+      "calories": 80,
+      "name": "Apple",
+      "servingSize": 1,
+      "carbs": 16,
+      "fat": 0,
+      "fiber": 5,
+      "potassium": 0,
+      "protein": 0,
+      "servingSizeType": "item",
+      "sodium": 0,
+      "sugar": 16,
       "active": true
     },
     {
@@ -316,6 +331,21 @@ const FoodList =
       "protein": 8,
       "servingSizeType": "Item",
       "sodium": 150,
+      "sugar": 0,
+      "active": false
+    },
+    {
+      "id": 10,
+      "calories": 100,
+      "name": "LunchMeat",
+      "servingSize": 4,
+      "carbs": 2,
+      "fat": 2,
+      "fiber": 0,
+      "potassium": 0,
+      "protein": 20,
+      "servingSizeType": "oz",
+      "sodium": 450,
       "sugar": 0,
       "active": false
     },
@@ -453,6 +483,36 @@ const FoodList =
       "sodium": 140,
       "sugar": 1,
       "active": false
+    },
+    {
+      "id": 99,
+      "calories": 35,
+      "name": "Rice Cake",
+      "servingSize": 1,
+      "carbs": 7,
+      "fat": 0,
+      "fiber": 0,
+      "potassium": 30,
+      "protein": 0,
+      "servingSizeType": "Item",
+      "sodium": 15,
+      "sugar": 0,
+      "active": true
+    },
+    {
+      "id": 100,
+      "calories": 110,
+      "name": "Yogurt (Coconut)",
+      "servingSize": 225,
+      "carbs": 12,
+      "fat": 7,
+      "fiber": 3,
+      "potassium": 0,
+      "protein": 0,
+      "servingSizeType": "Grams",
+      "sodium": 50,
+      "sugar": 0,
+      "active": true
     }
   ] as Food[]).filter(f => f.active)
 
