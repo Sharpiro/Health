@@ -14,14 +14,17 @@ import { MatListModule } from '@angular/material/list'
 import { MatTableModule } from '@angular/material/table'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatTreeModule } from '@angular/material/tree'
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { MatToolbarModule } from '@angular/material/toolbar'
+import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
+import { CustomSelectComponent } from './custom-select/custom-select.component'
+import { MatDialogModule } from '@angular/material'
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent
+    DashboardComponent,
+    CustomSelectComponent
   ],
   imports: [
     BrowserModule,
@@ -38,9 +41,11 @@ import { environment } from '../environments/environment'
     MatTabsModule,
     MatTreeModule,
     MatToolbarModule,
+    MatDialogModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [CustomSelectComponent]
 })
 export class AppModule { }

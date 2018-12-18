@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table'
 import { Meal } from './models/meal'
 import { MealEntry } from "./models/mealEntry"
 import { Food } from './models/food'
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+import { MatDialog } from '@angular/material'
+import { CustomSelectComponent } from '../custom-select/custom-select.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -12,6 +15,7 @@ import { Food } from './models/food'
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  isScrollable = false
   meals: Meal[] = []
   displayedColumns: string[] = ['foodName', 'calories']
   foods = FoodList
@@ -22,7 +26,7 @@ export class DashboardComponent implements OnInit {
   currentMealCaloriesControl = new FormControl('', [Validators.required])
   allMealsCaloriesControl = new FormControl('', [Validators.required])
 
-  constructor(public snackBar: MatSnackBar) { }
+  constructor(public snackBar: MatSnackBar, public dialog: MatDialog) { }
 
   ngOnInit() {
     const mealEntriesJson = localStorage.getItem("mealEntries")
@@ -33,7 +37,6 @@ export class DashboardComponent implements OnInit {
 
     this.foodFormControl.valueChanges.subscribe(this.onFoodChanges)
 
-    // todo: set to local storage loaded values
     this.updateAggregateCalories()
 
     this.foodFormControl.setValue(this.getRandomFood())
@@ -108,9 +111,31 @@ export class DashboardComponent implements OnInit {
     this.mealEntryServingSizeFormControl.setValue(mealEntryServingSize.toFixed(2))
   }
 
+  onFoodClick() {
+    const dialogRef = this.dialog.open(CustomSelectComponent, {
+      width: '350px',
+      data: { animal: "test animal", foods: this.foods }
+    })
+
+    dialogRef.afterClosed().subscribe((food: Food) => {
+      if (!food) return
+      this.foodFormControl.setValue(food)
+    })
+  }
+
+  onDebug() {
+    if (this.isScrollable) {
+      disableBodyScroll(document.querySelector("body"))
+    } else {
+      enableBodyScroll(document.querySelector("body"))
+    }
+    this.isScrollable = !this.isScrollable
+  }
+
   private getRandomFood(): Food {
-    const randomIndex = Math.floor(Math.random() * FoodList.length)
-    return FoodList[randomIndex]
+    // const randomIndex = Math.floor(Math.random() * FoodList.length)
+    // return FoodList[randomIndex]
+    return FoodList[0]
   }
 
   private updateAggregateCalories() {
@@ -514,7 +539,9 @@ const FoodList =
       "sugar": 0,
       "active": true
     }
-  ] as Food[]).filter(f => f.active)
+  ] as Food[])
+    .filter(f => f.active)
+    .sort((first, second) => first.name.charCodeAt(0) - second.name.charCodeAt(0))
 
 const FoodMap = FoodList.reduce((map, curr) => {
   map.set(curr.name, curr)

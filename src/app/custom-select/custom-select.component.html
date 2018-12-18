@@ -1,0 +1,4 @@
+<span>Select a Food</span>
+<mat-nav-list>
+  <a (click)="selectFood(food)" mat-list-item *ngFor="let food of data.foods"> {{ food.name }} </a>
+</mat-nav-list>

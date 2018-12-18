@@ -1,27 +1,47 @@
 <div class="container">
-  <div>
+  <!-- <div>
     <mat-form-field class="full-page-input">
-      <mat-select placeholder="Food" [formControl]="foodFormControl">
+      <mat-select placeholder="Food" [formControl]="foodFormControl" (click)="onDebug()">
         <mat-option *ngFor="let food of foods" [value]="food">
           {{food.name}}
         </mat-option>
       </mat-select>
       <mat-error *ngIf="foodFormControl.hasError('required')">Please choose a food</mat-error>
     </mat-form-field>
-  </div>
+  </div> -->
 
-  <div>
+  <!-- <div>
     <mat-form-field class="full-page-input">
-      <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl" (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
-      <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
+      <select matNativeControl placeholder="Food" [formControl]="foodFormControl">
+        <option *ngFor="let food of foods" [value]="food">
+          {{food.name}}
+        </option>
+      </select>
+      <mat-error *ngIf="foodFormControl.hasError('required')">Please choose a food</mat-error>
+    </mat-form-field>
+  </div> -->
+
+  <div class="foodInput">
+    <mat-form-field class="full-page-input" (click)="onFoodClick()">
+      <input matInput [value]="foodFormControl.value.name" placeholder="Food" readonly>
+      <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
     </mat-form-field>
   </div>
 
   <div>
-    <mat-form-field class="full-page-input">
-      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()">
+    <mat-form-field class="half-page-input">
+      <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
+        (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
+      <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
+        Required
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="half-page-input" style="padding-left: 5%">
+      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()"
+        (click)="$event.target.select()">
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
@@ -33,6 +53,7 @@
     <button mat-button (click)="onSaveMeal()">Save Meal</button>
     <button mat-button (click)="onClearMeal()">Clear Meal</button>
     <button mat-button (click)="onClearDay()">Clear Day</button>
+    <button mat-button (click)="onDebug()">Debug</button>
   </div>
 
   <div class="divider">

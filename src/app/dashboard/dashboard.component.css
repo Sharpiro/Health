@@ -1,5 +1,5 @@
 .container{
-    padding-top: 25px;
+    padding-top: 5px;
     margin: auto;
     width: 90%;
 }
@@ -19,4 +19,8 @@
 table{
     margin: auto;
     width: 100%;
+}
+
+.foodInput input{
+    cursor: pointer;
 }
