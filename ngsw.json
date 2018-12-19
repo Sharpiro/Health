@@ -9,7 +9,7 @@
       "urls": [
         "https://sharpiro.github.io/health/favicon.ico",
         "https://sharpiro.github.io/health/index.html",
-        "https://sharpiro.github.io/health/main.a8b7f52da58564827a41.js",
+        "https://sharpiro.github.io/health/main.309620dab811ca5e11b6.js",
         "https://sharpiro.github.io/health/polyfills.183034259edfb713b1b1.js",
         "https://sharpiro.github.io/health/runtime.ec2944dd8b20ec099bf3.js",
         "https://sharpiro.github.io/health/styles.8849c5de9673e96b0428.css"
@@ -44,8 +44,8 @@
     "https://sharpiro.github.io/health/assets/icons/icon-72x72.png": "c457e56089a36952cd67156f9996bc4ce54a5ed9",
     "https://sharpiro.github.io/health/assets/icons/icon-96x96.png": "3914125a4b445bf111c5627875fc190f560daa41",
     "https://sharpiro.github.io/health/favicon.ico": "84161b857f5c547e3699ddfbffc6d8d737542e01",
-    "https://sharpiro.github.io/health/index.html": "0c714d65ad84b909da2de305a3b483bfeb7c4c8d",
-    "https://sharpiro.github.io/health/main.a8b7f52da58564827a41.js": "7354d090ecffe88b851f6a80aad2c55aa7011db8",
+    "https://sharpiro.github.io/health/index.html": "688ea10922e5e6052bf1ba43af0a984c956202c1",
+    "https://sharpiro.github.io/health/main.309620dab811ca5e11b6.js": "9390a5beefdb55027557c0182a6ee74730e9a771",
     "https://sharpiro.github.io/health/polyfills.183034259edfb713b1b1.js": "40c5a8c5ff064fac827e15ce8350a6b8b5e929f0",
     "https://sharpiro.github.io/health/runtime.ec2944dd8b20ec099bf3.js": "b62956c2192bfe5516d6374e753773901ed50ec5",
     "https://sharpiro.github.io/health/styles.8849c5de9673e96b0428.css": "f5176e67e5c243fae46d8f98e6661691f59e260d"
