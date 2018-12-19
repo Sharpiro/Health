@@ -18,13 +18,18 @@ import { MatToolbarModule } from '@angular/material/toolbar'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
 import { CustomSelectComponent } from './custom-select/custom-select.component'
-import { MatDialogModule } from '@angular/material'
+import { MatDialogModule, MatIconModule } from '@angular/material'
+import { MatTooltipModule } from '@angular/material/tooltip'
+import { ConfirmationComponentComponent } from './confirmation-component/confirmation-component.component';
+import { MoreOptionsComponent } from './more-options/more-options.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     DashboardComponent,
-    CustomSelectComponent
+    CustomSelectComponent,
+    ConfirmationComponentComponent,
+    MoreOptionsComponent
   ],
   imports: [
     BrowserModule,
@@ -42,10 +47,16 @@ import { MatDialogModule } from '@angular/material'
     MatTreeModule,
     MatToolbarModule,
     MatDialogModule,
+    MatIconModule,
+    MatTooltipModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [CustomSelectComponent]
+  entryComponents: [
+    CustomSelectComponent,
+    ConfirmationComponentComponent,
+    MoreOptionsComponent
+  ]
 })
 export class AppModule { }

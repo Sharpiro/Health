@@ -24,3 +24,37 @@ table{
 .foodInput input{
     cursor: pointer;
 }
+
+.temp{
+    /* margin:auto; */
+    /* margin:5px; */
+    width:43%; 
+}
+
+.temp-flex-container{
+    display: flex;
+    /* justify-content: center; */
+}
+
+.pixel-icon-48{
+    cursor:pointer;
+    font-size:48px;
+    width: 48px;
+    height:48px;
+}
+
+.pixel-icon-32{
+    cursor:pointer;
+    /* vertical-align: -webkit-baseline-middle; */
+    font-size:32px;
+}
+
+.noselect {
+    -webkit-touch-callout: none; /* iOS Safari */
+      -webkit-user-select: none; /* Safari */
+       -khtml-user-select: none; /* Konqueror HTML */
+         -moz-user-select: none; /* Firefox */
+          -ms-user-select: none; /* Internet Explorer/Edge */
+              user-select: none; /* Non-prefixed version, currently
+                                    supported by Chrome and Opera */
+  }

@@ -8,6 +8,8 @@ import { Food } from './models/food'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { MatDialog } from '@angular/material'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
+import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
+import { MoreOptionsComponent } from '../more-options/more-options.component'
 
 @Component({
   selector: 'app-dashboard',
@@ -82,10 +84,19 @@ export class DashboardComponent implements OnInit {
   }
 
   onClearDay() {
-    this.onClearMeal()
-    this.meals = []
-    localStorage.removeItem("meals")
-    this.updateAggregateCalories()
+    const dialogRef = this.dialog.open(ConfirmationComponentComponent, {
+      width: '350px',
+      data: "Are you sure you want to clear the day?"
+    })
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (!result) return
+
+      this.onClearMeal()
+      this.meals = []
+      localStorage.removeItem("meals")
+      this.updateAggregateCalories()
+    })
   }
 
   onFoodChanges = (food: Food) => {
@@ -114,7 +125,7 @@ export class DashboardComponent implements OnInit {
   onFoodClick() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
       width: '350px',
-      data: { animal: "test animal", foods: this.foods }
+      data: this.foods
     })
 
     dialogRef.afterClosed().subscribe((food: Food) => {
@@ -123,7 +134,30 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  onMoreOptions() {
+    const dialogRef = this.dialog.open(MoreOptionsComponent, {
+      width: '350px'
+    })
+
+    dialogRef.afterClosed().subscribe((result: string) => {
+      if (!result) return
+
+      switch (result) {
+        case "scroll":
+          this.onScrollToggle()
+          break
+        case "debug":
+          this.onDebug()
+          break
+      }
+    })
+  }
+
   onDebug() {
+    console.log("debugging...")
+  }
+
+  onScrollToggle() {
     if (this.isScrollable) {
       disableBodyScroll(document.querySelector("body"))
     } else {

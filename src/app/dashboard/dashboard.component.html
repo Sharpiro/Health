@@ -30,30 +30,60 @@
     </mat-form-field>
   </div>
 
-  <div>
-    <mat-form-field class="half-page-input">
-      <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
-        (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
-      <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
-        Required
-      </mat-error>
-    </mat-form-field>
+  <div class="temp-flex-container">
+    <!-- <div class="temp">data</div> -->
+    <div class="temp">
+      <mat-form-field class="full-page-input">
+        <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
+          (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
+        <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
+          Required
+        </mat-error>
+      </mat-form-field>
+    </div>
 
-    <mat-form-field class="half-page-input" style="padding-left: 5%">
-      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()"
-        (click)="$event.target.select()">
-      <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
-        Required
-      </mat-error>
-    </mat-form-field>
+    <div class="temp" style="padding-left: 5%">
+      <mat-form-field class="full-page-input">
+        <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl"
+          (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()">
+        <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
+          Required
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="" style="margin:auto;">
+      <mat-icon class="pixel-icon-48 noselect" (click)="onAddFood()">add</mat-icon>
+    </div>
+
+    <!-- <button mat-button (click)="onAddFood()">Add Food</button> -->
   </div>
 
   <div>
-    <button mat-button (click)="onAddFood()">Add Food</button>
-    <button mat-button (click)="onSaveMeal()">Save Meal</button>
-    <button mat-button (click)="onClearMeal()">Clear Meal</button>
-    <button mat-button (click)="onClearDay()">Clear Day</button>
-    <button mat-button (click)="onDebug()">Debug</button>
+    <span>
+      <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save</mat-icon>
+    </span>
+    <span style="padding-left:10%">
+      <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear</mat-icon>
+    </span>
+    <span style="padding-left:10%">
+      <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all</mat-icon>
+    </span>
+    <!-- <span style="padding-left:10%">
+      <mat-icon matTooltip="Toggle scrolling" (click)="onScrollToggle()" class="pixel-icon-32 noselect">accessibility</mat-icon>
+    </span>
+    <span style="padding-left:10%">
+      <mat-icon matTooltip="Debug" (click)="onDebug()" class="pixel-icon-32 noselect">bug_report</mat-icon>
+    </span> -->
+    <span style="padding-left:10%">
+      <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz</mat-icon>
+    </span>
+
+    <div>
+      <!-- <button mat-button (click)="onDebug()">Debug</button> -->
+      <!-- <button mat-button (click)="onScrollToggle()">Scroll Toggle</button> -->
+    </div>
+
   </div>
 
   <div class="divider">

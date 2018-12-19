@@ -5,6 +5,7 @@ import { AppModule } from './app/app.module'
 import { environment } from './environments/environment'
 
 import { disableBodyScroll } from 'body-scroll-lock'
+import 'hammerjs'
 
 disableBodyScroll(document.querySelector("body"))
 

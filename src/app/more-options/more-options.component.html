@@ -1,0 +1,18 @@
+<div>
+  <button mat-button (click)="selectFunction('scroll')">
+    <mat-icon matTooltip="Toggle scrolling">accessibility</mat-icon>
+    <span style="padding-left:10px">Toggle Scrolling</span>
+  </button>
+</div>
+<div>
+  <button mat-button (click)="selectFunction('debug')">
+    <mat-icon matTooltip="Debug">bug_report</mat-icon>
+    <span style="padding-left:10px">Debug</span>
+  </button>
+</div>
+<div>
+  <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
+    <mat-icon matTooltip="Cancel">cancel</mat-icon>
+    <span style="padding-left:10px">Cancel</span>
+  </button>
+</div>
