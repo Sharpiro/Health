@@ -1,28 +1,7 @@
 <div class="container">
-  <!-- <div>
-    <mat-form-field class="full-page-input">
-      <mat-select placeholder="Food" [formControl]="foodFormControl" (click)="onDebug()">
-        <mat-option *ngFor="let food of foods" [value]="food">
-          {{food.name}}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="foodFormControl.hasError('required')">Please choose a food</mat-error>
-    </mat-form-field>
-  </div> -->
 
-  <!-- <div>
-    <mat-form-field class="full-page-input">
-      <select matNativeControl placeholder="Food" [formControl]="foodFormControl">
-        <option *ngFor="let food of foods" [value]="food">
-          {{food.name}}
-        </option>
-      </select>
-      <mat-error *ngIf="foodFormControl.hasError('required')">Please choose a food</mat-error>
-    </mat-form-field>
-  </div> -->
-
-  <div class="foodInput">
-    <mat-form-field class="full-page-input" (click)="onFoodClick()">
+  <div class="inline-flex-container">
+    <mat-form-field class="full-page" (click)="onFoodClick()">
       <input matInput [value]="foodFormControl.value.name" placeholder="Food" readonly>
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
@@ -30,80 +9,49 @@
     </mat-form-field>
   </div>
 
-  <div class="temp-flex-container">
-    <!-- <div class="temp">data</div> -->
-    <div class="temp">
-      <mat-form-field class="full-page-input">
-        <input matInput type="number" pattern="\d*" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
-          (input)="updateServingSizeFromCalories()" (click)="$event.target.select()">
-        <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
-          Required
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="temp" style="padding-left: 5%">
-      <mat-form-field class="full-page-input">
-        <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl"
-          (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()">
-        <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
-          Required
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="" style="margin:auto;">
-      <mat-icon class="pixel-icon-48 noselect" (click)="onAddFood()">add</mat-icon>
-    </div>
-
-    <!-- <button mat-button (click)="onAddFood()">Add Food</button> -->
-  </div>
-
-  <div>
-    <span>
-      <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save</mat-icon>
-    </span>
-    <span style="padding-left:10%">
-      <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear</mat-icon>
-    </span>
-    <span style="padding-left:10%">
-      <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all</mat-icon>
-    </span>
-    <!-- <span style="padding-left:10%">
-      <mat-icon matTooltip="Toggle scrolling" (click)="onScrollToggle()" class="pixel-icon-32 noselect">accessibility</mat-icon>
-    </span>
-    <span style="padding-left:10%">
-      <mat-icon matTooltip="Debug" (click)="onDebug()" class="pixel-icon-32 noselect">bug_report</mat-icon>
-    </span> -->
-    <span style="padding-left:10%">
-      <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz</mat-icon>
-    </span>
-
-    <div>
-      <!-- <button mat-button (click)="onDebug()">Debug</button> -->
-      <!-- <button mat-button (click)="onScrollToggle()">Scroll Toggle</button> -->
-    </div>
-
-  </div>
-
-  <div class="divider">
-    <mat-divider></mat-divider>
-  </div>
-
-  <div>
-    <mat-form-field class="half-page-input">
-      <input matInput type="text" placeholder="Current Calories" [formControl]="currentMealCaloriesControl" readonly>
-      <mat-error *ngIf="currentMealCaloriesControl.hasError('required')">
+  <div class="inline-flex-container">
+    <mat-form-field class="half-page">
+      <input matInput type="number" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
+        (input)="updateServingSizeFromCalories()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+      <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
         Required
       </mat-error>
     </mat-form-field>
 
-    <mat-form-field class="half-page-input" style="padding-left: 5%">
-      <input matInput type="text" placeholder="Total Calories" [formControl]="allMealsCaloriesControl" readonly>
-      <mat-error *ngIf="allMealsCaloriesControl.hasError('required')">
+    <mat-form-field class="half-page">
+      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()"
+        (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+      <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
     </mat-form-field>
+
+  </div>
+
+  <div class="inline-flex-container">
+    <mat-icon matTooltip="Add food" (click)="onAddFood()" class="pixel-icon-32 noselect">add</mat-icon>
+    <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save</mat-icon>
+    <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear</mat-icon>
+    <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all</mat-icon>
+    <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz</mat-icon>
+  </div>
+  <div class="inline-flex-container" style="padding-top: 15px">
+    <mat-card class="half-page">
+      <mat-card-header>
+        <mat-card-title>Meal</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{currentMealCaloriesControl.value}}
+      </mat-card-content>
+    </mat-card>
+    <mat-card class="half-page">
+      <mat-card-header>
+        <mat-card-title>Total</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{allMealsCaloriesControl.value}}
+      </mat-card-content>
+    </mat-card>
   </div>
 
   <mat-tab-group>
@@ -139,15 +87,5 @@
       </div>
     </mat-tab>
 
-    <!-- todo: add nested tree to show saved melas -->
-    <!-- <mat-tab label="Testing">
-      <mat-tree>
-        <mat-nested-tree-node>
-          parent node
-          <mat-nested-tree-node> -- child node1 </mat-nested-tree-node>
-          <mat-nested-tree-node> -- child node2 </mat-nested-tree-node>
-        </mat-nested-tree-node>
-      </mat-tree>
-    </mat-tab> -->
   </mat-tab-group>
 </div>

@@ -4,16 +4,16 @@
     width: 90%;
 }
 
-.full-page-input{
-    width:100%;
+mat-card{
+    text-align: center;
 }
 
-.half-page-input{
-    width:45%;
+mat-card-header{
+    display: inline;
 }
 
-.divider{
-    padding: 25px 0px 25px 0px;
+mat-card-content{
+    font-size: 30px;
 }
 
 table{
@@ -25,15 +25,19 @@ table{
     cursor: pointer;
 }
 
-.temp{
-    /* margin:auto; */
-    /* margin:5px; */
-    width:43%; 
+.half-page{
+    width: 47.5%; 
+    margin: 0 1.25% 0px 1.25%
 }
 
-.temp-flex-container{
+.full-page{
+    width: 97.5%; 
+    margin: 0 1.25% 0px 1.25%
+}
+
+.inline-flex-container{
     display: flex;
-    /* justify-content: center; */
+    justify-content: center;
 }
 
 .pixel-icon-48{
@@ -41,12 +45,15 @@ table{
     font-size:48px;
     width: 48px;
     height:48px;
+    margin: 0 4% 0px 4%
 }
 
 .pixel-icon-32{
     cursor:pointer;
-    /* vertical-align: -webkit-baseline-middle; */
     font-size:32px;
+    width: 32px;
+    height:32px;
+    margin: 0 6% 0px 6%
 }
 
 .noselect {

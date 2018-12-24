@@ -106,6 +106,13 @@ export class DashboardComponent implements OnInit {
     this.mealEntryServingSizeFormControl.setValue(food.servingSize)
   }
 
+  onReturnKey(event: any) {
+    if (event.key === "Enter") {
+      this.onAddFood()
+      event.target.blur()
+    }
+  }
+
   updateCaloriesFromServingSize = () => {
     const food: Food = this.foodFormControl.value
     const mealEntryservingSize: number = this.mealEntryServingSizeFormControl.value
