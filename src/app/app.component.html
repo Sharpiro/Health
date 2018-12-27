@@ -1,3 +1,27 @@
-<mat-toolbar>Health</mat-toolbar>
+<!-- <mat-toolbar class="top-toolbar">Health</mat-toolbar> -->
 
 <router-outlet></router-outlet>
+
+<mat-toolbar class="fixed-bottom inline-flex-container">
+    <div class="nav-icon">
+        <a routerLink="/dashboard" [routerLinkActive]="['active']">
+            <div class="icon-and-text">
+                <div style="height: 24px;padding-bottom: 0;">
+                    <i class="material-icons md-dark md-inactive">home</i>
+                </div>
+                <div class="nav-icon-title">Home</div>
+            </div>
+        </a>
+    </div>
+
+    <div class="nav-icon">
+        <a routerLink="/meals" [routerLinkActive]="['active']">
+            <div class="icon-and-text">
+                <div style="height: 24px;padding-bottom: 0;">
+                    <i class="material-icons md-dark md-inactive">local_dining</i>
+                </div>
+                <div class="nav-icon-title">Meals</div>
+            </div>
+        </a>
+    </div>
+</mat-toolbar>

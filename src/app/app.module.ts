@@ -22,6 +22,7 @@ import { MatDialogModule, MatIconModule, MatCardModule } from '@angular/material
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { ConfirmationComponentComponent } from './confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from './more-options/more-options.component'
+import { MealsComponent, FileDatabase } from './meals/meals.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { MoreOptionsComponent } from './more-options/more-options.component'
     DashboardComponent,
     CustomSelectComponent,
     ConfirmationComponentComponent,
-    MoreOptionsComponent
+    MoreOptionsComponent,
+    MealsComponent
   ],
   imports: [
     BrowserModule,
@@ -52,7 +54,9 @@ import { MoreOptionsComponent } from './more-options/more-options.component'
     MatCardModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
-  providers: [],
+  providers: [
+    FileDatabase
+  ],
   bootstrap: [AppComponent],
   entryComponents: [
     CustomSelectComponent,

@@ -1,3 +1,36 @@
-mat-toolbar{
+.top-toolbar{
     height: 35px;
+}
+
+.fixed-bottom{
+    position: absolute;
+    bottom: 0;
+}
+
+.inline-flex-container{
+    display: flex;
+    justify-content: center;
+}
+
+.nav-icon{
+    margin: 0 10% 0 10%;
+    text-align: center;
+}
+
+.nav-icon-title{
+    font-size: 12px;
+    line-height: normal
+}
+
+a{
+    text-decoration: none;
+    color:inherit;
+}
+
+.icon-and-text{
+    color: rgba(0, 0, 0, 0.26);
+}
+
+.active .icon-and-text{
+    color: rgba(0, 0, 0, 1);
 }

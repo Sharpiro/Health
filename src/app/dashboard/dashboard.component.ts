@@ -35,7 +35,7 @@ export class DashboardComponent implements OnInit {
     this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
 
     const mealsJson = localStorage.getItem("meals")
-    this.meals = mealsJson ? JSON.parse(mealsJson).map(m => new Meal(m)) : []
+    this.meals = mealsJson ? JSON.parse(mealsJson).map((m: any) => new Meal(m)) : []
 
     this.foodFormControl.valueChanges.subscribe(this.onFoodChanges)
 

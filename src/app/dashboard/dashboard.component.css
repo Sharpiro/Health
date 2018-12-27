@@ -1,7 +1,13 @@
 .container{
-    padding-top: 5px;
+    /* padding-top: 5px; */
     margin: auto;
     width: 90%;
+}
+
+.page-title{
+    margin: 10px 0 10px 0;
+    font-size: 24px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
 mat-card{
@@ -64,4 +70,9 @@ table{
           -ms-user-select: none; /* Internet Explorer/Edge */
               user-select: none; /* Non-prefixed version, currently
                                     supported by Chrome and Opera */
+  }
+
+  .table-container{
+    height: 200px;
+    overflow: auto;
   }
