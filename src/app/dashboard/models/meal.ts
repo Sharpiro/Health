@@ -2,12 +2,10 @@ import { MealEntry } from './mealEntry'
 
 export class Meal {
   mealEntries: MealEntry[] = []
-
-  get calories(): number {
-    return this.mealEntries.reduce((prev, curr) => prev + curr.calories, 0)
-  }
+  calories: number
 
   constructor(partial: Partial<Meal>) {
     this.mealEntries = partial.mealEntries
+    this.calories = this.mealEntries.reduce((prev, curr) => prev + curr.calories, 0)
   }
 }

@@ -36,7 +36,7 @@ export class DashboardComponent implements OnInit {
     this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
 
     const mealsJson = localStorage.getItem("meals")
-    this.meals = mealsJson ? JSON.parse(mealsJson).map((m: any) => new Meal(m)) : []
+    this.meals = mealsJson ? JSON.parse(mealsJson) : []
 
     this.foodFormControl.valueChanges.subscribe(this.onFoodChanges)
 
@@ -55,6 +55,11 @@ export class DashboardComponent implements OnInit {
     if (this.mealEntryCalorieFormControl.value <= 0) {
       this.snackBar.open("Enter valid calories", "OK", { duration: 2000, })
       return
+    }
+
+    const dayTimestamp = localStorage.getItem("dayTimestamp")
+    if (!dayTimestamp) {
+      localStorage.setItem("dayTimestamp", new Date().toISOString())
     }
 
     const food: Food = this.foodFormControl.value
@@ -96,6 +101,7 @@ export class DashboardComponent implements OnInit {
       this.onClearMeal()
       this.meals = []
       localStorage.removeItem("meals")
+      localStorage.removeItem("dayTimestamp")
       this.updateAggregateCalories()
     })
   }

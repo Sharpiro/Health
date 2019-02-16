@@ -2,7 +2,9 @@ import { Component, OnInit, Injectable } from '@angular/core'
 import { Meal } from '../dashboard/models/meal'
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlattener, MatTreeFlatDataSource } from '@angular/material';
+import { MatTreeFlattener, MatTreeFlatDataSource, MatDialog } from '@angular/material';
+import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component';
+import { Day } from '../dashboard/models/day';
 
 export class FileNode {
   children: FileNode[]
@@ -18,39 +20,16 @@ export class FileFlatNode {
 @Injectable()
 export class FileDatabase {
   dataChange = new BehaviorSubject<FileNode[]>([]);
-  meals: Meal[]
 
   get data(): FileNode[] { return this.dataChange.value; }
 
   constructor() {
-    this.initialize()
+    // this.initialize({})
   }
 
-  initialize() {
-    const mealsJson = localStorage.getItem("meals")
-    this.meals = mealsJson ? JSON.parse(mealsJson).map((m: any) => new Meal(m)) : []
-
-    const mealTree = this.buildMealTree(this.meals)
-
-
-    const data = this.buildFileTree(mealTree, 0);
-
-    this.dataChange.next(data);
-  }
-
-  buildMealTree(meals: Meal[]): any {
-    const mealTree: any = {}
-    for (let i = 0; i < meals.length; i++) {
-      const meal = meals[i]
-      const mealKey = `Meal ${i + 1}: ${meal.calories}`
-      mealTree[mealKey] = {}
-      for (let j = 0; j < meal.mealEntries.length; j++) {
-        const mealEntry = meal.mealEntries[j]
-        mealTree[mealKey][`Entry ${j + 1}: ${mealEntry.foodName}`] = mealEntry.calories
-      }
-    }
-
-    return mealTree
+  initialize(treeData: any) {
+    const fileNodes = this.buildFileTree(treeData, 0);
+    this.dataChange.next(fileNodes);
   }
 
   buildFileTree(obj: { [key: string]: any }, level: number): FileNode[] {
@@ -81,34 +60,75 @@ export class MealsComponent implements OnInit {
   treeControl: FlatTreeControl<FileFlatNode>;
   treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
   dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
-  days: any[]
+  days: Day[]
 
-  constructor(private database: FileDatabase) {
+  constructor(private mealsDatabase: FileDatabase, private dialog: MatDialog) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
       this._isExpandable, this._getChildren);
     this.treeControl = new FlatTreeControl<FileFlatNode>(this._getLevel, this._isExpandable);
     this.dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
 
-    database.dataChange.subscribe(data => this.dataSource.data = data);
+    mealsDatabase.dataChange.subscribe(data => this.dataSource.data = data);
   }
 
   ngOnInit() {
-    this.database.initialize()
+    // initialize days database
     const daysJson = localStorage.getItem("days")
-    this.days = daysJson ? JSON.parse(daysJson).map((m: any) => m) : []
+    this.days = daysJson ? JSON.parse(daysJson) : []
+
+
+
+    // initialize meals database
+    const mealsJson = localStorage.getItem("meals")
+    const meals = mealsJson ? JSON.parse(mealsJson) : []
+    const mealTree = this.buildMealTree(meals)
+    this.mealsDatabase.initialize(mealTree)
+  }
+
+
+  buildMealTree(meals: Meal[]): any {
+    const mealTree: any = {}
+    for (let i = 0; i < meals.length; i++) {
+      const meal = meals[i]
+      const mealKey = `Meal ${i + 1}: ${meal.calories}`
+      mealTree[mealKey] = {}
+      for (let j = 0; j < meal.mealEntries.length; j++) {
+        const mealEntry = meal.mealEntries[j]
+        mealTree[mealKey][`Entry ${j + 1}: ${mealEntry.foodName}`] = mealEntry.calories
+      }
+    }
+    return mealTree
+  }
+
+  onSaveDay() {
+    let dayTimestamp = localStorage.getItem("dayTimestamp")
+    if (!dayTimestamp) {
+      dayTimestamp = new Date().toISOString()
+    }
+    const mealsJson = localStorage.getItem("meals")
+    const currentMeals: Meal[] = mealsJson ? JSON.parse(mealsJson) : []
+    this.days.push(new Day(dayTimestamp, currentMeals))
+    localStorage.setItem("days", JSON.stringify(this.days))
+    localStorage.setItem("meals", "[]")
+    localStorage.removeItem("dayTimestamp")
+  }
+
+  onClearLastDay() {
+    const dialogRef = this.dialog.open(ConfirmationComponentComponent, {
+      width: '350px',
+      data: "Are you sure you want to clear the latest day?"
+    })
+
+    dialogRef.afterClosed().subscribe((result: boolean) => {
+      if (!result) return
+
+      this.days.splice(this.days.length - 1)
+      localStorage.setItem("days", JSON.stringify(this.days))
+    })
   }
 
   transformer = (node: FileNode, level: number) => {
     return new FileFlatNode(!!node.children, node.filename, level, node.type);
-  }
-
-  onNewDay() {
-    const dayCalories = this.database.meals.reduce((prev, cur) => prev + cur.calories, 0)
-    this.days.push(dayCalories)
-    localStorage.setItem("days", JSON.stringify(this.days))
-    localStorage.removeItem("meals")
-    this.database.meals = []
-    this.database.initialize()
   }
 
   private _getLevel = (node: FileFlatNode) => node.level;

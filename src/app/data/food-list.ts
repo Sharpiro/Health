@@ -228,21 +228,6 @@ export const FoodList =
             "active": false
         },
         {
-            "id": 12,
-            "calories": 35,
-            "name": "Soup",
-            "servingSize": 1,
-            "carbs": 8,
-            "fat": 0,
-            "fiber": 4,
-            "potassium": 580,
-            "protein": 3,
-            "servingSizeType": "Item",
-            "sodium": 470,
-            "sugar": 2,
-            "active": true
-        },
-        {
             "id": 14,
             "calories": 110,
             "name": "Beans",
@@ -420,6 +405,36 @@ export const FoodList =
             "servingSizeType": "Item",
             "sodium": 270,
             "sugar": 0,
+            "active": true
+        },
+        {
+            "id": 103,
+            "calories": 120,
+            "name": "Soup (Savory Lentil)",
+            "servingSize": 1,
+            "carbs": 22,
+            "fat": 1.5,
+            "fiber": 3,
+            "potassium": 0,
+            "protein": 4,
+            "servingSizeType": "Item",
+            "sodium": 640,
+            "sugar": 2,
+            "active": true
+        },
+        {
+            "id": 103,
+            "calories": 140,
+            "name": "Soup (Chicken & Wild Rice)",
+            "servingSize": 1,
+            "carbs": 24,
+            "fat": 2,
+            "fiber": 2,
+            "potassium": 0,
+            "protein": 8,
+            "servingSizeType": "Item",
+            "sodium": 1340,
+            "sugar": 2,
             "active": true
         }
     ] as Food[])
