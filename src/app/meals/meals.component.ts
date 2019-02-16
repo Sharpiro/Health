@@ -95,7 +95,7 @@ export class MealsComponent implements OnInit {
   ngOnInit() {
     this.database.initialize()
     const daysJson = localStorage.getItem("days")
-    this.days = daysJson ? JSON.parse(daysJson).map((m: any) => new Meal(m)) : []
+    this.days = daysJson ? JSON.parse(daysJson).map((m: any) => m) : []
   }
 
   transformer = (node: FileNode, level: number) => {
