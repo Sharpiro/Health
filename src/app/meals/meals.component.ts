@@ -18,6 +18,7 @@ export class FileFlatNode {
 @Injectable()
 export class FileDatabase {
   dataChange = new BehaviorSubject<FileNode[]>([]);
+  meals: Meal[]
 
   get data(): FileNode[] { return this.dataChange.value; }
 
@@ -27,9 +28,9 @@ export class FileDatabase {
 
   initialize() {
     const mealsJson = localStorage.getItem("meals")
-    const meals: Meal[] = mealsJson ? JSON.parse(mealsJson).map((m: any) => new Meal(m)) : []
+    this.meals = mealsJson ? JSON.parse(mealsJson).map((m: any) => new Meal(m)) : []
 
-    const mealTree = this.buildMealTree(meals)
+    const mealTree = this.buildMealTree(this.meals)
 
 
     const data = this.buildFileTree(mealTree, 0);
@@ -80,6 +81,7 @@ export class MealsComponent implements OnInit {
   treeControl: FlatTreeControl<FileFlatNode>;
   treeFlattener: MatTreeFlattener<FileNode, FileFlatNode>;
   dataSource: MatTreeFlatDataSource<FileNode, FileFlatNode>;
+  days: any[]
 
   constructor(private database: FileDatabase) {
     this.treeFlattener = new MatTreeFlattener(this.transformer, this._getLevel,
@@ -92,10 +94,21 @@ export class MealsComponent implements OnInit {
 
   ngOnInit() {
     this.database.initialize()
+    const daysJson = localStorage.getItem("days")
+    this.days = daysJson ? JSON.parse(daysJson).map((m: any) => new Meal(m)) : []
   }
 
   transformer = (node: FileNode, level: number) => {
     return new FileFlatNode(!!node.children, node.filename, level, node.type);
+  }
+
+  onNewDay() {
+    const dayCalories = this.database.meals.reduce((prev, cur) => prev + cur.calories, 0)
+    this.days.push(dayCalories)
+    localStorage.setItem("days", JSON.stringify(this.days))
+    localStorage.removeItem("meals")
+    this.database.meals = []
+    this.database.initialize()
   }
 
   private _getLevel = (node: FileFlatNode) => node.level;
