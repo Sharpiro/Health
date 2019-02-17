@@ -9,22 +9,6 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
-.mat-tree-node{
-  min-height:25px;
-  height:25px;
-}
-
-.example-tree-invisible {
-  display: none;
-}
-
-.example-tree ul,
-.example-tree li {
-  margin-top: 0;
-  margin-bottom: 0;
-  list-style-type: none;
-}
-
 .row{
   padding-top: 15px;
 }
