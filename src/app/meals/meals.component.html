@@ -1,23 +1,23 @@
 <div class="container">
 
-  <div class="page-title">Saved Meals</div>
-
-  <app-tree-view [treeData]="mealsTree"></app-tree-view>
 
   <div>
     <div class="page-title">History</div>
-
-    <div>
-      <span class="button">
-        <button mat-button (click)="onSaveDay()">Save Day</button>
-      </span>
-      <span class="button">
-        <button mat-button (click)="onClearLastDay()">Clear Last Day</button>
-      </span>
-    </div>
-
-    <div class="row">
-      <app-tree-view [treeData]="daysTree"></app-tree-view>
-    </div>
-
+    <span class="button">
+      <button mat-button (click)="onSaveDay()">Save Day</button>
+    </span>
+    <span class="button">
+      <button mat-button (click)="onClearLastDay()">Clear Last Day</button>
+    </span>
   </div>
+
+  <div class="row">
+    <div class="page-title">Current Day</div>
+    <app-tree-view [treeData]="mealsTree"></app-tree-view>
+  </div>
+
+  <div class="row">
+    <div class="page-title">Previous Days</div>
+    <app-tree-view [treeData]="daysTree"></app-tree-view>
+  </div>
+</div>
