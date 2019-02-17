@@ -22,7 +22,9 @@ import { MatDialogModule, MatIconModule, MatCardModule } from '@angular/material
 import { MatTooltipModule } from '@angular/material/tooltip'
 import { ConfirmationComponentComponent } from './confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from './more-options/more-options.component'
-import { MealsComponent, FileDatabase } from './meals/meals.component'
+import { MealsComponent } from './meals/meals.component';
+import { TreeViewComponent } from './meals/tree-view/tree-view.component';
+import { FileDatabase } from './meals/tree-view/file-controls';
 
 @NgModule({
   declarations: [
@@ -31,7 +33,8 @@ import { MealsComponent, FileDatabase } from './meals/meals.component'
     CustomSelectComponent,
     ConfirmationComponentComponent,
     MoreOptionsComponent,
-    MealsComponent
+    MealsComponent,
+    TreeViewComponent
   ],
   imports: [
     BrowserModule,

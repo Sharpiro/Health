@@ -2,21 +2,22 @@
 
   <div class="page-title">Saved Meals</div>
 
-  <div>
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding>
-        <button mat-icon-button disabled></button>
-        {{node.filename}} : {{node.type}}
-      </mat-tree-node>
+  <app-tree-view [treeData]="mealsTree"></app-tree-view>
 
-      <mat-tree-node *matTreeNodeDef="let node;when: hasChild" matTreeNodePadding>
-        <button mat-icon-button matTreeNodeToggle [attr.aria-label]="'toggle ' + node.filename">
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
-        </button>
-        {{node.filename}}{{node.type}}
-      </mat-tree-node>
-    </mat-tree>
+  <div>
+    <div class="page-title">History</div>
+
+    <div>
+      <span class="button">
+        <button mat-button (click)="onSaveDay()">Save Day</button>
+      </span>
+      <span class="button">
+        <button mat-button (click)="onClearLastDay()">Clear Last Day</button>
+      </span>
+    </div>
+
+    <div class="row">
+      <app-tree-view [treeData]="daysTree"></app-tree-view>
+    </div>
+
   </div>
-</div>
