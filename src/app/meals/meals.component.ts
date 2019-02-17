@@ -27,7 +27,7 @@ export class FileDatabase {
     // this.initialize({})
   }
 
-  initialize(treeData: any) {
+  update(treeData: any) {
     const fileNodes = this.buildFileTree(treeData, 0);
     this.dataChange.next(fileNodes);
   }
@@ -82,7 +82,7 @@ export class MealsComponent implements OnInit {
     const mealsJson = localStorage.getItem("meals")
     const meals = mealsJson ? JSON.parse(mealsJson) : []
     const mealTree = this.buildMealTree(meals)
-    this.mealsDatabase.initialize(mealTree)
+    this.mealsDatabase.update(mealTree)
   }
 
 
@@ -108,6 +108,7 @@ export class MealsComponent implements OnInit {
     const mealsJson = localStorage.getItem("meals")
     const currentMeals: Meal[] = mealsJson ? JSON.parse(mealsJson) : []
     this.days.push(new Day(dayTimestamp, currentMeals))
+    this.mealsDatabase.update({})
     localStorage.setItem("days", JSON.stringify(this.days))
     localStorage.setItem("meals", "[]")
     localStorage.removeItem("dayTimestamp")
