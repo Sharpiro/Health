@@ -80,7 +80,7 @@ export const FoodList =
         {
             "id": 29,
             "calories": 70,
-            "name": "StringCheese",
+            "name": "Cheese (Milk/String)",
             "servingSize": 1,
             "carbs": 1,
             "fat": 4,
@@ -140,7 +140,7 @@ export const FoodList =
         {
             "id": 25,
             "calories": 120,
-            "name": "Milk Yogurt",
+            "name": "Yogurt (Milk)",
             "servingSize": 225,
             "carbs": 9,
             "fat": 0,
@@ -240,7 +240,7 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 270,
             "sugar": 0,
-            "active": true
+            "active": false
         },
         {
             "id": 17,
@@ -390,7 +390,7 @@ export const FoodList =
             "servingSizeType": "Item",
             "sodium": 420,
             "sugar": 2,
-            "active": true
+            "active": false
         },
         {
             "id": 102,
@@ -466,6 +466,36 @@ export const FoodList =
             "sodium": 85,
             "sugar": 0,
             "active": false,
+        },
+        {
+            "id": 106,
+            "calories": 45,
+            "name": "Ghee",
+            "servingSize": 5,
+            "carbs": 0,
+            "fat": 5,
+            "fiber": 0,
+            "potassium": 0,
+            "protein": 0,
+            "servingSizeType": "Grams",
+            "sodium": 0,
+            "sugar": 0,
+            "active": true,
+        },
+        {
+            "id": 107,
+            "calories": 60,
+            "name": "Cheese (Daiya)",
+            "servingSize": 1,
+            "carbs": 4,
+            "fat": 5,
+            "fiber": 0,
+            "potassium": 8,
+            "protein": 0,
+            "servingSizeType": "Item",
+            "sodium": 180,
+            "sugar": 0,
+            "active": true,
         }
     ] as Food[])
         .filter(f => f.active)
