@@ -6,6 +6,7 @@ export const FoodList =
             "id": 6,
             "calories": 120,
             "name": "Chicken",
+            "shortName": "Ckn",
             "servingSize": 4,
             "carbs": 0,
             "fat": 1,
@@ -21,6 +22,7 @@ export const FoodList =
             "id": 7,
             "calories": 120,
             "name": "Egg w/ whites",
+            "shortName": "Egg",
             "servingSize": 1,
             "carbs": 0,
             "fat": 5,
@@ -36,6 +38,7 @@ export const FoodList =
             "id": 8,
             "calories": 100,
             "name": "Almonds",
+            "shortName": "Alm",
             "servingSize": 18,
             "carbs": 1,
             "fat": 9,
@@ -111,6 +114,7 @@ export const FoodList =
             "id": 11,
             "calories": 80,
             "name": "Apple",
+            "shortName": "Apl",
             "servingSize": 1,
             "carbs": 16,
             "fat": 0,
@@ -171,6 +175,7 @@ export const FoodList =
             "id": 16,
             "calories": 110,
             "name": "Potatoes",
+            "shortName": "Pot",
             "servingSize": 148,
             "carbs": 26,
             "fat": 0,
@@ -351,6 +356,7 @@ export const FoodList =
             "id": 99,
             "calories": 35,
             "name": "Rice Cake",
+            "shortName": "Rca",
             "servingSize": 1,
             "carbs": 7,
             "fat": 0,
@@ -366,6 +372,7 @@ export const FoodList =
             "id": 100,
             "calories": 110,
             "name": "Yogurt (Coconut)",
+            "shortName": "Yog",
             "servingSize": 225,
             "carbs": 12,
             "fat": 7,
@@ -396,6 +403,7 @@ export const FoodList =
             "id": 102,
             "calories": 60,
             "name": "Tortilla (Low Carb)",
+            "shortName": "Tor",
             "servingSize": 1,
             "carbs": 19,
             "fat": 2.5,
@@ -411,6 +419,7 @@ export const FoodList =
             "id": 103,
             "calories": 120,
             "name": "Soup (Savory Lentil)",
+            "shortName": "Sou",
             "servingSize": 1,
             "carbs": 22,
             "fat": 3,
@@ -426,6 +435,7 @@ export const FoodList =
             "id": 103,
             "calories": 140,
             "name": "Soup (Chicken & Wild Rice)",
+            "shortName": "Sou",
             "servingSize": 1,
             "carbs": 24,
             "fat": 2,
@@ -471,6 +481,7 @@ export const FoodList =
             "id": 106,
             "calories": 45,
             "name": "Ghee",
+            "shortName": "Ghe",
             "servingSize": 5,
             "carbs": 0,
             "fat": 5,
@@ -486,6 +497,7 @@ export const FoodList =
             "id": 107,
             "calories": 60,
             "name": "Cheese (Daiya)",
+            "shortName": "Che",
             "servingSize": 1,
             "carbs": 4,
             "fat": 5,
@@ -501,7 +513,7 @@ export const FoodList =
         .filter(f => f.active)
         .sort((first, second) => first.name.charCodeAt(0) - second.name.charCodeAt(0))
 
-const FoodMap = FoodList.reduce((map, curr) => {
+export const FoodMap = FoodList.reduce((map, curr) => {
     map.set(curr.name, curr)
     return map
 }, new Map<string, Food>())

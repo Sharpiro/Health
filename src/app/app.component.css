@@ -1,10 +1,7 @@
-.top-toolbar{
-    height: 35px;
-}
-
 .fixed-bottom{
     position: absolute;
     bottom: 0;
+    height: 40px;
 }
 
 .inline-flex-container{
