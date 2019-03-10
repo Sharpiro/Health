@@ -25,6 +25,7 @@ import { MoreOptionsComponent } from './more-options/more-options.component'
 import { MealsComponent } from './meals/meals.component';
 import { TreeViewComponent } from './meals/tree-view/tree-view.component';
 import { FileDatabase } from './meals/tree-view/file-controls';
+import { ChartsComponent } from './charts/charts.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,8 @@ import { FileDatabase } from './meals/tree-view/file-controls';
     ConfirmationComponentComponent,
     MoreOptionsComponent,
     MealsComponent,
-    TreeViewComponent
+    TreeViewComponent,
+    ChartsComponent
   ],
   imports: [
     BrowserModule,
