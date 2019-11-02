@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Chart } from 'chart.js';
-import { Day } from '../dashboard/models/day';
-import { MealEntry } from '../dashboard/models/mealEntry';
+import { Day } from '../models/day';
+import { MealEntry } from '../models/mealEntry';
 import { FoodMap } from '../data/food-list';
 
 

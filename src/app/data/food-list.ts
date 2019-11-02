@@ -1,4 +1,4 @@
-import { Food } from "../dashboard/models/food";
+import { Food } from "../models/food";
 
 export const FoodList =
     ([

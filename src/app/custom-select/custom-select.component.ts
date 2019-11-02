@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material'
-import { Food } from '../dashboard/models/food'
+import { Food } from '../models/food'
 import { disableBodyScroll } from 'body-scroll-lock'
 
 @Component({

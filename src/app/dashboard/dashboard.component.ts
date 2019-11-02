@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource } from '@angular/material/table'
-import { Meal } from './models/meal'
-import { MealEntry } from "./models/mealEntry"
-import { Food } from './models/food'
+import { Meal } from '../models/meal'
+import { MealEntry } from "../models/mealEntry"
+import { Food } from '../models/food'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { MatDialog } from '@angular/material'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
