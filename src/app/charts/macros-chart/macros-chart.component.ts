@@ -1,15 +1,16 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart } from 'chart.js';
 import { MealEntry } from '../../models/mealEntry';
-import { FoodMap } from '../../data/food-list';
+import { FoodMap, FoodList } from '../../data/food-list';
 import { Meal } from 'src/app/models/meal';
 
 @Component({
-  selector: 'app-calorie-chart',
-  templateUrl: './calorie-chart.component.html',
-  styleUrls: ['./calorie-chart.component.css']
+  selector: 'app-macros-chart',
+  templateUrl: './macros-chart.component.html',
+  styleUrls: ['./macros-chart.component.css']
 })
-export class CalorieChartComponent implements AfterViewInit {
+export class MacrosChartComponent implements AfterViewInit {
+  // days: Day[]
   caloriesChart: Chart
 
   @ViewChild('myChart') myChart: ElementRef;
@@ -17,11 +18,19 @@ export class CalorieChartComponent implements AfterViewInit {
   constructor() { }
 
   ngAfterViewInit(): void {
-    const [foodShortNames, foodCalories] = this.initializeCaloriesData()
-    this.initializeCaloriesChart(foodShortNames, foodCalories)
+    const [foodShortNames, foodCalories] = this.initializeData()
+    this.initializeChart(foodShortNames, foodCalories)
   }
 
-  private initializeCaloriesData(): [string[], number[]] {
+  private initializeData(): [string[], number[]] {
+    // todo: past day picker
+    // const daysJson = localStorage.getItem("days")
+    // this.days = daysJson ? JSON.parse(daysJson) : []
+    // if (this.days.length < 1) {
+    //   return [[], []]
+    // }
+    // const selectedDay = this.days[this.days.length - 1]
+
     const mealsJson = localStorage.getItem("meals")
     const meals: Meal[] = mealsJson ? JSON.parse(mealsJson) : []
     if (meals.length < 1) {
@@ -30,26 +39,44 @@ export class CalorieChartComponent implements AfterViewInit {
     const allMealEntries = meals.reduce((prev, curr) => {
       return prev.concat(curr.mealEntries)
     }, [] as MealEntry[])
-    const foodCalorieMap = allMealEntries.reduce((map, curr) => {
-      if (map.get(curr.foodName) === undefined) {
-        return map.set(curr.foodName, curr.calories)
-      }
-      return map.set(curr.foodName, map.get(curr.foodName) + curr.calories)
-    }, new Map<string, number>())
-    const foodNames = Array.from(foodCalorieMap.keys())
-    const foodShortNames = foodNames.map(f => FoodMap.get(f).shortName)
-    const foodCalories = Array.from(foodCalorieMap.values())
-    return [foodShortNames, foodCalories]
+
+    let totalCarbs = 0
+    let totalFiber = 0
+    let totalFat = 0
+    let totalProtein = 0
+    for (const mealEntry of allMealEntries) {
+      const food = FoodMap.get(mealEntry.foodName)
+      const servingsConsumed = mealEntry.calories / food.calories
+
+      const carbsConsumed = food.carbs * servingsConsumed
+      totalCarbs += carbsConsumed
+      const fiberConsumed = food.fiber * servingsConsumed
+      totalFiber += fiberConsumed
+      const fatConsumed = food.fat * servingsConsumed
+      totalFat += fatConsumed
+      const proteinConsumed = food.protein * servingsConsumed
+      totalProtein += proteinConsumed
+    }
+
+    return [
+      ["Carbs", "Net Carbs", "Fat", "Protein"],
+      [
+        Math.round(totalCarbs),
+        Math.round(totalCarbs - totalFiber),
+        Math.round(totalFat),
+        Math.round(totalProtein)
+      ]
+    ]
   }
 
-  private initializeCaloriesChart(labels: string[], data: number[]) {
+  private initializeChart(labels: string[], data: number[]) {
     const canvas = this.myChart.nativeElement as HTMLCanvasElement
     this.caloriesChart = new Chart(canvas, {
       type: 'bar',
       data: {
         labels: labels,
         datasets: [{
-          label: 'Calories',
+          label: 'Macros',
           data: data,
           backgroundColor: [
             'rgba(255, 99, 132, 0.2)',
@@ -90,7 +117,7 @@ export class CalorieChartComponent implements AfterViewInit {
           yAxes: [{
             ticks: {
               beginAtZero: true,
-              max: 1000
+              max: 400
             }
           }],
         }

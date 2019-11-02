@@ -65,11 +65,13 @@ export class MealsComponent implements OnInit {
       this.snackBar.open("A current meal is in progress", "OK", {
         duration: 2000,
       })
+      return
     }
     if (this.meals.length === 0) {
       this.snackBar.open("No meals to save", "OK", {
         duration: 2000,
       })
+      return
     }
 
     let dayTimestamp = localStorage.getItem("dayTimestamp")

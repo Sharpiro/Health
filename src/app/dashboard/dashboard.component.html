@@ -31,31 +31,31 @@
 
   <div class="inline-flex-container">
     <div class="icon-container">
-      <button mat-button class="icon-button">
-        <mat-icon matTooltip="Add food" (click)="onAddFood()" class="pixel-icon-32 noselect">add</mat-icon>
+      <button mat-button class="icon-button" (click)="onAddFood()">
+        <mat-icon matTooltip="Add food" class="pixel-icon-32 noselect">add</mat-icon>
       </button>
     </div>
     <div class="icon-container">
-      <button mat-button class="icon-button">
-        <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save
+      <button mat-button class="icon-button" (click)="onSaveMeal()">
+        <mat-icon matTooltip="Save the current meal" class="pixel-icon-32 noselect">save
         </mat-icon>
       </button>
     </div>
     <div class="icon-container">
-      <button mat-button class="icon-button">
-        <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear
+      <button mat-button class="icon-button" (click)="onClearMeal()">
+        <mat-icon matTooltip="Clear the current meal" class="pixel-icon-32 noselect">clear
         </mat-icon>
       </button>
     </div>
     <div class="icon-container">
-      <button mat-button class="icon-button">
-        <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all
+      <button mat-button class="icon-button" (click)="onClearDay()">
+        <mat-icon matTooltip="Clear the current day" class="pixel-icon-32 noselect">clear_all
         </mat-icon>
       </button>
     </div>
     <div class="icon-container">
-      <button mat-button class="icon-button">
-        <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz
+      <button mat-button class="icon-button" (click)="onMoreOptions()">
+        <mat-icon matTooltip="More options" class="pixel-icon-32 noselect">more_horiz
         </mat-icon>
       </button>
     </div>
@@ -63,19 +63,19 @@
   <div class="inline-flex-container" style="padding-top: 15px">
     <mat-card class="half-page">
       <mat-card-header>
-        <mat-card-title>Total</mat-card-title>
-      </mat-card-header>
-      <mat-card-content>
-        {{allMealsCaloriesControl.value}}
-      </mat-card-content>
-    </mat-card>
-
-    <mat-card class="half-page">
-      <mat-card-header>
         <mat-card-title>Meal</mat-card-title>
       </mat-card-header>
       <mat-card-content>
         {{currentMealCaloriesControl.value}}
+      </mat-card-content>
+    </mat-card>
+    
+    <mat-card class="half-page">
+      <mat-card-header>
+        <mat-card-title>Total</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        {{allMealsCaloriesControl.value}}
       </mat-card-content>
     </mat-card>
   </div>
