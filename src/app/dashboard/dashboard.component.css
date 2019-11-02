@@ -62,6 +62,14 @@ table{
     margin: 0 6% 0px 6%
 }
 
+.icon-button{
+    width: 64px;
+}
+
+.icon-container{
+    width: 20%;
+}
+
 .noselect {
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */

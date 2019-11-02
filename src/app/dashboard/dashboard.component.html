@@ -12,16 +12,16 @@
 
   <div class="inline-flex-container">
     <mat-form-field class="half-page">
-      <input matInput type="number" placeholder="Calories" [formControl]="mealEntryCalorieFormControl" (input)="updateServingSizeFromCalories()"
-        (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+      <input matInput type="number" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
+        (input)="updateServingSizeFromCalories()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
       <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
         Required
       </mat-error>
     </mat-form-field>
 
     <mat-form-field class="half-page">
-      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl" (input)="updateCaloriesFromServingSize()"
-        (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+      <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl"
+        (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
@@ -30,11 +30,35 @@
   </div>
 
   <div class="inline-flex-container">
-    <mat-icon matTooltip="Add food" (click)="onAddFood()" class="pixel-icon-32 noselect">add</mat-icon>
-    <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save</mat-icon>
-    <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear</mat-icon>
-    <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all</mat-icon>
-    <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz</mat-icon>
+    <div class="icon-container">
+      <button mat-button class="icon-button">
+        <mat-icon matTooltip="Add food" (click)="onAddFood()" class="pixel-icon-32 noselect">add</mat-icon>
+      </button>
+    </div>
+    <div class="icon-container">
+      <button mat-button class="icon-button">
+        <mat-icon matTooltip="Save the current meal" (click)="onSaveMeal()" class="pixel-icon-32 noselect">save
+        </mat-icon>
+      </button>
+    </div>
+    <div class="icon-container">
+      <button mat-button class="icon-button">
+        <mat-icon matTooltip="Clear the current meal" (click)="onClearMeal()" class="pixel-icon-32 noselect">clear
+        </mat-icon>
+      </button>
+    </div>
+    <div class="icon-container">
+      <button mat-button class="icon-button">
+        <mat-icon matTooltip="Clear the current day" (click)="onClearDay()" class="pixel-icon-32 noselect">clear_all
+        </mat-icon>
+      </button>
+    </div>
+    <div class="icon-container">
+      <button mat-button class="icon-button">
+        <mat-icon matTooltip="More options" (click)="onMoreOptions()" class="pixel-icon-32 noselect">more_horiz
+        </mat-icon>
+      </button>
+    </div>
   </div>
   <div class="inline-flex-container" style="padding-top: 15px">
     <mat-card class="half-page">
@@ -45,7 +69,7 @@
         {{allMealsCaloriesControl.value}}
       </mat-card-content>
     </mat-card>
-    
+
     <mat-card class="half-page">
       <mat-card-header>
         <mat-card-title>Meal</mat-card-title>
