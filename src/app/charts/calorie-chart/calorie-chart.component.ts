@@ -12,6 +12,7 @@ import { FoodMap } from '../../data/food-list';
 export class CalorieChartComponent implements AfterViewInit {
   days: Day[]
   caloriesChart: Chart
+  
   constructor() { }
 
   ngAfterViewInit(): void {
@@ -42,15 +43,8 @@ export class CalorieChartComponent implements AfterViewInit {
     return { foodShortNames, foodCalories }
   }
 
-  debug() {
-    const ctx = document.getElementById("myChart") as HTMLCanvasElement;
-    console.log(ctx);
-  }
-
   private initializeCaloriesChart(labels: string[], data: number[]) {
     const ctx = document.getElementById("myChart") as HTMLCanvasElement;
-    console.log(ctx);
-
     this.caloriesChart = new Chart(ctx, {
       type: 'bar',
       data: {
