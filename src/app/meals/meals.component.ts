@@ -1,9 +1,10 @@
 import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core'
 import { Meal } from '../dashboard/models/meal'
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatSnackBar } from '@angular/material';
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component';
 import { Day } from '../dashboard/models/day';
 import { formatDate } from '@angular/common';
+import { MealEntry } from '../dashboard/models/mealEntry';
 
 @Component({
   selector: 'app-meals',
@@ -15,20 +16,23 @@ export class MealsComponent implements OnInit {
   days: Day[]
   mealsTree: any
   daysTree: any
+  mealInProgress: boolean
 
-
-  constructor(private dialog: MatDialog, @Inject(LOCALE_ID) private locale: string) { }
+  constructor(private dialog: MatDialog, @Inject(LOCALE_ID) private locale: string,
+    public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    // initialize days tree
     const daysJson = localStorage.getItem("days")
     this.days = daysJson ? JSON.parse(daysJson) : []
     this.daysTree = this.buildDaysTree(this.days.slice().reverse())
 
-    // initialize meals tree
     const mealsJson = localStorage.getItem("meals")
     this.meals = mealsJson ? JSON.parse(mealsJson) : []
     this.mealsTree = this.buildMealsTree(this.meals)
+
+    const mealEntriesJson = localStorage.getItem("mealEntries")
+    const mealEntries: MealEntry[] = mealEntriesJson ? JSON.parse(mealEntriesJson) : [];
+    this.mealInProgress = mealEntries.length > 0
   }
 
   buildMealsTree(meals: Meal[]): any {
@@ -57,13 +61,24 @@ export class MealsComponent implements OnInit {
   }
 
   onSaveDay() {
-    console.log("clearing meals...");
+    if (this.mealInProgress) {
+      this.snackBar.open("A current meal is in progress", "OK", {
+        duration: 2000,
+      })
+    }
+    if (this.meals.length === 0) {
+      this.snackBar.open("No meals to save", "OK", {
+        duration: 2000,
+      })
+    }
+
     let dayTimestamp = localStorage.getItem("dayTimestamp")
     if (!dayTimestamp) {
       dayTimestamp = new Date().toISOString()
     }
 
     this.days.push(new Day(dayTimestamp, this.meals))
+    this.meals = []
     this.mealsTree = {}
     this.daysTree = this.buildDaysTree(this.days.slice().reverse())
 
