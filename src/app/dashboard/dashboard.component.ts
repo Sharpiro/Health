@@ -138,7 +138,6 @@ export class DashboardComponent implements OnInit {
 
   onFoodClick() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
-      width: '350px',
       data: this.foods
     })
 
