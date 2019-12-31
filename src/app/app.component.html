@@ -1,8 +1,10 @@
-<router-outlet></router-outlet>
+<div class="app-container">
+    <router-outlet></router-outlet>
+</div>
 
 <mat-toolbar class="fixed-bottom inline-flex-container">
     <div class="nav-icon">
-        <a routerLink="/dashboard" [routerLinkActive]="['active']">
+        <a routerLink="" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
             <div class="icon-and-text">
                 <div style="height: 24px;padding-bottom: 0;">
                     <i class="material-icons md-dark md-inactive">home</i>

@@ -31,3 +31,8 @@ a{
 .active .icon-and-text{
     color: rgba(0, 0, 0, 1);
 }
+
+.app-container {
+    max-width: 600px;
+    margin: auto;
+}

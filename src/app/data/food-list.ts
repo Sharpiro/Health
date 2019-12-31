@@ -1,4 +1,4 @@
-import { Food } from "../models/food";
+import { Food } from "../models/food"
 
 export const FoodList =
     ([
@@ -48,12 +48,12 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 0,
             "sugar": 1,
-            "active": false
+            "active": true
         },
         {
             "id": 13,
             "calories": 180,
-            "name": "ProteinBar",
+            "name": "Protein Bar",
             "servingSize": 1,
             "carbs": 4,
             "fat": 8,
@@ -63,7 +63,7 @@ export const FoodList =
             "servingSizeType": "Item",
             "sodium": 170,
             "sugar": 1,
-            "active": false
+            "active": true
         },
         {
             "id": 26,
@@ -78,7 +78,7 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 0,
             "sugar": 1,
-            "active": false
+            "active": true
         },
         {
             "id": 29,
@@ -155,7 +155,7 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 90,
             "sugar": 9,
-            "active": false
+            "active": true
         },
         {
             "id": 27,
@@ -186,7 +186,7 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 0,
             "sugar": 1,
-            "active": false
+            "active": true
         },
         {
             "id": 28,
@@ -384,7 +384,7 @@ export const FoodList =
             "servingSizeType": "Grams",
             "sodium": 50,
             "sugar": 0,
-            "active": true
+            "active": false
         },
         {
             "id": 101,
@@ -431,7 +431,7 @@ export const FoodList =
             "servingSizeType": "Item",
             "sodium": 1170,
             "sugar": 4,
-            "active": true,
+            "active": false,
         },
         {
             "id": 203,
@@ -541,7 +541,7 @@ export const FoodList =
             "servingSizeType": "grams",
             "sodium": 490,
             "sugar": 0,
-            "active": true,
+            "active": false,
         },
         {
             "id": 110,
@@ -557,7 +557,7 @@ export const FoodList =
             "servingSizeType": "oz",
             "sodium": 55,
             "sugar": 0,
-            "active": true,
+            "active": false,
         }
     ] as Food[])
         .filter(f => f.active)
