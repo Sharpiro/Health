@@ -1,5 +1,4 @@
 export interface Food {
-  id: number
   name: string
   shortName: string
   calories: number

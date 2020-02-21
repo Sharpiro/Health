@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
 
     const food: Food = this.foodFormControl.value
     const currentMealEntries = this.currentMealEntriesDataSource.data
-    currentMealEntries.push({ foodId: food.id, foodName: food.name, calories: this.mealEntryCalorieFormControl.value })
+    currentMealEntries.push({ foodName: food.name, calories: this.mealEntryCalorieFormControl.value })
     this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries)
     localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries))
     this.updateAggregateCalories()
