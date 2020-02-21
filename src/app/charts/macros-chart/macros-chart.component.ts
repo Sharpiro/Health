@@ -1,8 +1,8 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Chart } from 'chart.js';
-import { MealEntry } from '../../models/mealEntry';
-import { FoodMap, FoodList } from '../../data/food-list';
-import { Meal } from 'src/app/models/meal';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
+import { Chart } from 'chart.js'
+import { MealEntry } from '../../models/mealEntry'
+import { FoodMap, FoodList } from '../../data/food-list'
+import { Meal } from 'src/app/models/meal'
 
 @Component({
   selector: 'app-macros-chart',
@@ -11,9 +11,9 @@ import { Meal } from 'src/app/models/meal';
 })
 export class MacrosChartComponent implements AfterViewInit {
   // days: Day[]
-  caloriesChart: Chart
+  caloriesChart!: Chart
 
-  @ViewChild('myChart') myChart: ElementRef;
+  @ViewChild('myChart') myChart!: ElementRef
 
   constructor() { }
 
@@ -46,6 +46,9 @@ export class MacrosChartComponent implements AfterViewInit {
     let totalProtein = 0
     for (const mealEntry of allMealEntries) {
       const food = FoodMap.get(mealEntry.foodName)
+      if (!food) {
+        throw new Error("food was not defined")
+      }
       const servingsConsumed = mealEntry.calories / food.calories
 
       const carbsConsumed = food.carbs * servingsConsumed

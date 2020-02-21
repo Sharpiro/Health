@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from '../more-options/more-options.component'
-import { FoodList } from '../data/food-list';
+import { FoodList } from '../data/food-list'
 
 @Component({
   selector: 'app-dashboard',
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       this.snackBar.open("Enter Meal Information", "OK", { duration: 2000, })
       return
     }
-    const newMeal = new Meal({ mealEntries: this.currentMealEntriesDataSource.data, calories: 5 })
+    const newMeal = { mealEntries: this.currentMealEntriesDataSource.data, calories: 5 }
     this.meals.push(newMeal)
     this.currentMealEntriesDataSource = new MatTableDataSource()
     localStorage.removeItem("mealEntries")
@@ -172,9 +172,9 @@ export class DashboardComponent implements OnInit {
 
   onScrollToggle() {
     if (this.isScrollable) {
-      disableBodyScroll(document.querySelector("body"))
+      disableBodyScroll(document.body)
     } else {
-      enableBodyScroll(document.querySelector("body"))
+      enableBodyScroll(document.body)
     }
     this.isScrollable = !this.isScrollable
   }

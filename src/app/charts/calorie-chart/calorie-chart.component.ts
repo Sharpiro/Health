@@ -1,8 +1,8 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
-import { Chart } from 'chart.js';
-import { MealEntry } from '../../models/mealEntry';
-import { FoodMap } from '../../data/food-list';
-import { Meal } from 'src/app/models/meal';
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
+import { Chart } from 'chart.js'
+import { MealEntry } from '../../models/mealEntry'
+import { FoodMap } from '../../data/food-list'
+import { Meal } from 'src/app/models/meal'
 
 @Component({
   selector: 'app-calorie-chart',
@@ -10,9 +10,9 @@ import { Meal } from 'src/app/models/meal';
   styleUrls: ['./calorie-chart.component.css']
 })
 export class CalorieChartComponent implements AfterViewInit {
-  caloriesChart: Chart
+  caloriesChart!: Chart
 
-  @ViewChild('myChart') myChart: ElementRef;
+  @ViewChild('myChart') myChart!: ElementRef
 
   constructor() { }
 
@@ -30,15 +30,19 @@ export class CalorieChartComponent implements AfterViewInit {
     const allMealEntries = meals.reduce((prev, curr) => {
       return prev.concat(curr.mealEntries)
     }, [] as MealEntry[])
-    const foodCalorieMap = allMealEntries.reduce((map, curr) => {
-      if (map.get(curr.foodName) === undefined) {
+    const foodDailyCalories = allMealEntries.reduce((map, curr) => {
+      const dailyCalories = map.get(curr.foodName)
+      if (dailyCalories === undefined) {
         return map.set(curr.foodName, curr.calories)
       }
-      return map.set(curr.foodName, map.get(curr.foodName) + curr.calories)
+      return map.set(curr.foodName, dailyCalories + curr.calories)
     }, new Map<string, number>())
-    const foodNames = Array.from(foodCalorieMap.keys())
-    const foodShortNames = foodNames.map(f => FoodMap.get(f).shortName)
-    const foodCalories = Array.from(foodCalorieMap.values())
+    const foodNames = Array.from(foodDailyCalories.keys())
+    // todo: can we do better than asserting the value?
+    const foodShortNames = foodNames.map(f => FoodMap.get(f)!.shortName)
+    const foodCalories = Array.from(foodDailyCalories.values())
+
+    // todo: group duplicate short-names and aggregate the calories
     return [foodShortNames, foodCalories]
   }
 

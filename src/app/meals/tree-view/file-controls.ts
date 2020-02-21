@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from '@angular/core'
+import { BehaviorSubject } from 'rxjs'
 
-export class FileNode {
+export interface FileNode {
     children: FileNode[]
     filename: string
     type: any
@@ -16,28 +16,32 @@ export class FileFlatNode {
 export class FileDatabase {
     dataChange = new BehaviorSubject<FileNode[]>([]);
 
-    get data(): FileNode[] { return this.dataChange.value; }
+    get data(): FileNode[] { return this.dataChange.value }
 
     update(treeData: any) {
-        const fileNodes = this.buildFileTree(treeData, 0);
-        this.dataChange.next(fileNodes);
+        const fileNodes = this.buildFileTree(treeData, 0)
+        this.dataChange.next(fileNodes)
     }
 
     buildFileTree(obj: { [key: string]: any }, level: number): FileNode[] {
         return Object.keys(obj).reduce<FileNode[]>((accumulator, key) => {
-            const value = obj[key];
-            const node = new FileNode();
-            node.filename = key;
+            const value = obj[key]
 
+            let children: FileNode[] = []
+            let type: object | undefined
             if (value != null) {
                 if (typeof value === 'object') {
-                    node.children = this.buildFileTree(value, level + 1);
+                    children = this.buildFileTree(value, level + 1)
                 } else {
-                    node.type = value;
+                    type = value
                 }
             }
-
-            return accumulator.concat(node);
-        }, []);
+            const node = {
+                filename: key,
+                children,
+                type
+            }
+            return accumulator.concat(node)
+        }, [])
     }
 }

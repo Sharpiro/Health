@@ -1,10 +1,10 @@
 import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core'
 import { Meal } from '../models/meal'
-import { MatDialog, MatSnackBar } from '@angular/material';
-import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component';
-import { Day } from '../models/day';
-import { formatDate } from '@angular/common';
-import { MealEntry } from '../models/mealEntry';
+import { MatDialog, MatSnackBar } from '@angular/material'
+import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
+import { Day } from '../models/day'
+import { formatDate } from '@angular/common'
+import { MealEntry } from '../models/mealEntry'
 
 @Component({
   selector: 'app-meals',
@@ -12,11 +12,11 @@ import { MealEntry } from '../models/mealEntry';
   styleUrls: ['./meals.component.css']
 })
 export class MealsComponent implements OnInit {
-  meals: Meal[]
-  days: Day[]
-  mealsTree: any
-  daysTree: any
-  mealInProgress: boolean
+  meals!: Meal[]
+  days!: Day[]
+  mealsTree!: object
+  daysTree!: object
+  mealInProgress = false
 
   constructor(private dialog: MatDialog, @Inject(LOCALE_ID) private locale: string,
     public snackBar: MatSnackBar) { }
@@ -31,7 +31,7 @@ export class MealsComponent implements OnInit {
     this.mealsTree = this.buildMealsTree(this.meals)
 
     const mealEntriesJson = localStorage.getItem("mealEntries")
-    const mealEntries: MealEntry[] = mealEntriesJson ? JSON.parse(mealEntriesJson) : [];
+    const mealEntries: MealEntry[] = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
     this.mealInProgress = mealEntries.length > 0
   }
 

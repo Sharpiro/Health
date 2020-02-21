@@ -7,7 +7,7 @@ import { environment } from './environments/environment'
 import { disableBodyScroll } from 'body-scroll-lock'
 import 'hammerjs'
 
-disableBodyScroll(document.querySelector("body"))
+disableBodyScroll(document.body)
 
 if (environment.production) {
   enableProdMode()
