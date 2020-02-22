@@ -1,10 +1,11 @@
 import { Component, OnInit, LOCALE_ID, Inject } from '@angular/core'
 import { Meal } from '../models/meal'
-import { MatDialog, MatSnackBar } from '@angular/material'
+import { MatDialog } from '@angular/material/dialog'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
 import { Day } from '../models/day'
 import { formatDate } from '@angular/common'
 import { MealEntry } from '../models/mealEntry'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-meals',

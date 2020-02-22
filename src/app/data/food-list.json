@@ -538,7 +538,7 @@
     "servingSizeType": "oz",
     "sodium": 55,
     "sugar": 0,
-    "active": false
+    "active": true
   },
   {
     "calories": 110,

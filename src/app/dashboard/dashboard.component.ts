@@ -6,7 +6,7 @@ import { Meal } from '../models/meal'
 import { MealEntry } from "../models/mealEntry"
 import { Food } from '../models/food'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
-import { MatDialog } from '@angular/material'
+import { MatDialog } from '@angular/material/dialog'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from '../more-options/more-options.component'
@@ -75,7 +75,7 @@ export class DashboardComponent implements OnInit {
       this.snackBar.open("Enter Meal Information", "OK", { duration: 2000, })
       return
     }
-    const newMeal = { mealEntries: this.currentMealEntriesDataSource.data, calories: 5 }
+    const newMeal = new Meal(this.currentMealEntriesDataSource.data)
     this.meals.push(newMeal)
     this.currentMealEntriesDataSource = new MatTableDataSource()
     localStorage.removeItem("mealEntries")
@@ -122,9 +122,9 @@ export class DashboardComponent implements OnInit {
 
   updateCaloriesFromServingSize = () => {
     const food: Food = this.foodFormControl.value
-    const mealEntryservingSize: number = this.mealEntryServingSizeFormControl.value
+    const mealEntryServingSize: number = this.mealEntryServingSizeFormControl.value
     const caloriesPerOneOfServingType = food.calories / food.servingSize
-    const mealEntryCalories = Math.ceil(mealEntryservingSize * caloriesPerOneOfServingType)
+    const mealEntryCalories = Math.ceil(mealEntryServingSize * caloriesPerOneOfServingType)
     this.mealEntryCalorieFormControl.setValue(mealEntryCalories)
   }
 

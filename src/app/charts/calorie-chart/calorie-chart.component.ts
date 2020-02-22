@@ -12,7 +12,7 @@ import { Meal } from 'src/app/models/meal'
 export class CalorieChartComponent implements AfterViewInit {
   caloriesChart!: Chart
 
-  @ViewChild('myChart') myChart!: ElementRef
+  @ViewChild('myChart', { static: true }) myChart!: ElementRef
 
   constructor() { }
 

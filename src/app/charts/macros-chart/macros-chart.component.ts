@@ -13,7 +13,7 @@ export class MacrosChartComponent implements AfterViewInit {
   // days: Day[]
   caloriesChart!: Chart
 
-  @ViewChild('myChart') myChart!: ElementRef
+  @ViewChild('myChart', { static: true }) myChart!: ElementRef
 
   constructor() { }
 
