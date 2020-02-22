@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
 import { Chart } from 'chart.js'
 import { MealEntry } from '../../models/mealEntry'
-import { FoodMap } from '../../data/food-list'
 import { Meal } from 'src/app/models/meal'
+import { FoodService } from 'src/app/shared/foods/food.service'
+import { Food } from 'src/app/shared/foods/food'
 
 @Component({
   selector: 'app-calorie-chart',
@@ -11,12 +12,14 @@ import { Meal } from 'src/app/models/meal'
 })
 export class CalorieChartComponent implements AfterViewInit {
   caloriesChart!: Chart
-
+  foodMap!: Map<string, Food>
   @ViewChild('myChart', { static: true }) myChart!: ElementRef
 
-  constructor() { }
+  constructor(readonly foodService: FoodService) { }
 
-  ngAfterViewInit(): void {
+  async ngAfterViewInit() {
+    this.foodMap = await this.foodService.getFoodMap()
+
     const [foodShortNames, foodCalories] = this.initializeCaloriesData()
     this.initializeCaloriesChart(foodShortNames, foodCalories)
   }
@@ -39,7 +42,7 @@ export class CalorieChartComponent implements AfterViewInit {
     }, new Map<string, number>())
     const foodNames = Array.from(foodDailyCalories.keys())
     // todo: can we do better than asserting the value?
-    const foodShortNames = foodNames.map(f => FoodMap.get(f)!.shortName)
+    const foodShortNames = foodNames.map(f => this.foodMap.get(f)!.shortName)
     const foodCalories = Array.from(foodDailyCalories.values())
 
     // todo: group duplicate short-names and aggregate the calories

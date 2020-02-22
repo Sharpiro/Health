@@ -122,6 +122,7 @@
   {
     "calories": 80,
     "name": "Yasso-Pop",
+    "shortName": "null",
     "servingSize": 1,
     "carbs": 16,
     "fat": 2,
@@ -151,6 +152,7 @@
   {
     "calories": 114,
     "name": "SweetPotato",
+    "shortName": "null",
     "servingSize": 133,
     "carbs": 27,
     "fat": 0,
@@ -180,6 +182,7 @@
   {
     "calories": 60,
     "name": "WheatBread",
+    "shortName": "null",
     "servingSize": 1,
     "carbs": 11,
     "fat": 0,
@@ -209,6 +212,7 @@
   {
     "calories": 100,
     "name": "LunchMeat",
+    "shortName": "null",
     "servingSize": 4,
     "carbs": 2,
     "fat": 2,
@@ -223,6 +227,7 @@
   {
     "calories": 110,
     "name": "Beans",
+    "shortName": "null",
     "servingSize": 130,
     "carbs": 19,
     "fat": 1,
@@ -237,6 +242,7 @@
   {
     "calories": 130,
     "name": "Cheeto-Crunch",
+    "shortName": "null",
     "servingSize": 28,
     "carbs": 20,
     "fat": 5,
@@ -251,6 +257,7 @@
   {
     "calories": 150,
     "name": "Cheeto-Puff",
+    "shortName": "null",
     "servingSize": 28,
     "carbs": 16,
     "fat": 9,
@@ -265,6 +272,7 @@
   {
     "calories": 150,
     "name": "Yasso-Bar",
+    "shortName": "null",
     "servingSize": 1,
     "carbs": 16,
     "fat": 8,
@@ -279,6 +287,7 @@
   {
     "calories": 140,
     "name": "Waffles",
+    "shortName": "null",
     "servingSize": 2,
     "carbs": 27,
     "fat": 3,
@@ -293,6 +302,7 @@
   {
     "calories": 360,
     "name": "Strudles",
+    "shortName": "null",
     "servingSize": 2,
     "carbs": 54,
     "fat": 14,
@@ -322,6 +332,7 @@
   {
     "calories": 100,
     "name": "Cheerios",
+    "shortName": "null",
     "servingSize": 28,
     "carbs": 20,
     "fat": 2,
@@ -366,6 +377,7 @@
   {
     "calories": 140,
     "name": "Tortilla (Gluten Free)",
+    "shortName": "Tor",
     "servingSize": 1,
     "carbs": 25,
     "fat": 4.5,
@@ -425,6 +437,7 @@
   {
     "calories": 25,
     "name": "Chili Sauce",
+    "shortName": "null",
     "servingSize": 1,
     "carbs": 6,
     "fat": 0,
@@ -439,6 +452,7 @@
   {
     "calories": 160,
     "name": "Turkey (93% Lean)",
+    "shortName": "null",
     "servingSize": 1,
     "carbs": 0,
     "fat": 8,

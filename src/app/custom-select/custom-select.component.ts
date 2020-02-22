@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { Food } from '../models/food'
 import { disableBodyScroll } from 'body-scroll-lock'
+import { Food } from '../shared/foods/food'
 
 @Component({
   selector: 'app-custom-select',

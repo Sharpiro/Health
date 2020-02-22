@@ -4,13 +4,13 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource } from '@angular/material/table'
 import { Meal } from '../models/meal'
 import { MealEntry } from "../models/mealEntry"
-import { Food } from '../models/food'
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { MatDialog } from '@angular/material/dialog'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from '../more-options/more-options.component'
-import { FoodList } from '../data/food-list'
+import { Food } from '../shared/foods/food'
+import { FoodService } from '../shared/foods/food.service'
 
 @Component({
   selector: 'app-dashboard',
@@ -21,28 +21,34 @@ export class DashboardComponent implements OnInit {
   isScrollable = false
   meals: Meal[] = []
   displayedColumns: string[] = ['foodName', 'calories']
-  foods = FoodList
   currentMealEntriesDataSource = new MatTableDataSource<MealEntry>()
   mealEntryCalorieFormControl = new FormControl('', [Validators.required])
   mealEntryServingSizeFormControl = new FormControl('', [Validators.required])
   foodFormControl = new FormControl('', [Validators.required])
   currentMealCaloriesControl = new FormControl('', [Validators.required])
   allMealsCaloriesControl = new FormControl('', [Validators.required])
+  foodList: Food[] = []
 
-  constructor(public snackBar: MatSnackBar, public dialog: MatDialog) { }
+  constructor(readonly snackBar: MatSnackBar, readonly dialog: MatDialog,
+    readonly foodService: FoodService) { }
 
-  ngOnInit() {
-    const mealEntriesJson = localStorage.getItem("mealEntries")
-    this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
+  async ngOnInit() {
+    try {
+      this.foodList = await this.foodService.getFoodList()
+      const mealEntriesJson = localStorage.getItem("mealEntries")
+      this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
 
-    const mealsJson = localStorage.getItem("meals")
-    this.meals = mealsJson ? JSON.parse(mealsJson) : []
+      const mealsJson = localStorage.getItem("meals")
+      this.meals = mealsJson ? JSON.parse(mealsJson) : []
 
-    this.foodFormControl.valueChanges.subscribe(this.onFoodChanges)
+      this.foodFormControl.valueChanges.subscribe(this.onFoodChanges)
 
-    this.updateAggregateCalories()
+      this.updateAggregateCalories()
 
-    this.foodFormControl.setValue(this.getRandomFood())
+      this.foodFormControl.setValue(this.getRandomFood())
+    } catch (err) {
+      this.snackBar.open(err)
+    }
   }
 
   onAddFood() {
@@ -138,7 +144,7 @@ export class DashboardComponent implements OnInit {
 
   onFoodClick() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
-      data: this.foods
+      data: this.foodList
     })
 
     dialogRef.afterClosed().subscribe((food: Food) => {
@@ -182,7 +188,7 @@ export class DashboardComponent implements OnInit {
   private getRandomFood(): Food {
     // const randomIndex = Math.floor(Math.random() * FoodList.length)
     // return FoodList[randomIndex]
-    return FoodList[0]
+    return this.foodList[0]
   }
 
   private updateAggregateCalories() {
