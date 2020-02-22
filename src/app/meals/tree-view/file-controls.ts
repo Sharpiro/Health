@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { BehaviorSubject } from 'rxjs'
 
 export interface FileNode {
-    children: FileNode[]
+    children: FileNode[] | undefined
     filename: string
     type: any
 }
@@ -27,7 +27,7 @@ export class FileDatabase {
         return Object.keys(obj).reduce<FileNode[]>((accumulator, key) => {
             const value = obj[key]
 
-            let children: FileNode[] = []
+            let children: FileNode[] | undefined
             let type: object | undefined
             if (value != null) {
                 if (typeof value === 'object') {
