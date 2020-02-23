@@ -29,6 +29,10 @@
 
   </div>
 
+  <div>
+    <button mat-raised-button (click)="onDebug()">Meals (beta)</button>
+  </div>
+
   <div class="inline-flex-container">
     <div class="icon-container">
       <button mat-button class="icon-button" (click)="onAddFood()">
@@ -69,7 +73,7 @@
         {{currentMealCaloriesControl.value}}
       </mat-card-content>
     </mat-card>
-    
+
     <mat-card class="half-page">
       <mat-card-header>
         <mat-card-title>Total</mat-card-title>

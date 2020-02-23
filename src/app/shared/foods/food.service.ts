@@ -1,4 +1,5 @@
 import foods from "./food-list.json"
+import meals from "./meals.json"
 import { validateArray } from 'src/lib/validation'
 import { Food } from './food.js'
 import { Injectable } from '@angular/core'
@@ -18,6 +19,29 @@ export class FoodService {
       map.set(curr.name, curr)
       return map
     }, new Map<string, Food>())
+  }
+
+  async getMeals() {
+    const foodMap = await this.getFoodMap()
+    const computedMeals = meals.map(meal => {
+      const computedFoods = getComputedFood(meal.foods)
+      const mealCalories = computedFoods.reduce((prev, curr) => {
+        return prev + curr.calories
+      }, 0)
+      return { ...meal, foods: computedFoods, calories: mealCalories }
+    })
+
+    return computedMeals
+
+    function getComputedFood(foods: typeof meals[0]["foods"]) {
+      return foods.map(mealFood => {
+        const food = foodMap.get(mealFood.name)
+        if (!food) throw new Error(`could not find food '${mealFood.name}'`)
+
+        const servingCalories = Math.round(food.calories / food.servingSize * mealFood.servingSize)
+        return { ...mealFood, calories: servingCalories }
+      })
+    }
   }
 
   private getRawFoods() {

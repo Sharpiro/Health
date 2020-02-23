@@ -1,7 +1,8 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
 import { disableBodyScroll } from 'body-scroll-lock'
-import { Food } from '../shared/foods/food'
+
+type Nameable = { name: string }
 
 @Component({
   selector: 'app-custom-select',
@@ -11,13 +12,13 @@ import { Food } from '../shared/foods/food'
 export class CustomSelectComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<CustomSelectComponent>,
-    @Inject(MAT_DIALOG_DATA) public foods: Food[]) { }
+    @Inject(MAT_DIALOG_DATA) public items: Nameable[]) { }
 
   ngOnInit(): void {
     disableBodyScroll(document.getElementsByClassName("cdk-overlay-container")[0])
   }
 
-  selectFood(food: Food) {
-    this.dialogRef.close(food)
+  selectItem(item: Nameable) {
+    this.dialogRef.close(item)
   }
 }

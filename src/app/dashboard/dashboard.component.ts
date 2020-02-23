@@ -28,12 +28,15 @@ export class DashboardComponent implements OnInit {
   currentMealCaloriesControl = new FormControl('', [Validators.required])
   allMealsCaloriesControl = new FormControl('', [Validators.required])
   foodList: Food[] = []
+  mealList: any[] = []
 
   constructor(readonly snackBar: MatSnackBar, readonly dialog: MatDialog,
     readonly foodService: FoodService) { }
 
   async ngOnInit() {
     try {
+      this.mealList = await this.foodService.getMeals()
+
       this.foodList = await this.foodService.getFoodList()
       const mealEntriesJson = localStorage.getItem("mealEntries")
       this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
@@ -173,7 +176,22 @@ export class DashboardComponent implements OnInit {
   }
 
   onDebug() {
-    console.log("debugging...")
+    const dialogRef = this.dialog.open(CustomSelectComponent, {
+      data: this.mealList
+    })
+
+    dialogRef.afterClosed().subscribe((meal: any) => {
+      if (!meal) return
+
+      const currentMealEntries = this.currentMealEntriesDataSource.data
+      for (const food of meal.foods) {
+        currentMealEntries.push({ foodName: food.name, calories: food.calories })
+      }
+
+      this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries)
+      localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries))
+      this.updateAggregateCalories()
+    })
   }
 
   onScrollToggle() {

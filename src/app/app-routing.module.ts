@@ -8,7 +8,7 @@ const routes: Routes = [
   { path: "", component: DashboardComponent },
   { path: "meals", component: MealsComponent },
   { path: "charts", component: ChartsComponent },
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/' }
 ]
 
 @NgModule({

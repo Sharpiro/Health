@@ -1,0 +1,58 @@
+[
+  {
+    "name": "Protein Shake-Large",
+    "shortName": "shk",
+    "foods": [
+      {
+        "name": "Almond Butter",
+        "servingSize": 32
+      },
+      {
+        "name": "Coconut-Shredded",
+        "servingSize": 30
+      },
+      {
+        "name": "Protein-Whey",
+        "servingSize": 17
+      },
+      {
+        "name": "Protein-Collagen",
+        "servingSize": 8
+      },
+      {
+        "name": "Milk-Almond",
+        "servingSize": 210
+      },
+      {
+        "name": "Milk-Coconut",
+        "servingSize": 110
+      }
+    ]
+  },
+  {
+    "name": "Protein Shake-Small",
+    "shortName": "shk",
+    "foods": [
+      {
+        "name": "Coconut-Shredded",
+        "servingSize": 15
+      },
+      {
+        "name": "Protein-Whey",
+        "servingSize": 17
+      },
+      {
+        "name": "Protein-Collagen",
+        "servingSize": 8
+      },
+      {
+        "name": "Milk-Almond",
+        "servingSize": 110
+      },
+      {
+        "name": "Milk-Coconut",
+        "servingSize": 110
+      }
+    ]
+  }
+]

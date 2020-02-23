@@ -34,18 +34,19 @@ export class CalorieChartComponent implements AfterViewInit {
       return prev.concat(curr.mealEntries)
     }, [] as MealEntry[])
     const foodDailyCalories = allMealEntries.reduce((map, curr) => {
-      const dailyCalories = map.get(curr.foodName)
+      const food = this.foodMap.get(curr.foodName)
+      if (!food) throw new Error(`invalid food '${curr.foodName}'`)
+
+      const dailyCalories = map.get(food.shortName)
       if (dailyCalories === undefined) {
-        return map.set(curr.foodName, curr.calories)
+        return map.set(food.shortName, curr.calories)
+      } else {
+        return map.set(food.shortName, dailyCalories + curr.calories)
       }
-      return map.set(curr.foodName, dailyCalories + curr.calories)
     }, new Map<string, number>())
-    const foodNames = Array.from(foodDailyCalories.keys())
-    // todo: can we do better than asserting the value?
-    const foodShortNames = foodNames.map(f => this.foodMap.get(f)!.shortName)
+    const foodShortNames = Array.from(foodDailyCalories.keys())
     const foodCalories = Array.from(foodDailyCalories.values())
 
-    // todo: group duplicate short-names and aggregate the calories
     return [foodShortNames, foodCalories]
   }
 
