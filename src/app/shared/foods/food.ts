@@ -1,4 +1,7 @@
 import { IsInt, IsString, IsBoolean, IsNumber } from "class-validator"
+import { ExcludeMethods } from 'src/lib/types'
+
+type FoodInit = Omit<ExcludeMethods<Food>, "">
 
 export class Food {
   @IsString()
@@ -28,7 +31,7 @@ export class Food {
   @IsBoolean()
   readonly active!: boolean
 
-  constructor(init: Food) {
+  constructor(init: FoodInit) {
     Object.assign(this, init)
   }
 }

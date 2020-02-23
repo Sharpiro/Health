@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
-import { disableBodyScroll } from 'body-scroll-lock'
+// import { disableBodyScroll } from 'body-scroll-lock'
 
 type Nameable = { name: string }
 
@@ -15,7 +15,7 @@ export class CustomSelectComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public items: Nameable[]) { }
 
   ngOnInit(): void {
-    disableBodyScroll(document.getElementsByClassName("cdk-overlay-container")[0])
+    // disableBodyScroll(document.getElementsByClassName("cdk-overlay-container")[0])
   }
 
   selectItem(item: Nameable) {

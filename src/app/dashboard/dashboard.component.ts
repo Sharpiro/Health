@@ -4,7 +4,7 @@ import { MatSnackBar } from '@angular/material/snack-bar'
 import { MatTableDataSource } from '@angular/material/table'
 import { Meal } from '../models/meal'
 import { MealEntry } from "../models/mealEntry"
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
+// import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock'
 import { MatDialog } from '@angular/material/dialog'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
@@ -147,6 +147,7 @@ export class DashboardComponent implements OnInit {
 
   onFoodClick() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
+      height: "500px",
       data: this.foodList
     })
 
@@ -195,12 +196,12 @@ export class DashboardComponent implements OnInit {
   }
 
   onScrollToggle() {
-    if (this.isScrollable) {
-      disableBodyScroll(document.body)
-    } else {
-      enableBodyScroll(document.body)
-    }
-    this.isScrollable = !this.isScrollable
+    // if (this.isScrollable) {
+    //   disableBodyScroll(document.body)
+    // } else {
+    //   enableBodyScroll(document.body)
+    // }
+    // this.isScrollable = !this.isScrollable
   }
 
   private getRandomFood(): Food {
