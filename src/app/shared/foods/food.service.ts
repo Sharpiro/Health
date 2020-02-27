@@ -1,7 +1,7 @@
 import foods from "./food-list.json"
-import meals from "./meals.json"
+import meals from "./grouped-foods.json"
 import { validateArray } from 'src/lib/validation'
-import { Food } from './food.js'
+import { Food, GroupedFood, FoodInfo } from './food.js'
 import { Injectable } from '@angular/core'
 
 @Injectable({ providedIn: "root" })
@@ -21,19 +21,16 @@ export class FoodService {
     }, new Map<string, Food>())
   }
 
-  async getMeals() {
+  async getGroupedFoods(): Promise<GroupedFood[]> {
     const foodMap = await this.getFoodMap()
-    const computedMeals = meals.map(meal => {
+    const groupedFoods = meals.map(meal => {
       const computedFoods = getComputedFood(meal.foods)
-      const mealCalories = computedFoods.reduce((prev, curr) => {
-        return prev + curr.calories
-      }, 0)
-      return { ...meal, foods: computedFoods, calories: mealCalories }
+      return { ...meal, foods: computedFoods }
     })
 
-    return computedMeals
+    return groupedFoods
 
-    function getComputedFood(foods: typeof meals[0]["foods"]) {
+    function getComputedFood(foods: Omit<FoodInfo, "calories">[]) {
       return foods.map(mealFood => {
         const food = foodMap.get(mealFood.name)
         if (!food) throw new Error(`could not find food '${mealFood.name}'`)

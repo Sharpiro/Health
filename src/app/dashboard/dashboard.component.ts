@@ -9,7 +9,7 @@ import { MatDialog } from '@angular/material/dialog'
 import { CustomSelectComponent } from '../custom-select/custom-select.component'
 import { ConfirmationComponentComponent } from '../confirmation-component/confirmation-component.component'
 import { MoreOptionsComponent } from '../more-options/more-options.component'
-import { Food } from '../shared/foods/food'
+import { Food, GroupedFood } from '../shared/foods/food'
 import { FoodService } from '../shared/foods/food.service'
 
 @Component({
@@ -20,7 +20,7 @@ import { FoodService } from '../shared/foods/food.service'
 export class DashboardComponent implements OnInit {
   isScrollable = false
   meals: Meal[] = []
-  displayedColumns: string[] = ['foodName', 'calories']
+  displayedColumns: string[] = ['foodName', 'calories', "ss"]
   currentMealEntriesDataSource = new MatTableDataSource<MealEntry>()
   mealEntryCalorieFormControl = new FormControl('', [Validators.required])
   mealEntryServingSizeFormControl = new FormControl('', [Validators.required])
@@ -28,16 +28,18 @@ export class DashboardComponent implements OnInit {
   currentMealCaloriesControl = new FormControl('', [Validators.required])
   allMealsCaloriesControl = new FormControl('', [Validators.required])
   foodList: Food[] = []
-  mealList: any[] = []
+  groupedFoodsList: GroupedFood[] = []
+  allFoodList: (Food | GroupedFood)[] = []
 
   constructor(readonly snackBar: MatSnackBar, readonly dialog: MatDialog,
     readonly foodService: FoodService) { }
 
   async ngOnInit() {
     try {
-      this.mealList = await this.foodService.getMeals()
-
       this.foodList = await this.foodService.getFoodList()
+      this.groupedFoodsList = await this.foodService.getGroupedFoods()
+      this.allFoodList = [...this.foodList, ...this.groupedFoodsList]
+
       const mealEntriesJson = localStorage.getItem("mealEntries")
       this.currentMealEntriesDataSource.data = mealEntriesJson ? JSON.parse(mealEntriesJson) : []
 
@@ -73,7 +75,11 @@ export class DashboardComponent implements OnInit {
 
     const food: Food = this.foodFormControl.value
     const currentMealEntries = this.currentMealEntriesDataSource.data
-    currentMealEntries.push({ foodName: food.name, calories: this.mealEntryCalorieFormControl.value })
+    currentMealEntries.push({
+      foodName: food.name,
+      calories: this.mealEntryCalorieFormControl.value,
+      servingSize: this.mealEntryServingSizeFormControl.value
+    })
     this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries)
     localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries))
     this.updateAggregateCalories()
@@ -148,12 +154,28 @@ export class DashboardComponent implements OnInit {
   onFoodClick() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
       height: "500px",
-      data: this.foodList
+      data: this.allFoodList
     })
 
-    dialogRef.afterClosed().subscribe((food: Food) => {
-      if (!food) return
-      this.foodFormControl.setValue(food)
+    dialogRef.afterClosed().subscribe((foodOrGroupedFood: Food | GroupedFood) => {
+      if (!foodOrGroupedFood) return
+
+      if ("foods" in foodOrGroupedFood) {
+        const currentMealEntries = this.currentMealEntriesDataSource.data
+        for (const food of foodOrGroupedFood.foods) {
+          currentMealEntries.push({
+            foodName: food.name,
+            calories: food.calories,
+            servingSize: food.servingSize
+          })
+        }
+        this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries)
+        localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries))
+        this.updateAggregateCalories()
+      }
+      else {
+        this.foodFormControl.setValue(foodOrGroupedFood)
+      }
     })
   }
 
@@ -178,15 +200,19 @@ export class DashboardComponent implements OnInit {
 
   onDebug() {
     const dialogRef = this.dialog.open(CustomSelectComponent, {
-      data: this.mealList
+      data: this.groupedFoodsList
     })
 
-    dialogRef.afterClosed().subscribe((meal: any) => {
+    dialogRef.afterClosed().subscribe((meal: GroupedFood) => {
       if (!meal) return
 
       const currentMealEntries = this.currentMealEntriesDataSource.data
       for (const food of meal.foods) {
-        currentMealEntries.push({ foodName: food.name, calories: food.calories })
+        currentMealEntries.push({
+          foodName: food.name,
+          calories: food.calories,
+          servingSize: food.servingSize
+        })
       }
 
       this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries)

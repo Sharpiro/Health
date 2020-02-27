@@ -35,3 +35,11 @@ export class Food {
     Object.assign(this, init)
   }
 }
+
+export type FoodInfo = { name: string, servingSize: number, calories: number }
+
+export interface GroupedFood {
+  name: string
+  shortName: string
+  foods: FoodInfo[]
+}
