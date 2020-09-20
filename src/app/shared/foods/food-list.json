@@ -9,7 +9,7 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 26,
-    "servingSizeType": "ounces",
+    "servingSizeType": "oz",
     "sodium": 50,
     "sugar": 0,
     "active": true
@@ -26,6 +26,36 @@
     "protein": 16,
     "servingSizeType": "item",
     "sodium": 230,
+    "sugar": 0,
+    "active": true
+  },
+  {
+    "calories": 25,
+    "name": "Egg Whites",
+    "shortName": "Egg",
+    "servingSize": 46,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "potassium": 75,
+    "protein": 5,
+    "servingSizeType": "grams",
+    "sodium": 75,
+    "sugar": 0,
+    "active": false
+  },
+  {
+    "calories": 60,
+    "name": "Eggs",
+    "shortName": "Egg",
+    "servingSize": 1,
+    "carbs": 0,
+    "fat": 4,
+    "fiber": 0,
+    "potassium": 0,
+    "protein": 6,
+    "servingSizeType": "item",
+    "sodium": 60,
     "sugar": 0,
     "active": true
   },
@@ -376,7 +406,7 @@
   },
   {
     "calories": 35,
-    "name": "Rice Cake",
+    "name": "Rice Cake-Quaker",
     "shortName": "Rca",
     "servingSize": 1,
     "carbs": 7,
@@ -388,6 +418,21 @@
     "sodium": 15,
     "sugar": 0,
     "active": false
+  },
+  {
+    "calories": 70,
+    "name": "Rice Cake-Lundberg",
+    "shortName": "Rca",
+    "servingSize": 1,
+    "carbs": 16,
+    "fat": 0,
+    "fiber": 1,
+    "potassium": 50,
+    "protein": 1,
+    "servingSizeType": "item",
+    "sodium": 25,
+    "sugar": 0,
+    "active": true
   },
   {
     "calories": 110,
@@ -675,33 +720,18 @@
     "active": false
   },
   {
-    "calories": 25,
-    "name": "Egg Whites",
-    "shortName": "Egg",
-    "servingSize": 46,
+    "calories": 1,
+    "name": "Water",
+    "shortName": "Wtr",
+    "servingSize": 40,
     "carbs": 0,
     "fat": 0,
     "fiber": 0,
-    "potassium": 75,
-    "protein": 5,
-    "servingSizeType": "grams",
-    "sodium": 75,
-    "sugar": 0,
-    "active": false
-  },
-  {
-    "calories": 60,
-    "name": "Eggs",
-    "shortName": "Egg",
-    "servingSize": 1,
-    "carbs": 0,
-    "fat": 4,
-    "fiber": 0,
     "potassium": 0,
-    "protein": 6,
-    "servingSizeType": "item",
-    "sodium": 60,
+    "protein": 0,
+    "servingSizeType": "oz",
+    "sodium": 0,
     "sugar": 0,
-    "active": false
+    "active": true
   }
 ]

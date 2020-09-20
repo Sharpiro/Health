@@ -29,7 +29,8 @@ import { TreeViewComponent } from './meals/tree-view/tree-view.component'
 import { FileDatabase } from './meals/tree-view/file-controls'
 import { ChartsComponent } from './charts/charts.component'
 import { CalorieChartComponent } from './charts/calorie-chart/calorie-chart.component'
-import { MacrosChartComponent } from './charts/macros-chart/macros-chart.component'
+import { MacrosChartComponent } from './charts/macros-chart/macros-chart.component';
+import { WaterChartComponent } from './charts/water-chart/water-chart.component'
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import { MacrosChartComponent } from './charts/macros-chart/macros-chart.compone
     TreeViewComponent,
     ChartsComponent,
     CalorieChartComponent,
-    MacrosChartComponent
+    MacrosChartComponent,
+    WaterChartComponent
   ],
   imports: [
     BrowserModule,
