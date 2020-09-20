@@ -22,7 +22,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles.css"
@@ -57,7 +57,8 @@
                   "maximumWarning": "6kb"
                 }
               ],
-              "serviceWorker": true
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -92,7 +93,7 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.webmanifest"
             ]
           }
         },
