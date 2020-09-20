@@ -9,7 +9,7 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 26,
-    "servingSizeType": "Ounces",
+    "servingSizeType": "ounces",
     "sodium": 50,
     "sugar": 0,
     "active": true
@@ -24,7 +24,7 @@
     "fiber": 0,
     "potassium": 150,
     "protein": 16,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 230,
     "sugar": 0,
     "active": true
@@ -39,10 +39,10 @@
     "fiber": 3,
     "potassium": 200,
     "protein": 6,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 1,
-    "active": true
+    "active": false
   },
   {
     "calories": 180,
@@ -54,7 +54,7 @@
     "fiber": 13,
     "potassium": 140,
     "protein": 20,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 170,
     "sugar": 1,
     "active": false
@@ -72,7 +72,7 @@
     "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 2,
-    "active": true
+    "active": false
   },
   {
     "calories": 80,
@@ -99,15 +99,45 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 0,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 0,
     "sugar": 0,
     "active": false
   },
   {
+    "calories": 25,
+    "name": "Cauliflower Rice",
+    "shortName": "CflR",
+    "servingSize": 85,
+    "carbs": 4,
+    "fat": 0,
+    "fiber": 2,
+    "potassium": 110,
+    "protein": 1,
+    "servingSizeType": "grams",
+    "sodium": 70,
+    "sugar": 1,
+    "active": true
+  },
+  {
     "calories": 80,
     "name": "Apple",
     "shortName": "Apl",
+    "servingSize": 1,
+    "carbs": 27,
+    "fat": 0,
+    "fiber": 3,
+    "potassium": 422,
+    "protein": 1,
+    "servingSizeType": "item",
+    "sodium": 1,
+    "sugar": 13,
+    "active": true
+  },
+  {
+    "calories": 80,
+    "name": "Banana",
+    "shortName": "Ban",
     "servingSize": 1,
     "carbs": 16,
     "fat": 0,
@@ -117,7 +147,7 @@
     "servingSizeType": "item",
     "sodium": 0,
     "sugar": 16,
-    "active": false
+    "active": true
   },
   {
     "calories": 80,
@@ -129,7 +159,7 @@
     "fiber": 1,
     "potassium": 0,
     "protein": 5,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 40,
     "sugar": 13,
     "active": false
@@ -144,25 +174,25 @@
     "fiber": 0,
     "potassium": 250,
     "protein": 22,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 90,
     "sugar": 9,
     "active": false
   },
   {
     "calories": 114,
-    "name": "SweetPotato",
-    "shortName": "null",
+    "name": "Sweet Potato",
+    "shortName": "SPto",
     "servingSize": 133,
     "carbs": 27,
     "fat": 0,
     "fiber": 4,
     "potassium": 448,
     "protein": 2,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 73,
     "sugar": 6,
-    "active": false
+    "active": true
   },
   {
     "calories": 110,
@@ -174,7 +204,7 @@
     "fiber": 2,
     "potassium": 620,
     "protein": 3,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 1,
     "active": false
@@ -189,7 +219,7 @@
     "fiber": 2,
     "potassium": 0,
     "protein": 4,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 0,
     "sugar": 1,
     "active": false
@@ -207,7 +237,7 @@
     "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 100,
@@ -234,7 +264,7 @@
     "fiber": 5,
     "potassium": 400,
     "protein": 7,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 270,
     "sugar": 0,
     "active": false
@@ -249,7 +279,7 @@
     "fiber": 0,
     "potassium": 60,
     "protein": 2,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 230,
     "sugar": 0,
     "active": false
@@ -264,7 +294,7 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 2,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 290,
     "sugar": 1,
     "active": false
@@ -279,7 +309,7 @@
     "fiber": 1,
     "potassium": 0,
     "protein": 4,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 40,
     "sugar": 12,
     "active": false
@@ -294,7 +324,7 @@
     "fiber": 3,
     "potassium": 110,
     "protein": 4,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 380,
     "sugar": 3,
     "active": false
@@ -309,7 +339,7 @@
     "fiber": 1,
     "potassium": 0,
     "protein": 4,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 360,
     "sugar": 20,
     "active": false
@@ -324,7 +354,7 @@
     "fiber": 3,
     "potassium": 422,
     "protein": 1,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 1,
     "sugar": 14,
     "active": false
@@ -339,7 +369,7 @@
     "fiber": 3,
     "potassium": 180,
     "protein": 3,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 140,
     "sugar": 1,
     "active": false
@@ -354,7 +384,7 @@
     "fiber": 0,
     "potassium": 30,
     "protein": 0,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 15,
     "sugar": 0,
     "active": false
@@ -369,7 +399,7 @@
     "fiber": 3,
     "potassium": 0,
     "protein": 0,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 50,
     "sugar": 0,
     "active": false
@@ -384,7 +414,7 @@
     "fiber": 5,
     "potassium": 50,
     "protein": 3,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 420,
     "sugar": 2,
     "active": false
@@ -399,7 +429,7 @@
     "fiber": 14,
     "potassium": 20,
     "protein": 5,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 270,
     "sugar": 0,
     "active": false
@@ -414,7 +444,7 @@
     "fiber": 3,
     "potassium": 560,
     "protein": 15,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 1170,
     "sugar": 4,
     "active": false
@@ -429,7 +459,7 @@
     "fiber": 2,
     "potassium": 190,
     "protein": 5,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 1390,
     "sugar": 2,
     "active": false
@@ -444,10 +474,25 @@
     "fiber": 2,
     "potassium": 210,
     "protein": 0,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 360,
     "sugar": 3,
     "active": false
+  },
+  {
+    "calories": 100,
+    "name": "Alaska Pink Salmon",
+    "shortName": "Sal",
+    "servingSize": 85,
+    "carbs": 0,
+    "fat": 3.5,
+    "fiber": 0,
+    "potassium": 280,
+    "protein": 17,
+    "servingSizeType": "item",
+    "sodium": 260,
+    "sugar": 0,
+    "active": true
   },
   {
     "calories": 160,
@@ -459,7 +504,7 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 22,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 85,
     "sugar": 0,
     "active": false
@@ -474,7 +519,7 @@
     "fiber": 0,
     "potassium": 0,
     "protein": 0,
-    "servingSizeType": "Grams",
+    "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 0,
     "active": true
@@ -489,7 +534,7 @@
     "fiber": 0,
     "potassium": 8,
     "protein": 0,
-    "servingSizeType": "Item",
+    "servingSizeType": "item",
     "sodium": 180,
     "sugar": 0,
     "active": false
@@ -522,7 +567,7 @@
     "servingSizeType": "grams",
     "sodium": 5,
     "sugar": 2,
-    "active": true
+    "active": false
   },
   {
     "calories": 90,
@@ -537,7 +582,7 @@
     "servingSizeType": "grams",
     "sodium": 490,
     "sugar": 0,
-    "active": false
+    "active": true
   },
   {
     "calories": 240,
@@ -567,7 +612,7 @@
     "servingSizeType": "grams",
     "sodium": 5,
     "sugar": 1,
-    "active": true
+    "active": false
   },
   {
     "calories": 120,
@@ -582,7 +627,7 @@
     "servingSizeType": "grams",
     "sodium": 45,
     "sugar": 2,
-    "active": true
+    "active": false
   },
   {
     "calories": 40,
@@ -597,7 +642,7 @@
     "servingSizeType": "grams",
     "sodium": 0,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 30,
@@ -612,7 +657,7 @@
     "servingSizeType": "grams",
     "sodium": 170,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 50,
@@ -627,7 +672,7 @@
     "servingSizeType": "grams",
     "sodium": 30,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 25,
@@ -642,7 +687,7 @@
     "servingSizeType": "grams",
     "sodium": 75,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 60,
@@ -657,6 +702,6 @@
     "servingSizeType": "item",
     "sodium": 60,
     "sugar": 0,
-    "active": true
+    "active": false
   }
 ]

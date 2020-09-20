@@ -37,7 +37,7 @@ export class DashboardComponent implements OnInit {
   async ngOnInit() {
     try {
       this.foodList = await this.foodService.getFoodList()
-      this.groupedFoodsList = await this.foodService.getGroupedFoods()
+      // this.groupedFoodsList = await this.foodService.getGroupedFoods()
       this.allFoodList = [...this.foodList, ...this.groupedFoodsList]
 
       const mealEntriesJson = localStorage.getItem("mealEntries")
