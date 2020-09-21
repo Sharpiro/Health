@@ -1,39 +1,50 @@
 <div class="app-container">
-    <router-outlet></router-outlet>
+  <router-outlet></router-outlet>
 </div>
 
 <mat-toolbar class="fixed-bottom inline-flex-container">
-    <div class="nav-icon">
-        <a routerLink="" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-            <div class="icon-and-text">
-                <div style="height: 24px;padding-bottom: 0;">
-                    <i class="material-icons md-dark md-inactive">home</i>
-                </div>
-                <div class="nav-icon-title">Home</div>
-            </div>
-        </a>
-    </div>
+  <div class="nav-icon">
+    <a routerLink="" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+      <div class="icon-and-text">
+        <div style="height: 24px;padding-bottom: 0;">
+          <i class="material-icons md-dark md-inactive">home</i>
+        </div>
+        <div class="nav-icon-title">Home</div>
+      </div>
+    </a>
+  </div>
 
-    <div class="nav-icon">
-        <a routerLink="/meals" [routerLinkActive]="['active']">
-            <div class="icon-and-text">
-                <div style="height: 24px;padding-bottom: 0;">
-                    <i class="material-icons md-dark md-inactive">history</i>
-                </div>
-                <div class="nav-icon-title">History</div>
-            </div>
-        </a>
-    </div>
+  <div class="nav-icon">
+    <a routerLink="/meals" [routerLinkActive]="['active']">
+      <div class="icon-and-text">
+        <div style="height: 24px;padding-bottom: 0;">
+          <i class="material-icons md-dark md-inactive">history</i>
+        </div>
+        <div class="nav-icon-title">History</div>
+      </div>
+    </a>
+  </div>
 
-    <div class="nav-icon">
-        <a routerLink="/charts" [routerLinkActive]="['active']">
-            <div class="icon-and-text">
-                <div style="height: 24px;padding-bottom: 0;">
-                    <i class="material-icons md-dark md-inactive">bar_chart</i>
-                </div>
-                <div class="nav-icon-title">Charts</div>
-            </div>
-        </a>
-    </div>
+  <div class="nav-icon">
+    <a routerLink="/charts" [routerLinkActive]="['active']">
+      <div class="icon-and-text">
+        <div style="height: 24px;padding-bottom: 0;">
+          <i class="material-icons md-dark md-inactive">bar_chart</i>
+        </div>
+        <div class="nav-icon-title">Charts</div>
+      </div>
+    </a>
+  </div>
+
+  <div class="nav-icon">
+    <a routerLink="/log" [routerLinkActive]="['active']">
+      <div class="icon-and-text">
+        <div style="height: 24px;padding-bottom: 0;">
+          <i class="material-icons md-dark md-inactive">library_books</i>
+        </div>
+        <div class="nav-icon-title">Log</div>
+      </div>
+    </a>
+  </div>
 
 </mat-toolbar>

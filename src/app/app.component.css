@@ -10,8 +10,9 @@
 }
 
 .nav-icon{
-    margin: 0 10% 0 10%;
+    margin: 0 10px 0 10px;
     text-align: center;
+    width: 75px;
 }
 
 .nav-icon-title{

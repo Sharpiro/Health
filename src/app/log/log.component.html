@@ -1,0 +1,27 @@
+<div style="width:85%; margin:auto;">
+  <div class="page-title">Log</div>
+
+  <form style="padding-top:25px;">
+    <mat-form-field style="width:80%">
+      <input autocomplete="off" matInput type="text" placeholder="Log Message" [formControl]="messageFormControl"
+        (click)="$event.target.select()">
+    </mat-form-field>
+
+    <button type="submit" mat-button (click)="submitLog()">
+      <mat-icon> send </mat-icon>
+    </button>
+  </form>
+
+
+  <div>
+    <h3>Debug Zone</h3>
+    <button type="button" mat-button (click)="deleteLastLog()">Delete Last Log</button>
+  </div>
+
+  <div>
+    <h3>Recent Logs</h3>
+    <div *ngFor="let log of logs.reverse()">
+      {{log.date | date}} | {{log.message}}
+    </div>
+  </div>
+</div>
