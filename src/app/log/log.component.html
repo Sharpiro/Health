@@ -3,8 +3,7 @@
 
   <form style="padding-top:25px;">
     <mat-form-field style="width:80%">
-      <input autocomplete="off" matInput type="text" placeholder="Log Message" [formControl]="messageFormControl"
-        (click)="$event.target.select()">
+      <input id="logInput" matInput type="text" placeholder="Log Message" [formControl]="messageFormControl">
     </mat-form-field>
 
     <button type="submit" mat-button (click)="submitLog()">
@@ -12,16 +11,15 @@
     </button>
   </form>
 
-
   <div>
     <h3>Debug Zone</h3>
     <button type="button" mat-button (click)="deleteLastLog()">Delete Last Log</button>
   </div>
 
-  <div>
-    <h3>Recent Logs</h3>
-    <div *ngFor="let log of logs.reverse()">
-      {{log.date | date}} | {{log.message}}
+  <h3>Recent Logs</h3>
+  <div class="recent-logs">
+    <div *ngFor="let log of logs.slice().reverse()">
+      {{log.date | date:'E h:mm'}} | {{log.message}}
     </div>
   </div>
 </div>

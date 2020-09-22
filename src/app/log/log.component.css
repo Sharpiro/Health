@@ -3,3 +3,10 @@
     font-size: 24px;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
+
+.recent-logs{
+  height: 300px;
+  overflow-y: auto;
+  border-style: solid;
+  padding: 0 25px 0 25px;
+}

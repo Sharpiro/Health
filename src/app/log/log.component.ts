@@ -9,7 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LogComponent implements OnInit {
   messageFormControl = new FormControl();
-  logs: any[] = [];
+  logs: Log[] = [];
 
   constructor(readonly snackBar: MatSnackBar) {
     this.logs = JSON.parse(localStorage.getItem("logs") ?? "[]");
@@ -26,7 +26,7 @@ export class LogComponent implements OnInit {
     }
 
     const logObj = {
-      date: new Date(),
+      date: new Date().toISOString(),
       message: this.messageFormControl.value
     };
     this.logs.push(logObj);
@@ -38,4 +38,9 @@ export class LogComponent implements OnInit {
     this.logs = this.logs.slice(0, this.logs.length - 1);
     localStorage.setItem("logs", JSON.stringify(this.logs));
   }
+}
+
+interface Log {
+  date: string;
+  message: string;
 }
