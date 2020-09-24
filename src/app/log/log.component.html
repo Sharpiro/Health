@@ -2,6 +2,12 @@
   <div class="page-title">Log</div>
 
   <form style="padding-top:25px;">
+    <div>
+      <mat-form-field style="width:80%">
+        <input id="logType" matInput type="text" placeholder="Log Type" [formControl]="logTypeFormControl">
+      </mat-form-field>
+    </div>
+
     <mat-form-field style="width:80%">
       <input id="logInput" matInput type="text" placeholder="Log Message" [formControl]="messageFormControl">
     </mat-form-field>
@@ -14,12 +20,13 @@
   <div>
     <h3>Debug Zone</h3>
     <button type="button" mat-button (click)="deleteLastLog()">Delete Last Log</button>
+    <button type="button" mat-button (click)="export()">Export</button>
   </div>
 
   <h3>Recent Logs</h3>
   <div class="recent-logs">
     <div *ngFor="let log of logs.slice().reverse()">
-      {{log.date | date:'E h:mm'}} | {{log.message}}
+      {{log.date | date:'E h:mm'}} | {{log.type }} | {{log.message}}
     </div>
   </div>
 </div>

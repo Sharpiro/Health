@@ -11,6 +11,7 @@ import { ConfirmationComponentComponent } from '../confirmation-component/confir
 import { MoreOptionsComponent } from '../more-options/more-options.component';
 import { Food, GroupedFood } from '../shared/foods/food';
 import { FoodService } from '../shared/foods/food.service';
+import { exportText } from '../shared/foods/helpers';
 
 @Component({
   selector: 'app-dashboard',
@@ -202,17 +203,9 @@ export class DashboardComponent implements OnInit {
   }
 
   export() {
-    const daysJson = JSON.parse(localStorage.getItem("days") ?? "[]");
-    const jsonText = JSON.stringify(daysJson);
-    var blob = new Blob([jsonText], { type: "text/plain;charset=utf-8" });
     const filename = `${new Date().toISOString()}_health_export.json.txt`;
-
-    const a = document.createElement("a");
-    a.download = filename;
-    a.rel = "noopener";
-    a.href = URL.createObjectURL(blob);
-    a.click();
-    URL.revokeObjectURL(a.href);
+    const daysText = localStorage.getItem("days") ?? "[]";
+    exportText(filename, daysText);
   }
 
   onDebug() {

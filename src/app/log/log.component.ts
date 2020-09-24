@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { exportText } from '../shared/foods/helpers';
 
 @Component({
   selector: 'app-log',
@@ -9,10 +10,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class LogComponent implements OnInit {
   messageFormControl = new FormControl();
+  logTypeFormControl: FormControl;
   logs: Log[] = [];
 
   constructor(readonly snackBar: MatSnackBar) {
     this.logs = JSON.parse(localStorage.getItem("logs") ?? "[]");
+
+    const lastLogType = localStorage.getItem("lastLogType") ?? "general";
+    this.logTypeFormControl = new FormControl(lastLogType);
   }
 
   ngOnInit(): void { }
@@ -27,10 +32,12 @@ export class LogComponent implements OnInit {
 
     const logObj = {
       date: new Date().toISOString(),
-      message: this.messageFormControl.value
+      message: this.messageFormControl.value,
+      type: this.logTypeFormControl.value
     };
     this.logs.push(logObj);
     localStorage.setItem("logs", JSON.stringify(this.logs));
+    localStorage.setItem("lastLogType", this.logTypeFormControl.value);
     this.messageFormControl.reset();
   }
 
@@ -38,9 +45,16 @@ export class LogComponent implements OnInit {
     this.logs = this.logs.slice(0, this.logs.length - 1);
     localStorage.setItem("logs", JSON.stringify(this.logs));
   }
+
+  export() {
+    const filename = `${new Date().toISOString()}_health_logs_export.json.txt`;
+    const logsText = localStorage.getItem("logs") ?? "[]";
+    exportText(filename, logsText);
+  }
 }
 
 interface Log {
   date: string;
   message: string;
+  type: string;
 }

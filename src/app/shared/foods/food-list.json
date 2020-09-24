@@ -375,21 +375,6 @@
     "active": false
   },
   {
-    "calories": 80,
-    "name": "Banana",
-    "shortName": "Ban",
-    "servingSize": 1,
-    "carbs": 27,
-    "fat": 0,
-    "fiber": 3,
-    "potassium": 422,
-    "protein": 1,
-    "servingSizeType": "item",
-    "sodium": 1,
-    "sugar": 14,
-    "active": false
-  },
-  {
     "calories": 100,
     "name": "Cheerios",
     "shortName": "null",
