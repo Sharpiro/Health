@@ -189,8 +189,8 @@ export class DashboardComponent implements OnInit {
       if (!result) return;
 
       switch (result) {
-        case "export":
-          this.export();
+        case "exportAll":
+          this.exportAll();
           break;
         case "scroll":
           this.onScrollToggle();
@@ -202,10 +202,13 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  export() {
+  exportAll() {
+    const exportObj = {
+      days: JSON.parse(localStorage.getItem("days") ?? "[]"),
+      logs: JSON.parse(localStorage.getItem("logs") ?? "[]")
+    };
     const filename = `${new Date().toISOString()}_health_export.json.txt`;
-    const daysText = localStorage.getItem("days") ?? "[]";
-    exportText(filename, daysText);
+    exportText(filename, JSON.stringify(exportObj));
   }
 
   onDebug() {
