@@ -9,15 +9,12 @@
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
 }
 
-.row{
-  padding-top: 15px;
-}
-
 .mat-button{
   background-color: lightgray;
   width:150px;
 }
 
-.button{
-  padding: 0 5px 0 0
+.days-tree{
+  height: 33vh;
+  overflow-y: auto;
 }
