@@ -1,15 +1,17 @@
 import { serve, Server, ServerRequest, Response } from "https://deno.land/std@0.71.0/http/server.ts";
 
-export class WebApp {
+export class WebServer {
   private server?: Server;
-  private getHandlers = new Map<string, RequestHandler>();
-  private postHandlers = new Map<string, PostHandler>();
-  private allowedOrigins = new Set<string>();
+  private getHandlers = new Map<string, GetReqHandler>();
+  private postHandlers = new Map<string, PostReqHandler>();
+  private middleware: Middleware[] = [];
 
-  async listen(port: number = 8080) {
+  constructor(readonly port: number = 8080) { }
+
+  async listen() {
     if (this.server) return;
 
-    this.server = serve({ hostname: "0.0.0.0", port: port });
+    this.server = serve({ hostname: "0.0.0.0", port: this.port });
     for await (const request of this.server) {
       console.log(request.method, request.url);
       this.processRequest(request)
@@ -25,20 +27,19 @@ export class WebApp {
     this.server = undefined;
   }
 
-  get(path: string, callback: RequestHandler) {
+  get(path: string, callback: GetReqHandler) {
     this.getHandlers.set(path, callback);
   }
 
-  post(path: string, callback: PostHandler) {
+  post(path: string, callback: PostReqHandler) {
     this.postHandlers.set(path, callback);
   }
 
-  useCors(origins: string[]) {
-    this.allowedOrigins = new Set(origins);
+  use(middleware: Middleware) {
+    this.middleware.push(middleware);
   }
 
   private processRequest(request: ServerRequest): Promise<boolean> {
-    console.log(request.headers);
     if (request.method === "OPTIONS") {
       return this.sendResponse(request, { status: 200 });
     } else if (request.method === "GET") {
@@ -73,7 +74,6 @@ export class WebApp {
         const text = new TextDecoder().decode(body);
         const response = requestHandler(request, text);
 
-        console.log("body:", typeof response.body);
         return this.sendResponse(request, response);
       }
       catch (err) {
@@ -86,7 +86,9 @@ export class WebApp {
 
   private async sendResponse(request: ServerRequest, response: Response) {
     try {
-      this.corsMiddleware(request, response);
+      for (const middleware of this.middleware) {
+        middleware.next(request, response);
+      }
 
       if (response.body && typeof response.body !== "string") {
         throw new Error("invalid response body");
@@ -108,16 +110,11 @@ export class WebApp {
       }
     }
   }
-
-  private corsMiddleware(request: ServerRequest, response: Response) {
-    const requestOrigin = request.headers.get("Origin");
-    if (requestOrigin && this.allowedOrigins.has(requestOrigin)) {
-      response.headers = response.headers ?? new Headers();
-      response.headers.set("Access-Control-Allow-Origin", requestOrigin);
-      response.headers.set("Access-Control-Allow-Headers", "*");
-    }
-  }
 }
 
-type RequestHandler = (req: ServerRequest) => Response;
-type PostHandler = (req: ServerRequest, body: string) => Response;
+export type GetReqHandler = (req: ServerRequest) => Response;
+export type PostReqHandler = (req: ServerRequest, body: string) => Response;
+
+export interface Middleware {
+  next(request: ServerRequest, response: Response): void;
+}

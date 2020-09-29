@@ -212,12 +212,22 @@ export class DashboardComponent implements OnInit {
   }
 
   onDebug() {
-    fetch("http://localhost:8080/postdata", {
-      body: JSON.stringify({ x: "hi", y: 9 }),
+    const exportObj = {
+      days: JSON.parse(localStorage.getItem("days") ?? "[]"),
+      logs: JSON.parse(localStorage.getItem("logs") ?? "[]")
+    };
+    fetch("http://localhost:8080/healthexport", {
+      body: JSON.stringify(exportObj),
       method: "POST",
       headers: [["content-type", "application/json"]]
-    }).then(res => res.json())
-      .then(data => console.log(data));
+    }).then(res => {
+      if (!res.ok) {
+        throw new Error("bad res code");
+      }
+    }).catch(err => {
+      console.log("an err occurred here");
+      console.log(err);
+    });
   }
 
   onScrollToggle() {

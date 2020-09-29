@@ -1,25 +1,38 @@
-import { WebApp } from "./web_app.ts";
+import { CorsMiddleware } from "./cors_middleware.ts";
+import { WebServer } from "./web_server.ts";
 
-const app = new WebApp();
-// app.use(["http://localhost:4200"]);
-app.useCors(["http://localhost:4200"]);
+const app = new WebServer();
+app.use(new CorsMiddleware(["http://localhost:4200"]));
 
-app.get("/tacos", req => {
+app.get("/", req => {
   const obj = {
     data: "how bout json",
     x: 12
   };
   const headers = new Headers([["content-type", "application/json"]]);
   const body = JSON.stringify(obj);
-  return { status: 200, body: "hi" as any, headers: headers };
-  // return req.respond({ status: 200, body: body, headers: headers });
-});
-
-app.post("/postdata", (req, body) => {
-  const json = JSON.parse(body);
-  const headers = new Headers([["content-type", "application/json"]]);
   return { status: 200, body: body, headers: headers };
 });
 
-console.log(`server running: http://localhost:8080/`);
+app.post("/healthexport", (req, body) => {
+  const json = JSON.parse(body);
+  validateExportJson(json);
+  Deno.writeTextFile(`data/${new Date().toISOString()}.json`, body);
+  return { status: 200 };
+});
+
+function validateExportJson(json: any) {
+  if (!json) {
+    throw new Error("json was null");
+  }
+  if (!json.days) {
+    throw new Error("days not present");
+  }
+  if (!json.logs) {
+    throw new Error("logs not present");
+  }
+  return json;
+}
+
+console.log(`server running on http://localhost:${app.port}`);
 app.listen();
