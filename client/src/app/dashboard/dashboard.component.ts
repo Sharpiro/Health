@@ -212,26 +212,12 @@ export class DashboardComponent implements OnInit {
   }
 
   onDebug() {
-    const dialogRef = this.dialog.open(CustomSelectComponent, {
-      data: this.groupedFoodsList
-    });
-
-    dialogRef.afterClosed().subscribe((meal: GroupedFood) => {
-      if (!meal) return;
-
-      const currentMealEntries = this.currentMealEntriesDataSource.data;
-      for (const food of meal.foods) {
-        currentMealEntries.push({
-          foodName: food.name,
-          calories: food.calories,
-          servingSize: food.servingSize
-        });
-      }
-
-      this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries);
-      localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries));
-      this.updateAggregateCalories();
-    });
+    fetch("http://localhost:8080/postdata", {
+      body: JSON.stringify({ x: "hi", y: 9 }),
+      method: "POST",
+      headers: [["content-type", "application/json"]]
+    }).then(res => res.json())
+      .then(data => console.log(data));
   }
 
   onScrollToggle() {
