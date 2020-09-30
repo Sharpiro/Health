@@ -1,5 +1,6 @@
 import { CorsMiddleware } from "./cors_middleware.ts";
 import { WebServer } from "./web_server.ts";
+import "./promise_extensions.ts";
 
 const port = +(Deno.args[0] ?? 8080);
 const app = new WebServer(port);
@@ -15,10 +16,11 @@ app.get("/", (_req, res) => {
   res.body = JSON.stringify(obj);
 });
 
-app.post("/healthexport", async (_req, _res, body) => {
+app.post("/healthexport", (_req, _res, body) => {
   const json = JSON.parse(body);
   validateExportJson(json);
-  await Deno.writeTextFile(`data/${new Date().toISOString()}.json`, body);
+  Deno.writeTextFile(`data/${new Date().toISOString()}.json`, body)
+    .spawn();
 });
 
 function validateExportJson(json: any) {
