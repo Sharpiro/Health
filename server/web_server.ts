@@ -15,7 +15,9 @@ export class WebServer {
       const response: Response = { status: 200 };
       this.processRequest(request, response)
         .finally(() => {
-          console.log(request.method, request.url, response.status);
+          // todo: probably will be my reverse proxy
+          const hostname = (request.conn.remoteAddr as Deno.NetAddr).hostname;
+          console.log(hostname, request.method, request.url, response.status);
         })
         .catch(err => {
           console.error(err);

@@ -4,7 +4,11 @@ import "./promise_extensions.ts";
 
 const port = +(Deno.args[0] ?? 8080);
 const app = new WebServer(port);
-app.use(new CorsMiddleware(["http://localhost:4200"]));
+const origins = [
+  "http://localhost:4200",
+  "https://statichostsharp.z13.web.core.windows.net"
+];
+app.use(new CorsMiddleware(origins));
 await Deno.mkdir("data", { recursive: true });
 
 app.get("/", (_req, res) => {
@@ -38,11 +42,3 @@ function validateExportJson(json: any) {
 
 app.listen();
 console.log(`server running on http://localhost:${port}`);
-
-function delayedError() {
-  return new Promise((_, rej) => {
-    setTimeout(() => {
-      rej("fake b-ground processing error");
-    }, 5_000);
-  });
-}
