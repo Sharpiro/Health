@@ -7,7 +7,7 @@ export function delay(seconds: number) {
 }
 
 export function clientFetch() {
-  fetch("http://localhost:8080/postdata", {
+  fetch("http://localhost:8080/healthexport", {
     body: JSON.stringify({ x: "hi", y: 9 }),
     method: "POST",
     headers: [["content-type", "application/json"]]

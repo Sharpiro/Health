@@ -221,9 +221,12 @@ export class DashboardComponent implements OnInit {
       method: "POST",
       headers: [["content-type", "application/json"]]
     }).then(res => {
-      if (!res.ok) {
-        throw new Error("bad res code");
-      }
+      res.text().then(text => {
+        console.log(text);
+      });
+      // if (!res.ok) {
+      //   throw new Error("bad res code");
+      // }
     }).catch(err => {
       console.log("an err occurred here");
       console.log(err);

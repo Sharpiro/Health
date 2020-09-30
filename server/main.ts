@@ -1,24 +1,24 @@
 import { CorsMiddleware } from "./cors_middleware.ts";
 import { WebServer } from "./web_server.ts";
 
-const app = new WebServer();
+const port = +(Deno.args[0] ?? 8080);
+const app = new WebServer(port);
 app.use(new CorsMiddleware(["http://localhost:4200"]));
+await Deno.mkdir("data", { recursive: true });
 
-app.get("/", req => {
+app.get("/", (_req, res) => {
   const obj = {
     data: "how bout json",
     x: 12
   };
-  const headers = new Headers([["content-type", "application/json"]]);
-  const body = JSON.stringify(obj);
-  return { status: 200, body: body, headers: headers };
+  res.headers?.set("content-type", "application/json");
+  res.body = JSON.stringify(obj);
 });
 
-app.post("/healthexport", (req, body) => {
+app.post("/healthexport", async (_req, _res, body) => {
   const json = JSON.parse(body);
   validateExportJson(json);
-  Deno.writeTextFile(`data/${new Date().toISOString()}.json`, body);
-  return { status: 200 };
+  await Deno.writeTextFile(`data/${new Date().toISOString()}.json`, body);
 });
 
 function validateExportJson(json: any) {
@@ -34,5 +34,13 @@ function validateExportJson(json: any) {
   return json;
 }
 
-console.log(`server running on http://localhost:${app.port}`);
 app.listen();
+console.log(`server running on http://localhost:${port}`);
+
+function delayedError() {
+  return new Promise((_, rej) => {
+    setTimeout(() => {
+      rej("fake b-ground processing error");
+    }, 5_000);
+  });
+}

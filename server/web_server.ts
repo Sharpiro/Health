@@ -10,14 +10,15 @@ export class WebServer {
 
   async listen() {
     if (this.server) return;
-
     this.server = serve({ hostname: "0.0.0.0", port: this.port });
     for await (const request of this.server) {
-      console.log(request.method, request.url);
-      this.processRequest(request)
+      const response: Response = { status: 200 };
+      this.processRequest(request, response)
+        .finally(() => {
+          console.log(request.method, request.url, response.status);
+        })
         .catch(err => {
           console.error(err);
-          console.error("response failed, need to log");
         });
     }
   }
@@ -39,81 +40,95 @@ export class WebServer {
     this.middleware.push(middleware);
   }
 
-  private processRequest(request: ServerRequest): Promise<boolean> {
+  private async processRequest(request: ServerRequest, response: Response) {
+    try {
+      for (const middleware of this.middleware) {
+        middleware.next(request, response);
+      }
+    } catch (err) {
+      await this.sendErrorResponse(request, response, 500, err.toString());
+      throw err;
+    }
+
     if (request.method === "OPTIONS") {
-      return this.sendResponse(request, { status: 200 });
+      return this.sendResponse(request, response);
     } else if (request.method === "GET") {
-      return this.processGet(request);
+      return this.processGet(request, response);
     } else if (request.method === "POST") {
-      return this.processPost(request);
+      return this.processPost(request, response);
     } else {
-      return this.sendResponse(request, { status: 400, body: "Bad Request" });
+      return this.sendErrorResponse(request, response, 400, "Bad Request");
     }
   }
 
-  private processGet(request: ServerRequest) {
+  private processGet(request: ServerRequest, response: Response) {
     const requestHandler = this.getHandlers.get(request.url);
     if (requestHandler) {
-      const response = requestHandler(request);
+      requestHandler(request, response);
       return this.sendResponse(request, response);
     } else {
-      return this.sendResponse(request, { status: 404, body: "Not Found" });
+      return this.sendErrorResponse(request, response, 404, "Not Founds");
     }
   }
 
-  private async processPost(request: ServerRequest) {
+  private async processPost(request: ServerRequest, response: Response) {
     const contentType = request.headers.get("content-type");
     if (!contentType?.toLowerCase().includes("json")) {
-      return this.sendResponse(request, { status: 400, body: "Only json content-type allowed" });
+      return this.sendErrorResponse(request, response, 400, "Only json content-type allowed");
     }
 
     const requestHandler = this.postHandlers.get(request.url);
     if (requestHandler) {
       try {
-        const body = await Deno.readAll(request.body);
-        const text = new TextDecoder().decode(body);
-        const response = requestHandler(request, text);
+        const bodyBuffer = await Deno.readAll(request.body);
+        const bodyText = new TextDecoder().decode(bodyBuffer);
+
+        if (!bodyText) {
+          return this.sendErrorResponse(request, response, 400, "HTTP POST must have body");
+        }
+        await requestHandler(request, response, bodyText);
 
         return this.sendResponse(request, response);
       }
       catch (err) {
-        return this.sendResponse(request, { status: 500, body: err?.toString() });
+        return this.sendErrorResponse(request, response, 500, err?.toString());
       }
     } else {
-      return this.sendResponse(request, { status: 404, body: "Not Found" });
+      return this.sendErrorResponse(request, response, 404, "Not Found");
+    }
+  }
+
+  private async sendErrorResponse(request: ServerRequest, response: Response, statusCode: number, message: string) {
+    response.status = statusCode;
+    response.body = message;
+    try {
+      await this.sendResponse(request, response);
+    } catch (outerErr) {
+      throw new Error(
+        `An error occurred while sending an error -> outer: ${outerErr}` +
+        `-> inner: ${message}`
+      );
     }
   }
 
   private async sendResponse(request: ServerRequest, response: Response) {
     try {
-      for (const middleware of this.middleware) {
-        middleware.next(request, response);
-      }
-
       if (response.body && typeof response.body !== "string") {
         throw new Error("invalid response body");
       }
-      await request.respond(response);
-      return true;
     }
     catch (err) {
-      // todo: fails if an in-progress response already failed
-      try {
-        await request.respond({
-          status: 500,
-          body: err?.toString(),
-          headers: response.headers
-        });
-        return true;
-      } catch (innerErr) {
-        throw new Error(`${innerErr}|${err}`);
-      }
+      await request.respond({ status: 500, body: err?.toString() });
+      throw err;
     }
+
+    // todo: fails if an in-progress response already failed
+    await request.respond(response);
   }
 }
 
-export type GetReqHandler = (req: ServerRequest) => Response;
-export type PostReqHandler = (req: ServerRequest, body: string) => Response;
+export type GetReqHandler = (req: ServerRequest, res: Response) => void | Promise<void>;
+export type PostReqHandler = (req: ServerRequest, res: Response, body: string) => void | Promise<void>;
 
 export interface Middleware {
   next(request: ServerRequest, response: Response): void;
