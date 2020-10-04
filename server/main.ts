@@ -11,7 +11,7 @@ const origins = [
 app.use(new CorsMiddleware(origins));
 await Deno.mkdir("data", { recursive: true });
 
-app.get("/", (_req, res) => {
+app.get("/test", (_req, res) => {
   const obj = {
     data: "how bout json",
     x: 12

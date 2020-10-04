@@ -12,7 +12,7 @@ export class WebServer {
     if (this.server) return;
     this.server = serve({ hostname: "0.0.0.0", port: this.port });
     for await (const request of this.server) {
-      const response: Response = { status: 200 };
+      const response: Response = { status: 200, headers: new Headers() };
       this.processRequest(request, response)
         .finally(() => {
           // todo: probably will be my reverse proxy
@@ -69,7 +69,7 @@ export class WebServer {
       requestHandler(request, response);
       return this.sendResponse(request, response);
     } else {
-      return this.sendErrorResponse(request, response, 404, "Not Founds");
+      return this.sendErrorResponse(request, response, 404, "Not Found");
     }
   }
 
