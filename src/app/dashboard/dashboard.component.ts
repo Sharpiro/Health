@@ -64,10 +64,6 @@ export class DashboardComponent implements OnInit {
       });
       return;
     }
-    if (this.mealEntryCalorieFormControl.value <= 0) {
-      this.snackBar.open("Enter valid calories", "OK", { duration: 2000, });
-      return;
-    }
 
     const dayTimestamp = localStorage.getItem("dayTimestamp");
     if (!dayTimestamp) {
@@ -175,6 +171,12 @@ export class DashboardComponent implements OnInit {
         this.updateAggregateCalories();
       }
       else {
+        if (foodOrGroupedFood.name === "Other") {
+          const foodName = prompt("food name");
+          if (!foodName) return;
+          foodOrGroupedFood.name = foodName;
+          console.log(foodName);
+        }
         this.foodFormControl.setValue(foodOrGroupedFood);
       }
     });

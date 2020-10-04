@@ -287,7 +287,7 @@
   {
     "calories": 110,
     "name": "Beans",
-    "shortName": "null",
+    "shortName": "Bns",
     "servingSize": 130,
     "carbs": 19,
     "fat": 1,
@@ -705,7 +705,7 @@
     "active": false
   },
   {
-    "calories": 1,
+    "calories": 0,
     "name": "Water",
     "shortName": "Wtr",
     "servingSize": 40,
@@ -720,7 +720,7 @@
     "active": true
   },
   {
-    "calories": 1,
+    "calories": 0,
     "name": "Coffee-Bulletproof",
     "shortName": "Coff",
     "servingSize": 20,
@@ -735,7 +735,7 @@
     "active": true
   },
   {
-    "calories": 1,
+    "calories": 0,
     "name": "Coffee-RGCC",
     "shortName": "Coff",
     "servingSize": 20,
@@ -750,7 +750,7 @@
     "active": true
   },
   {
-    "calories": 1,
+    "calories": 0,
     "name": "Coffee-Mayorga",
     "shortName": "Coff",
     "servingSize": 20,
@@ -760,6 +760,21 @@
     "potassium": 0,
     "protein": 0,
     "servingSizeType": "oz",
+    "sodium": 0,
+    "sugar": 0,
+    "active": true
+  },
+  {
+    "calories": 100,
+    "name": "Other",
+    "shortName": "Oth",
+    "servingSize": 1,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "potassium": 0,
+    "protein": 0,
+    "servingSizeType": "other",
     "sodium": 0,
     "sugar": 0,
     "active": true
