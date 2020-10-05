@@ -17,6 +17,12 @@
   </button>
 </div>
 <div>
+  <a mat-button routerLink="/settings" (click)="selectFunction()">
+    <mat-icon>settings</mat-icon>
+    <span style="padding-left:10px">Settings</span>
+  </a>
+</div>
+<div>
   <button mat-button [mat-dialog-close]="false" cdkFocusInitial>
     <mat-icon matTooltip="Cancel">cancel</mat-icon>
     <span style="padding-left:10px">Cancel</span>
