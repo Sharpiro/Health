@@ -30,8 +30,8 @@ export class WebServer {
     this.server = undefined;
   }
 
-  get(path: string, callback: GetReqHandler) {
-    this.getHandlers.set(path, callback);
+  get(path: string, handler: GetReqHandler) {
+    this.getHandlers.set(path, handler);
   }
 
   post(path: string, callback: PostReqHandler) {
@@ -64,7 +64,11 @@ export class WebServer {
   }
 
   private processGet(request: ServerRequest, response: Response) {
-    const requestHandler = this.getHandlers.get(request.url);
+    const queryStart = request.url.indexOf("?");
+    const handlerLookup = queryStart > -1 ?
+      request.url.slice(0, queryStart) :
+      request.url;
+    const requestHandler = this.getHandlers.get(handlerLookup);
     if (requestHandler) {
       requestHandler(request, response);
       return this.sendResponse(request, response);
@@ -79,7 +83,11 @@ export class WebServer {
       return this.sendErrorResponse(request, response, 400, "Only json content-type allowed");
     }
 
-    const requestHandler = this.postHandlers.get(request.url);
+    const queryStart = request.url.indexOf("?");
+    const handlerLookup = queryStart > -1 ?
+      request.url.slice(0, queryStart) :
+      request.url;
+    const requestHandler = this.postHandlers.get(handlerLookup);
     if (requestHandler) {
       try {
         const bodyBuffer = await Deno.readAll(request.body);
