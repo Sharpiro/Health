@@ -32,6 +32,8 @@ import { CalorieChartComponent } from './charts/calorie-chart/calorie-chart.comp
 import { MacrosChartComponent } from './charts/macros-chart/macros-chart.component';
 import { WaterChartComponent } from './charts/water-chart/water-chart.component';
 import { LogComponent } from './log/log.component';
+import { SettingsComponent } from './settings/settings.component';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { LogComponent } from './log/log.component';
     CalorieChartComponent,
     MacrosChartComponent,
     WaterChartComponent,
-    LogComponent
+    LogComponent,
+    SettingsComponent
   ],
   imports: [
     FormsModule,
@@ -68,6 +71,7 @@ import { LogComponent } from './log/log.component';
     MatIconModule,
     MatTooltipModule,
     MatCardModule,
+    MatCheckboxModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

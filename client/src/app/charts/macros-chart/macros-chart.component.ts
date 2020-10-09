@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
-import { Chart } from 'chart.js'
-import { MealEntry } from '../../models/mealEntry'
-import { Meal } from 'src/app/models/meal'
-import { FoodService } from 'src/app/shared/foods/food.service'
-import { Food } from 'src/app/shared/foods/food'
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Chart } from 'chart.js';
+import { MealEntry } from '../../models/mealEntry';
+import { Meal } from 'src/app/models/meal';
+import { FoodService } from 'src/app/shared/foods/food.service';
+import { Food } from 'src/app/shared/foods/food';
 
 @Component({
   selector: 'app-macros-chart',
@@ -12,17 +12,19 @@ import { Food } from 'src/app/shared/foods/food'
 })
 export class MacrosChartComponent implements AfterViewInit {
   // days: Day[]
-  caloriesChart!: Chart
-  foodMap!: Map<string, Food>
+  caloriesChart!: Chart;
+  foodMap!: Map<string, Food>;
 
-  @ViewChild('myChart', { static: true }) myChart!: ElementRef
+  @ViewChild('myChart', { static: true }) myChart!: ElementRef;
 
   constructor(readonly foodService: FoodService) { }
 
-  async  ngAfterViewInit() {
-    this.foodMap = await this.foodService.getFoodMap()
-    const [foodShortNames, foodCalories] = this.initializeData()
-    this.initializeChart(foodShortNames, foodCalories)
+  async ngAfterViewInit() {
+    this.foodMap = await this.foodService.getFoodMap();
+    const [foodShortNames, foodCalories] = this.initializeData();
+    console.log(foodShortNames);
+    console.log(foodCalories);
+    this.initializeChart(foodShortNames, foodCalories);
   }
 
   private initializeData(): [string[], number[]] {
@@ -34,34 +36,35 @@ export class MacrosChartComponent implements AfterViewInit {
     // }
     // const selectedDay = this.days[this.days.length - 1]
 
-    const mealsJson = localStorage.getItem("meals")
-    const meals: Meal[] = mealsJson ? JSON.parse(mealsJson) : []
+    const mealsJson = localStorage.getItem("meals");
+    const meals: Meal[] = mealsJson ? JSON.parse(mealsJson) : [];
     if (meals.length < 1) {
-      return [[], []]
+      return [[], []];
     }
     const allMealEntries = meals.reduce((prev, curr) => {
-      return prev.concat(curr.mealEntries)
-    }, [] as MealEntry[])
+      return prev.concat(curr.mealEntries);
+    }, [] as MealEntry[]);
 
-    let totalCarbs = 0
-    let totalFiber = 0
-    let totalFat = 0
-    let totalProtein = 0
+    let totalCarbs = 0;
+    let totalFiber = 0;
+    let totalFat = 0;
+    let totalProtein = 0;
     for (const mealEntry of allMealEntries) {
-      const food = this.foodMap.get(mealEntry.foodName)
-      if (!food) {
-        throw new Error("food was not defined")
+      const food = this.foodMap.get(mealEntry.foodName);
+      if (!food || food.calories < 1) {
+        // throw new Error("food was not defined");
+        continue;
       }
-      const servingsConsumed = mealEntry.calories / food.calories
+      const servingsConsumed = mealEntry.calories / food.calories;
 
-      const carbsConsumed = food.carbs * servingsConsumed
-      totalCarbs += carbsConsumed
-      const fiberConsumed = food.fiber * servingsConsumed
-      totalFiber += fiberConsumed
-      const fatConsumed = food.fat * servingsConsumed
-      totalFat += fatConsumed
-      const proteinConsumed = food.protein * servingsConsumed
-      totalProtein += proteinConsumed
+      const carbsConsumed = food.carbs * servingsConsumed;
+      totalCarbs += carbsConsumed;
+      const fiberConsumed = food.fiber * servingsConsumed;
+      totalFiber += fiberConsumed;
+      const fatConsumed = food.fat * servingsConsumed;
+      totalFat += fatConsumed;
+      const proteinConsumed = food.protein * servingsConsumed;
+      totalProtein += proteinConsumed;
     }
 
     return [
@@ -72,11 +75,11 @@ export class MacrosChartComponent implements AfterViewInit {
         Math.round(totalFat),
         Math.round(totalProtein)
       ]
-    ]
+    ];
   }
 
   private initializeChart(labels: string[], data: number[]) {
-    const canvas = this.myChart.nativeElement as HTMLCanvasElement
+    const canvas = this.myChart.nativeElement as HTMLCanvasElement;
     this.caloriesChart = new Chart(canvas, {
       type: 'bar',
       data: {
@@ -128,6 +131,6 @@ export class MacrosChartComponent implements AfterViewInit {
           }],
         }
       }
-    })
+    });
   }
 }

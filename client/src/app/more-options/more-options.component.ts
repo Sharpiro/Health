@@ -1,5 +1,5 @@
-import { Component, Inject } from '@angular/core'
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog'
+import { Component, Inject } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-more-options',
@@ -11,7 +11,7 @@ export class MoreOptionsComponent {
     public dialogRef: MatDialogRef<MoreOptionsComponent>,
     @Inject(MAT_DIALOG_DATA) public foods: any) { }
 
-  selectFunction(name: string) {
-    this.dialogRef.close(name)
+  selectFunction(name?: string) {
+    this.dialogRef.close(name);
   }
 }

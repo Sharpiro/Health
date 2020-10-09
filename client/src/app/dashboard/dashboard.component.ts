@@ -12,6 +12,7 @@ import { MoreOptionsComponent } from '../more-options/more-options.component';
 import { Food, GroupedFood } from '../shared/foods/food';
 import { FoodService } from '../shared/foods/food.service';
 import { exportText } from '../shared/foods/helpers';
+import { settings } from '../settings/settings';
 
 @Component({
   selector: 'app-dashboard',
@@ -31,13 +32,16 @@ export class DashboardComponent implements OnInit {
   foodList: Food[] = [];
   groupedFoodsList: GroupedFood[] = [];
   allFoodList: (Food | GroupedFood)[] = [];
+  settings;
 
   constructor(readonly snackBar: MatSnackBar, readonly dialog: MatDialog,
-    readonly foodService: FoodService) { }
+    readonly foodService: FoodService) {
+    this.settings = settings;
+  }
 
   async ngOnInit() {
     try {
-      this.foodList = await this.foodService.getFoodList();
+      this.foodList = await this.foodService.getFoodList(this.settings.showAllFoods);
       // this.groupedFoodsList = await this.foodService.getGroupedFoods()
       this.allFoodList = [...this.foodList, ...this.groupedFoodsList];
 
@@ -62,10 +66,6 @@ export class DashboardComponent implements OnInit {
       this.snackBar.open("Enter valid food", "OK", {
         duration: 2000,
       });
-      return;
-    }
-    if (this.mealEntryCalorieFormControl.value <= 0) {
-      this.snackBar.open("Enter valid calories", "OK", { duration: 2000, });
       return;
     }
 
@@ -175,6 +175,12 @@ export class DashboardComponent implements OnInit {
         this.updateAggregateCalories();
       }
       else {
+        if (foodOrGroupedFood.name === "Other") {
+          const foodName = prompt("food name");
+          if (!foodName) return;
+          foodOrGroupedFood.name = foodName;
+          console.log(foodName);
+        }
         this.foodFormControl.setValue(foodOrGroupedFood);
       }
     });

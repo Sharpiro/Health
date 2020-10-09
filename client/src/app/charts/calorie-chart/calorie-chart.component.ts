@@ -1,9 +1,9 @@
-import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core'
-import { Chart } from 'chart.js'
-import { MealEntry } from '../../models/mealEntry'
-import { Meal } from 'src/app/models/meal'
-import { FoodService } from 'src/app/shared/foods/food.service'
-import { Food } from 'src/app/shared/foods/food'
+import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Chart } from 'chart.js';
+import { MealEntry } from '../../models/mealEntry';
+import { Meal } from 'src/app/models/meal';
+import { FoodService } from 'src/app/shared/foods/food.service';
+import { Food } from 'src/app/shared/foods/food';
 
 @Component({
   selector: 'app-calorie-chart',
@@ -11,47 +11,47 @@ import { Food } from 'src/app/shared/foods/food'
   styleUrls: ['./calorie-chart.component.css']
 })
 export class CalorieChartComponent implements AfterViewInit {
-  caloriesChart!: Chart
-  foodMap!: Map<string, Food>
-  @ViewChild('myChart', { static: true }) myChart!: ElementRef
+  caloriesChart!: Chart;
+  foodMap!: Map<string, Food>;
+  @ViewChild('myChart', { static: true }) myChart!: ElementRef;
 
   constructor(readonly foodService: FoodService) { }
 
   async ngAfterViewInit() {
-    this.foodMap = await this.foodService.getFoodMap()
+    this.foodMap = await this.foodService.getFoodMap();
 
-    const [foodShortNames, foodCalories] = this.initializeCaloriesData()
-    this.initializeCaloriesChart(foodShortNames, foodCalories)
+    const [foodShortNames, foodCalories] = this.initializeCaloriesData();
+    this.initializeCaloriesChart(foodShortNames, foodCalories);
   }
 
   private initializeCaloriesData(): [string[], number[]] {
-    const mealsJson = localStorage.getItem("meals")
-    const meals: Meal[] = mealsJson ? JSON.parse(mealsJson) : []
+    const mealsJson = localStorage.getItem("meals");
+    const meals: Meal[] = mealsJson ? JSON.parse(mealsJson) : [];
     if (meals.length < 1) {
-      return [[], []]
+      return [[], []];
     }
     const allMealEntries = meals.reduce((prev, curr) => {
-      return prev.concat(curr.mealEntries)
-    }, [] as MealEntry[])
-    const foodDailyCalories = allMealEntries.reduce((map, curr) => {
-      const food = this.foodMap.get(curr.foodName)
-      if (!food) throw new Error(`invalid food '${curr.foodName}'`)
+      return prev.concat(curr.mealEntries);
+    }, [] as MealEntry[]);
+    const foodDailyCalories = allMealEntries.filter(me => me.calories > 0).reduce((map, curr) => {
+      const food = this.foodMap.get(curr.foodName);
+      const shortName = food?.shortName ?? "Oth";
 
-      const dailyCalories = map.get(food.shortName)
+      const dailyCalories = map.get(shortName);
       if (dailyCalories === undefined) {
-        return map.set(food.shortName, curr.calories)
+        return map.set(shortName, curr.calories);
       } else {
-        return map.set(food.shortName, dailyCalories + curr.calories)
+        return map.set(shortName, dailyCalories + curr.calories);
       }
-    }, new Map<string, number>())
-    const foodShortNames = Array.from(foodDailyCalories.keys())
-    const foodCalories = Array.from(foodDailyCalories.values())
+    }, new Map<string, number>());
+    const foodShortNames = Array.from(foodDailyCalories.keys());
+    const foodCalories = Array.from(foodDailyCalories.values());
 
-    return [foodShortNames, foodCalories]
+    return [foodShortNames, foodCalories];
   }
 
   private initializeCaloriesChart(labels: string[], data: number[]) {
-    const canvas = this.myChart.nativeElement as HTMLCanvasElement
+    const canvas = this.myChart.nativeElement as HTMLCanvasElement;
     this.caloriesChart = new Chart(canvas, {
       type: 'bar',
       data: {
@@ -103,6 +103,6 @@ export class CalorieChartComponent implements AfterViewInit {
           }],
         }
       }
-    })
+    });
   }
 }
