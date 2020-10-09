@@ -2,6 +2,8 @@ import { CorsMiddleware } from "./cors_middleware.ts";
 import { WebServer } from "./web_server.ts";
 import "./promise_extensions.ts";
 
+await Deno.mkdir("data", { recursive: true });
+
 const port = +(Deno.args[0] ?? 8080);
 const app = new WebServer(port);
 const appToken = Deno.env.get("token");
@@ -11,7 +13,6 @@ const origins = [
   "https://statichostsharp.z13.web.core.windows.net"
 ];
 app.use(new CorsMiddleware(origins));
-await Deno.mkdir("data", { recursive: true });
 
 app.get("/test", (req, res) => {
   const requestToken = req.headers.get("token");

@@ -1,7 +1,13 @@
 <div>
-  <button mat-button (click)="selectFunction('exportAll')">
+  <button mat-button (click)="selectFunction('exportToFile')">
     <mat-icon matTooltip="Export all health data">arrow_circle_down</mat-icon>
-    <span style="padding-left:10px">Export All</span>
+    <span style="padding-left:10px">Export to file</span>
+  </button>
+</div>
+<div>
+  <button mat-button (click)="selectFunction('exportToServer')">
+    <mat-icon matTooltip="Export all health data">cloud_upload</mat-icon>
+    <span style="padding-left:10px">Export to server</span>
   </button>
 </div>
 <div>

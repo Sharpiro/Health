@@ -1,9 +1,16 @@
-<div>
+<div style="margin:25px;">
   <h1>Settings</h1>
 
   <div>
     <mat-checkbox [(ngModel)]="settings.showAllFoods" (change)="updateStorage()" class="example-margin">
       Show
       all foods</mat-checkbox>
+  </div>
+
+  <div style="margin-top:25px;">
+    <mat-form-field style="width:100%;">
+      <input matInput type="text" [(ngModel)]="settings.token" placeholder="Token" (input)="updateStorage()"
+        autocomplete="off">
+    </mat-form-field>
   </div>
 </div>

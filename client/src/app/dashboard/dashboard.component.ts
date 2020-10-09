@@ -13,6 +13,7 @@ import { Food, GroupedFood } from '../shared/foods/food';
 import { FoodService } from '../shared/foods/food.service';
 import { exportText } from '../shared/foods/helpers';
 import { settings } from '../settings/settings';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-dashboard',
@@ -195,8 +196,11 @@ export class DashboardComponent implements OnInit {
       if (!result) return;
 
       switch (result) {
-        case "exportAll":
-          this.exportAll();
+        case "exportToFile":
+          this.exportToFile();
+          break;
+        case "exportToServer":
+          this.exportToServer();
           break;
         case "scroll":
           this.onScrollToggle();
@@ -208,7 +212,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  exportAll() {
+  exportToFile() {
     const exportObj = {
       days: JSON.parse(localStorage.getItem("days") ?? "[]"),
       logs: JSON.parse(localStorage.getItem("logs") ?? "[]")
@@ -217,27 +221,31 @@ export class DashboardComponent implements OnInit {
     exportText(filename, JSON.stringify(exportObj));
   }
 
-  onDebug() {
+  exportToServer() {
     const exportObj = {
       days: JSON.parse(localStorage.getItem("days") ?? "[]"),
       logs: JSON.parse(localStorage.getItem("logs") ?? "[]")
     };
-    fetch("http://localhost:8080/healthexport", {
+    fetch(`${environment.server}/healthexport`, {
       body: JSON.stringify(exportObj),
       method: "POST",
-      headers: [["content-type", "application/json"]]
+      headers: [
+        ["content-type", "application/json"],
+        ["token", this.settings.token]
+      ]
     }).then(res => {
-      res.text().then(text => {
-        console.log(text);
-      });
-      // if (!res.ok) {
-      //   throw new Error("bad res code");
-      // }
+      if (!res.ok) {
+        return res.text().then(msg => { throw new Error(msg); });
+      } else {
+        this.snackBar.open("Upload success", "OK", { duration: 3000, });
+      }
     }).catch(err => {
-      console.log("an err occurred here");
+      this.snackBar.open(`Upload failed: ${err}`, "OK", { duration: 3000, });
       console.log(err);
     });
   }
+
+  onDebug() { }
 
   onScrollToggle() {
     // if (this.isScrollable) {

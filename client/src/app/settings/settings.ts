@@ -1,5 +1,6 @@
 const defaultSettings = {
-  showAllFoods: false
+  showAllFoods: false,
+  token: ""
 };
 
 const settingsText = localStorage.getItem("settings");
