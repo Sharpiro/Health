@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { Meal } from '../models/meal';
@@ -14,6 +14,7 @@ import { FoodService } from '../shared/foods/food.service';
 import { exportText } from '../shared/foods/helpers';
 import { settings } from '../settings/settings';
 import { environment } from 'src/environments/environment';
+import { TypedFormControl } from '../shared/typed_form_control';
 
 @Component({
   selector: 'app-dashboard',
@@ -25,11 +26,11 @@ export class DashboardComponent implements OnInit {
   meals: Meal[] = [];
   displayedColumns: string[] = ['foodName', 'calories', "ss"];
   currentMealEntriesDataSource = new MatTableDataSource<MealEntry>();
-  mealEntryCalorieFormControl = new FormControl('', [Validators.required]);
-  mealEntryServingSizeFormControl = new FormControl('', [Validators.required]);
-  foodFormControl = new FormControl('', [Validators.required]);
-  currentMealCaloriesControl = new FormControl('', [Validators.required]);
-  allMealsCaloriesControl = new FormControl('', [Validators.required]);
+  mealEntryCalorieFormControl = new TypedFormControl('', [Validators.required]);
+  mealEntryServingSizeFormControl = new TypedFormControl('', [Validators.required]);
+  foodFormControl = new TypedFormControl<Food>();
+  currentMealCaloriesControl = new TypedFormControl('', [Validators.required]);
+  allMealsCaloriesControl = new TypedFormControl('', [Validators.required]);
   foodList: Food[] = [];
   groupedFoodsList: GroupedFood[] = [];
   allFoodList: (Food | GroupedFood)[] = [];
@@ -52,18 +53,18 @@ export class DashboardComponent implements OnInit {
       const mealsJson = localStorage.getItem("meals");
       this.meals = mealsJson ? JSON.parse(mealsJson) : [];
 
-      this.foodFormControl.valueChanges.subscribe(this.onFoodChanges);
+      this.foodFormControl.valueChangesTyped.subscribe(this.onFoodChanges);
 
       this.updateAggregateCalories();
 
-      this.foodFormControl.setValue(this.getRandomFood());
+      this.foodFormControl.setValueTyped(this.getRandomFood());
     } catch (err) {
       this.snackBar.open(err);
     }
   }
 
   onAddFood() {
-    if (!this.foodFormControl.value) {
+    if (!this.foodFormControl.valueTyped) {
       this.snackBar.open("Enter valid food", "OK", {
         duration: 2000,
       });
@@ -75,12 +76,12 @@ export class DashboardComponent implements OnInit {
       localStorage.setItem("dayTimestamp", new Date().toISOString());
     }
 
-    const food: Food = this.foodFormControl.value;
+    const food: Food = this.foodFormControl.valueTyped;
     const currentMealEntries = this.currentMealEntriesDataSource.data;
     currentMealEntries.push({
       foodName: food.name,
-      calories: this.mealEntryCalorieFormControl.value,
-      servingSize: this.mealEntryServingSizeFormControl.value
+      calories: +this.mealEntryCalorieFormControl.valueTyped,
+      servingSize: +this.mealEntryServingSizeFormControl.valueTyped
     });
     this.currentMealEntriesDataSource = new MatTableDataSource(currentMealEntries);
     localStorage.setItem("mealEntries", JSON.stringify(currentMealEntries));
@@ -126,8 +127,8 @@ export class DashboardComponent implements OnInit {
   onFoodChanges = (food: Food) => {
     if (!food) return;
 
-    this.mealEntryCalorieFormControl.setValue(food.calories);
-    this.mealEntryServingSizeFormControl.setValue(food.servingSize);
+    this.mealEntryCalorieFormControl.setValueTyped(food.calories.toString());
+    this.mealEntryServingSizeFormControl.setValueTyped(food.servingSize.toString());
   };
 
   onReturnKey(event: any) {
@@ -137,20 +138,20 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  updateCaloriesFromServingSize = () => {
-    const food: Food = this.foodFormControl.value;
-    const mealEntryServingSize: number = this.mealEntryServingSizeFormControl.value;
+  onServingSizeChange = () => {
+    const food: Food = this.foodFormControl.valueTyped;
+    const mealEntryServingSize: number = +this.mealEntryServingSizeFormControl.valueTyped;
     const caloriesPerOneOfServingType = food.calories / food.servingSize;
     const mealEntryCalories = Math.ceil(mealEntryServingSize * caloriesPerOneOfServingType);
-    this.mealEntryCalorieFormControl.setValue(mealEntryCalories);
+    this.mealEntryCalorieFormControl.setValueTyped(mealEntryCalories.toString());
   };
 
-  updateServingSizeFromCalories = () => {
-    const food: Food = this.foodFormControl.value;
-    const mealEntryCalories: number = this.mealEntryCalorieFormControl.value;
+  onCaloriesChange = () => {
+    const food: Food = this.foodFormControl.valueTyped;
+    const mealEntryCalories = +this.mealEntryCalorieFormControl.valueTyped;
     const caloriesPerOneOfServingType = food.calories / food.servingSize;
     const mealEntryServingSize = mealEntryCalories / caloriesPerOneOfServingType;
-    this.mealEntryServingSizeFormControl.setValue(mealEntryServingSize.toFixed(2));
+    this.mealEntryServingSizeFormControl.setValueTyped(mealEntryServingSize.toFixed(2));
   };
 
   onFoodClick() {
@@ -177,12 +178,12 @@ export class DashboardComponent implements OnInit {
       }
       else {
         if (foodOrGroupedFood.name === "Other") {
-          const foodName = prompt("food name");
+          const foodName = (prompt("food name") ?? "").trim();
           if (!foodName) return;
           foodOrGroupedFood.name = foodName;
           console.log(foodName);
         }
-        this.foodFormControl.setValue(foodOrGroupedFood);
+        this.foodFormControl.setValueTyped(foodOrGroupedFood);
       }
     });
   }
@@ -266,7 +267,7 @@ export class DashboardComponent implements OnInit {
     const currentMealEntriesSum = this.currentMealEntriesDataSource.data.reduce((prev, curr) => prev + curr.calories, 0);
     const mealsSum = this.meals.reduce((prev, curr) => prev + curr.calories, 0);
     const totalCalories = currentMealEntriesSum + mealsSum;
-    this.currentMealCaloriesControl.setValue(currentMealEntriesSum);
-    this.allMealsCaloriesControl.setValue(totalCalories);
+    this.currentMealCaloriesControl.setValueTyped(currentMealEntriesSum.toString());
+    this.allMealsCaloriesControl.setValueTyped(totalCalories.toString());
   }
 }

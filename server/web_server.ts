@@ -1,12 +1,20 @@
 import { serve, Server, ServerRequest, Response } from "https://deno.land/std@0.71.0/http/server.ts";
+import { CaseMap } from "./case_map.ts";
 
 export class WebServer {
   private server?: Server;
-  private getHandlers = new Map<string, GetReqHandler>();
-  private postHandlers = new Map<string, PostReqHandler>();
+  private getHandlers: CaseMap<GetReqHandler>;
+  private postHandlers: CaseMap<PostReqHandler>;
   private middleware: Middleware[] = [];
+  private port;
+  private caseSensitiveRoutes: boolean;
 
-  constructor(readonly port: number = 8080) { }
+  constructor(init?: { port?: number; caseSensitiveRoutes?: boolean; }) {
+    this.port = init?.port ?? 8080;
+    this.caseSensitiveRoutes = init?.caseSensitiveRoutes ?? false;
+    this.getHandlers = new CaseMap(this.caseSensitiveRoutes);
+    this.postHandlers = new CaseMap(this.caseSensitiveRoutes);
+  }
 
   async listen() {
     if (this.server) return;
@@ -47,6 +55,9 @@ export class WebServer {
       for (const middleware of this.middleware) {
         middleware.next(request, response);
       }
+      if (response.status !== 200) {
+        return this.sendResponse(request, response);
+      }
     } catch (err) {
       await this.sendErrorResponse(request, response, 500, err.toString());
       throw err;
@@ -63,15 +74,19 @@ export class WebServer {
     }
   }
 
-  private processGet(request: ServerRequest, response: Response) {
+  private async processGet(request: ServerRequest, response: Response) {
     const queryStart = request.url.indexOf("?");
     const handlerLookup = queryStart > -1 ?
       request.url.slice(0, queryStart) :
       request.url;
     const requestHandler = this.getHandlers.get(handlerLookup);
     if (requestHandler) {
-      requestHandler(request, response);
-      return this.sendResponse(request, response);
+      try {
+        await requestHandler(request, response);
+        return this.sendResponse(request, response);
+      } catch (err) {
+        return this.sendErrorResponse(request, response, 500, err?.toString());
+      }
     } else {
       return this.sendErrorResponse(request, response, 404, "Not Found");
     }

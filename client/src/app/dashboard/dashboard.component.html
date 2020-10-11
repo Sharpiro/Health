@@ -3,7 +3,7 @@
 
   <div class="inline-flex-container">
     <mat-form-field class="full-page" (click)="onFoodClick()">
-      <input matInput [value]="foodFormControl.value.name" placeholder="Food" readonly>
+      <input matInput [value]="foodFormControl.value?.name" placeholder="Food" readonly>
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
@@ -13,7 +13,7 @@
   <div class="inline-flex-container">
     <mat-form-field class="half-page">
       <input matInput type="number" placeholder="Calories" [formControl]="mealEntryCalorieFormControl"
-        (input)="updateServingSizeFromCalories()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+        (input)="onCaloriesChange()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
       <mat-error *ngIf="mealEntryCalorieFormControl.hasError('required')">
         Required
       </mat-error>
@@ -21,7 +21,7 @@
 
     <mat-form-field class="half-page">
       <input matInput type="number" placeholder="Serving Size" [formControl]="mealEntryServingSizeFormControl"
-        (input)="updateCaloriesFromServingSize()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
+        (input)="onServingSizeChange()" (click)="$event.target.select()" (keyup)="onReturnKey($event)">
       <mat-error *ngIf="mealEntryServingSizeFormControl.hasError('required')">
         Required
       </mat-error>
