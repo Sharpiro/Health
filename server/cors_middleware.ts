@@ -1,4 +1,7 @@
-import { ServerRequest, Response } from "https://deno.land/std@0.71.0/http/server.ts";
+import {
+  ServerRequest,
+  Response,
+} from "https://deno.land/std@0.71.0/http/server.ts";
 import { Middleware } from "./web_server.ts";
 
 export class CorsMiddleware implements Middleware {

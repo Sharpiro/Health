@@ -1,10 +1,15 @@
 import { Middleware } from "./web_server.ts";
-import { ServerRequest, Response } from "https://deno.land/std@0.71.0/http/server.ts";
+import {
+  ServerRequest,
+  Response,
+} from "https://deno.land/std@0.71.0/http/server.ts";
 
 export class AuthMiddleware implements Middleware {
-  constructor(private appToken: string) { }
+  constructor(private appToken: string) {}
 
   next(request: ServerRequest, response: Response) {
+    if (request.method === "OPTIONS") return;
+
     const requestToken = request.headers.get("token");
     const queryToken = this.getTokenQueryTemp(request.url);
     if (!requestToken && !queryToken) {
