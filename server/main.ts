@@ -5,13 +5,13 @@ import { AuthMiddleware } from "./auth_middleware.ts";
 import { getMapWithDupes } from "./core/map.ts";
 import { addDaysToDatastore, getNewDays, HealthRoot } from "./merge.ts";
 
-await Deno.mkdir("data", { recursive: true });
+await Deno.mkdir("/root/health_data", { recursive: true });
 
 const port = +(Deno.args[0] ?? 8080);
 const app = new WebServer();
-const appToken = Deno.env.get("token");
+const appToken = Deno.env.get("health_token");
 if (!appToken) {
-  throw new Error("auth token required");
+  throw new Error("auth 'health_token' required");
 }
 
 const origins = [
@@ -79,7 +79,7 @@ app.post("/healthExportSmart", async (req, res, body) => {
 
   addDaysToDatastore(persistentHealthRoot, persistentMap, newDays);
   await Deno.writeTextFile(
-    `data/output.json`,
+    `/root/health_data/output.json`,
     JSON.stringify(persistentHealthRoot),
   );
   res.body = `added '${newDays.length}' days to store`;
