@@ -56,7 +56,9 @@ app.post("/healthExportSmart", async (req, res, body) => {
     return;
   }
 
-  const storedText = await Deno.readTextFile("data/2020_health_data.json");
+  const syncFileName = "health_data.json";
+  const syncFilePath = `${storageDir}/${syncFileName}`;
+  const storedText = await Deno.readTextFile(syncFilePath);
   const persistentHealthRoot = JSON.parse(storedText);
   validateHealthRoot(persistentHealthRoot);
   const { map: persistentMap, dupes: persistentDupes } = getMapWithDupes(
@@ -80,9 +82,12 @@ app.post("/healthExportSmart", async (req, res, body) => {
 
   addDaysToDatastore(persistentHealthRoot, persistentMap, newDays);
 
-  const syncFile = `${storageDir}/output.json`;
+  const backupFilePath = `${storageDir}/${
+    new Date().toISOString()
+  }_${syncFileName}`;
+  await Deno.copyFile(syncFilePath, backupFilePath);
   await Deno.writeTextFile(
-    syncFile ,
+    syncFilePath,
     JSON.stringify(persistentHealthRoot),
   );
   res.body = `added '${newDays.length}' days to store`;
@@ -101,19 +106,20 @@ function validateHealthRoot(json: any): asserts json is HealthRoot {
   return json;
 }
 
-async function getStorageDir(){
-	const storageDir = Deno.env.get("health_storage_dir")
-	if (!storageDir) throw new Error("must provide 'health_storage_dir'");
+async function getStorageDir() {
+  const storageDir = Deno.env.get("health_storage_dir");
+  if (!storageDir) throw new Error("must provide 'health_storage_dir'");
 
-	return Deno.stat(storageDir).then(s => {
-	if (!s.isDirectory){
-		throw new Error(`'${storageDir}' is not a directory`);
-	}
-	return storageDir;
-	})
-	.catch(err => {throw new Error(`storage dir '${storageDir}' invalid`)});
+  return Deno.stat(storageDir).then((s) => {
+    if (!s.isDirectory) {
+      throw new Error(`'${storageDir}' is not a directory`);
+    }
+    return storageDir;
+  })
+    .catch((err) => {
+      throw new Error(`storage dir '${storageDir}' invalid`);
+    });
 }
-
 
 app.listen();
 console.log(`server running on http://localhost:${port}`);

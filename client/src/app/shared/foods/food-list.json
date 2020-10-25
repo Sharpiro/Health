@@ -417,7 +417,7 @@
     "servingSizeType": "item",
     "sodium": 25,
     "sugar": 0,
-    "active": true
+    "active": false
   },
   {
     "calories": 110,
@@ -752,6 +752,21 @@
   {
     "calories": 0,
     "name": "Coffee-Mayorga",
+    "shortName": "Coff",
+    "servingSize": 20,
+    "carbs": 0,
+    "fat": 0,
+    "fiber": 0,
+    "potassium": 0,
+    "protein": 0,
+    "servingSizeType": "oz",
+    "sodium": 0,
+    "sugar": 0,
+    "active": true
+  },
+  {
+    "calories": 0,
+    "name": "Coffee-Pete's Organic",
     "shortName": "Coff",
     "servingSize": 20,
     "carbs": 0,
