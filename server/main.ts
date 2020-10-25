@@ -5,14 +5,15 @@ import { AuthMiddleware } from "./auth_middleware.ts";
 import { getMapWithDupes } from "./core/map.ts";
 import { addDaysToDatastore, getNewDays, HealthRoot } from "./merge.ts";
 
-await Deno.mkdir("/root/health_data", { recursive: true });
+const storageDir = (await getStorageDir());
 
-const port = +(Deno.args[0] ?? 8080);
-const app = new WebServer();
 const appToken = Deno.env.get("health_token");
 if (!appToken) {
   throw new Error("auth 'health_token' required");
 }
+
+const port = +(Deno.args[0] ?? 8080);
+const app = new WebServer();
 
 const origins = [
   "http://localhost:4200",
@@ -78,8 +79,10 @@ app.post("/healthExportSmart", async (req, res, body) => {
   console.log(`adding '${newDays.length}' days to store`);
 
   addDaysToDatastore(persistentHealthRoot, persistentMap, newDays);
+
+  const syncFile = `${storageDir}/output.json`;
   await Deno.writeTextFile(
-    `/root/health_data/output.json`,
+    syncFile ,
     JSON.stringify(persistentHealthRoot),
   );
   res.body = `added '${newDays.length}' days to store`;
@@ -97,6 +100,20 @@ function validateHealthRoot(json: any): asserts json is HealthRoot {
   }
   return json;
 }
+
+async function getStorageDir(){
+	const storageDir = Deno.env.get("health_storage_dir")
+	if (!storageDir) throw new Error("must provide 'health_storage_dir'");
+
+	return Deno.stat(storageDir).then(s => {
+	if (!s.isDirectory){
+		throw new Error(`'${storageDir}' is not a directory`);
+	}
+	return storageDir;
+	})
+	.catch(err => {throw new Error(`storage dir '${storageDir}' invalid`)});
+}
+
 
 app.listen();
 console.log(`server running on http://localhost:${port}`);
