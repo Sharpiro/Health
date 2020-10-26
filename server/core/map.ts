@@ -14,6 +14,8 @@ export class CaseMap<V> extends Map<string, V> {
     return this;
   }
 }
+
+/** Return a map as well as any dupes found */
 export function getMapWithDupes<T, K extends LookupKeys<T>>(
   datastore: T[],
   key: K,

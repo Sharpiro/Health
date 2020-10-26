@@ -1,11 +1,17 @@
-import "./promise_extensions.ts";
+import "./core/extensions/promise.ts";
 import { CorsMiddleware } from "./cors_middleware.ts";
 import { WebServer } from "./web_server.ts";
 import { AuthMiddleware } from "./auth_middleware.ts";
 import { getMapWithDupes } from "./core/map.ts";
-import { addDaysToDatastore, getNewDays, HealthRoot } from "./merge.ts";
-
-const storageDir = (await getStorageDir());
+import {
+  addDaysToHealthStore,
+  getNewItem,
+  HealthStore,
+  mergeDays,
+  mergeLogs,
+  validateHealthRoot,
+} from "./health/merge.ts";
+import { HealthService } from "./health/health_service.ts";
 
 const appToken = Deno.env.get("health_token");
 if (!appToken) {
@@ -14,6 +20,9 @@ if (!appToken) {
 
 const port = +(Deno.args[0] ?? 8080);
 const app = new WebServer();
+// const storageDir = (await getStorageDir());
+// const healthService = new HealthService(storageDir);
+const healthService = new HealthService((await getStorageDir()));
 
 const origins = [
   "http://localhost:4200",
@@ -46,65 +55,32 @@ app.post("/healthexport", (req, res, body) => {
 });
 
 app.post("/healthExportSmart", async (req, res, body) => {
-  const json = JSON.parse(body);
-  validateHealthRoot(json);
+  const postData = JSON.parse(body);
+  validateHealthRoot(postData);
 
-  const { map: newDataMap, dupes } = getMapWithDupes(json.days, "timestamp");
-  if (dupes.length) {
-    res.status = 403;
-    res.body = "posted data contained duplicates";
+  const healthStore = await healthService.loadHealthStore();
+
+  const daysResult = mergeDays(healthStore, postData.days);
+  if ("error" in daysResult) {
+    res.status = daysResult.error.status;
+    res.body = daysResult.error.body;
     return;
   }
 
-  const syncFileName = "health_data.json";
-  const syncFilePath = `${storageDir}/${syncFileName}`;
-  const storedText = await Deno.readTextFile(syncFilePath);
-  const persistentHealthRoot = JSON.parse(storedText);
-  validateHealthRoot(persistentHealthRoot);
-  const { map: persistentMap, dupes: persistentDupes } = getMapWithDupes(
-    persistentHealthRoot.days,
-    "timestamp",
-  );
-  if (persistentDupes.length) {
-    res.status = 403;
-    res.body = "stored data contained duplicates";
+  const logsResult = mergeLogs(healthStore, postData.logs);
+  if ("error" in logsResult) {
+    res.status = logsResult.error.status;
+    res.body = logsResult.error.body;
     return;
   }
 
-  const newDays = [...getNewDays(persistentMap, newDataMap)];
-  if (!newDays.length) {
-    res.status = 200;
-    res.body = "no days to update";
-    return;
-  }
+  healthService.saveHealthStore(healthStore);
 
-  console.log(`adding '${newDays.length}' days to store`);
-
-  addDaysToDatastore(persistentHealthRoot, persistentMap, newDays);
-
-  const backupFilePath = `${storageDir}/${
-    new Date().toISOString()
-  }_${syncFileName}`;
-  await Deno.copyFile(syncFilePath, backupFilePath);
-  await Deno.writeTextFile(
-    syncFilePath,
-    JSON.stringify(persistentHealthRoot),
-  );
-  res.body = `added '${newDays.length}' days to store`;
+  const resMsg =
+    `added '${daysResult.ok}' days & '${logsResult.ok}' logs to store`;
+  console.log(resMsg);
+  res.body = resMsg;
 });
-
-function validateHealthRoot(json: any): asserts json is HealthRoot {
-  if (!json) {
-    throw new Error("json was null");
-  }
-  if (!json.days) {
-    throw new Error("days not present");
-  }
-  if (!json.logs) {
-    throw new Error("logs not present");
-  }
-  return json;
-}
 
 async function getStorageDir() {
   const storageDir = Deno.env.get("health_storage_dir");

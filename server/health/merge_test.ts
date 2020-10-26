@@ -1,7 +1,7 @@
 import {
   assert,
 } from "https://deno.land/std@0.74.0/testing/asserts.ts";
-import { getMapWithDupes } from "./core/map.ts";
+import { getMapWithDupes } from "../core/map.ts";
 import { getNewDays } from "./merge.ts";
 
 Deno.test("Test Merge", () => {
