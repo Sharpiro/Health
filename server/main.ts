@@ -74,7 +74,9 @@ app.post("/healthExportSmart", async (req, res, body) => {
     return;
   }
 
-  healthService.saveHealthStore(healthStore);
+  if (daysResult.ok || logsResult.ok) {
+    healthService.saveHealthStore(healthStore);
+  }
 
   const resMsg =
     `added '${daysResult.ok}' days & '${logsResult.ok}' logs to store`;
