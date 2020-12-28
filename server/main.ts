@@ -13,6 +13,7 @@ import {
 } from "./health/merge.ts";
 import { HealthService } from "./health/health_service.ts";
 
+console.log("Loading configs...");
 const appToken = Deno.env.get("health_token");
 if (!appToken) {
   throw new Error("auth 'health_token' required");
